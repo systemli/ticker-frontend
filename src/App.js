@@ -34,6 +34,11 @@ class App extends Component {
 
                     if (this.state.ticker.active) {
                         this.fetchMessages();
+
+                        this.fetchID = setInterval(
+                            () => this.fetchMessages(),
+                            10000
+                        );
                     }
                 }
 
@@ -46,13 +51,6 @@ class App extends Component {
             () => this.tick(),
             1000
         );
-
-        if (this.state.ticker !== null && this.state.ticker.active) {
-            this.fetchID = setInterval(
-                () => this.fetchMessages(),
-                this.state.settings.refresh_interval || 10000
-            );
-        }
     }
 
     componentWillUnmount() {
