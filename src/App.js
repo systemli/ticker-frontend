@@ -20,6 +20,7 @@ class App extends Component {
 
         this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this);
         this.fetchMessages = this.fetchMessages.bind(this);
+        this.fetchOlderMessages = this.fetchOlderMessages.bind(this);
     }
 
     componentWillMount() {
@@ -51,6 +52,8 @@ class App extends Component {
             () => this.tick(),
             1000
         );
+
+        document.addEventListener('scroll', this.fetchOlderMessages);
     }
 
     componentWillUnmount() {
@@ -64,6 +67,24 @@ class App extends Component {
             .replace(/#(\S+)/g, '<a target="_blank" href="https://twitter.com/search?q=%23$1">#$1</a>')
             .replace(/@(\S+)/g, '<a target="_blank" href="https://twitter.com/$1">@$1</a>')
             .replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+    }
+
+    fetchOlderMessages() {
+        const root = document.getElementById('root');
+
+        if (root.getBoundingClientRect().bottom <= window.innerHeight) {
+            let message = this.state.messages[this.state.messages.length - 1];
+
+            if (message !== undefined) {
+                fetch(`${API_URL}/timeline?before=${message.id}`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.data !== undefined && response.data.messages !== null) {
+                            this.setState({messages: this.state.messages.concat(response.data.messages)});
+                        }
+                    });
+            }
+        }
     }
 
     fetchMessages() {
