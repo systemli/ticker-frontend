@@ -11,7 +11,16 @@ class App extends Component {
         this.state = {
             date: new Date(),
             ticker: null,
-            settings: {},
+            settings: {
+                refresh_interval: 10000,
+                author: '',
+                description: '',
+                email: '',
+                headline: '',
+                homepage: '',
+                sub_headline: '',
+                twitter: '',
+            },
             messages: [],
             isLoading: true,
             isFetching: false,
@@ -38,7 +47,7 @@ class App extends Component {
 
                         this.fetchID = setInterval(
                             () => this.fetchMessages(),
-                            10000
+                            this.state.settings.refresh_interval
                         );
                     }
                 }
@@ -306,6 +315,28 @@ class App extends Component {
     }
 
     renderInactiveMode() {
+        const authorItem = (this.state.settings.author) ? <List.Item>
+            <List.Icon name='users'/>
+            <List.Content>{this.state.settings.author}</List.Content>
+        </List.Item> : '';
+
+        const emailItem = (this.state.settings.email) ? <List.Item>
+            <List.Icon name='mail'/>
+            <List.Content><a
+                href={'mailto:' + this.state.settings.email}>Email</a></List.Content>
+        </List.Item> : '';
+
+        const homepageItem = (this.state.settings.homepage) ? <List.Item>
+            <List.Icon name='linkify'/>
+            <List.Content><a href={this.state.settings.homepage}>Homepage</a></List.Content>
+        </List.Item> : '';
+
+        const twitterItem = (this.state.settings.twitter) ? <List.Item>
+            <List.Icon name='twitter'/>
+            <List.Content><a
+                href={'https://twitter.com/' + this.state.settings.twitter}>@{this.state.settings.twitter}</a></List.Content>
+        </List.Item> : '';
+
         return (
             <Container style={{paddingTop: 50}}>
                 <Grid centered>
@@ -313,44 +344,23 @@ class App extends Component {
                         <Header size='huge' icon textAlign='center'>
                             <Icon name='hide'/>
                             <Header.Content>
-                                The ticker is currently inactive.
+                                {this.state.settings.headline}
                                 <Header.Subheader>
-                                    Please contact us if you want to use it.
+                                    {this.state.settings.sub_headline}
                                 </Header.Subheader>
                             </Header.Content>
                         </Header>
                         <Card fluid>
                             <Card.Content>
-                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-                                sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                                amet.
+                                {this.state.settings.description}
                             </Card.Content>
                             <Card.Content>
                                 <Header size='small'>Information</Header>
                                 <List>
-                                    <List.Item>
-                                        <List.Icon name='users'/>
-                                        <List.Content>systemli.org Ticker Team</List.Content>
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Icon name='mail'/>
-                                        <List.Content><a
-                                            href="mailto:admin@systemli.org">Email</a></List.Content>
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Icon name='linkify'/>
-                                        <List.Content><a href="https://www.systemli.org">Homepage</a></List.Content>
-                                    </List.Item>
-                                    <List.Item>
-                                        <List.Icon name='twitter'/>
-                                        <List.Content><a
-                                            href="https://twitter.com/systemli">@systemli</a></List.Content>
-                                    </List.Item>
+                                    {authorItem}
+                                    {emailItem}
+                                    {homepageItem}
+                                    {twitterItem}
                                 </List>
                             </Card.Content>
                         </Card>
