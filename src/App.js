@@ -378,7 +378,17 @@ class App extends Component {
             return this.renderActiveMode();
         }
 
-        return this.renderInactiveMode();
+        if (this.state.settings.inactive_settings !== undefined) {
+           return this.renderInactiveMode();
+        }
+
+        return (
+            <Container>
+                <Dimmer active>
+                    <Loader content='Loading' size='large' />
+                </Dimmer>
+            </Container>
+        );
     }
 }
 
