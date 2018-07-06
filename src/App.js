@@ -13,13 +13,15 @@ class App extends Component {
             ticker: null,
             settings: {
                 refresh_interval: 10000,
-                author: '',
-                description: '',
-                email: '',
-                headline: '',
-                homepage: '',
-                sub_headline: '',
-                twitter: '',
+                inactive_settings: {
+                    author: '',
+                    description: '',
+                    email: '',
+                    headline: '',
+                    homepage: '',
+                    sub_headline: '',
+                    twitter: '',
+                },
             },
             messages: [],
             isLoading: true,
@@ -315,26 +317,26 @@ class App extends Component {
     }
 
     renderInactiveMode() {
-        const authorItem = (this.state.settings.author) ? <List.Item>
+        const authorItem = (this.state.settings.inactive_settings.author) ? <List.Item>
             <List.Icon name='users'/>
-            <List.Content>{this.state.settings.author}</List.Content>
+            <List.Content>{this.state.settings.inactive_settings.author}</List.Content>
         </List.Item> : '';
 
-        const emailItem = (this.state.settings.email) ? <List.Item>
+        const emailItem = (this.state.settings.inactive_settings.email) ? <List.Item>
             <List.Icon name='mail'/>
             <List.Content><a
-                href={'mailto:' + this.state.settings.email}>Email</a></List.Content>
+                href={'mailto:' + this.state.settings.inactive_settings.email}>Email</a></List.Content>
         </List.Item> : '';
 
-        const homepageItem = (this.state.settings.homepage) ? <List.Item>
+        const homepageItem = (this.state.settings.inactive_settings.homepage) ? <List.Item>
             <List.Icon name='linkify'/>
-            <List.Content><a href={this.state.settings.homepage}>Homepage</a></List.Content>
+            <List.Content><a href={this.state.settings.inactive_settings.homepage}>Homepage</a></List.Content>
         </List.Item> : '';
 
-        const twitterItem = (this.state.settings.twitter) ? <List.Item>
+        const twitterItem = (this.state.settings.inactive_settings.twitter) ? <List.Item>
             <List.Icon name='twitter'/>
             <List.Content><a
-                href={'https://twitter.com/' + this.state.settings.twitter}>@{this.state.settings.twitter}</a></List.Content>
+                href={'https://twitter.com/' + this.state.settings.inactive_settings.twitter}>@{this.state.settings.inactive_settings.twitter}</a></List.Content>
         </List.Item> : '';
 
         return (
@@ -344,15 +346,15 @@ class App extends Component {
                         <Header size='huge' icon textAlign='center'>
                             <Icon name='hide'/>
                             <Header.Content>
-                                {this.state.settings.headline}
+                                {this.state.settings.inactive_settings.headline}
                                 <Header.Subheader>
-                                    {this.state.settings.sub_headline}
+                                    {this.state.settings.inactive_settings.sub_headline}
                                 </Header.Subheader>
                             </Header.Content>
                         </Header>
                         <Card fluid>
                             <Card.Content>
-                                {this.state.settings.description}
+                                {this.state.settings.inactive_settings.description}
                             </Card.Content>
                             <Card.Content>
                                 <Header size='small'>Information</Header>
