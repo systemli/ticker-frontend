@@ -46,7 +46,14 @@ class App extends Component {
     this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    )
+
+    document.addEventListener('scroll', this.fetchOlderMessages)
+
     fetch(`${API_URL}/init`)
       .then(response => response.json())
       .then(response => {
@@ -68,15 +75,6 @@ class App extends Component {
 
         this.setState({isLoading: false})
       })
-  }
-
-  componentDidMount () {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    )
-
-    document.addEventListener('scroll', this.fetchOlderMessages)
   }
 
   componentWillUnmount () {
