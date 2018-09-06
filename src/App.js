@@ -36,7 +36,6 @@ class App extends Component {
       },
       messages: [],
       isLoading: true,
-      isFetching: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
 
@@ -104,8 +103,6 @@ class App extends Component {
   }
 
   fetchMessages () {
-    this.setState({isFetching: true})
-
     if (this.state.messages[0] !== undefined) {
       let after = this.state.messages[0].id
 
@@ -127,8 +124,6 @@ class App extends Component {
           }
         })
     }
-
-    this.setState({isFetching: false})
   }
 
   handleReloadInfoDismiss () {
@@ -181,7 +176,6 @@ class App extends Component {
             </Card.Content>
           </Card>
         )}
-          <Loader active={this.state.isFetching} size='tiny'/>
       </div>
     )
   }
