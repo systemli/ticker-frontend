@@ -11,8 +11,7 @@ import {
   List,
   Loader,
   Message,
-  Popup,
-  Statistic
+  Popup
 } from 'semantic-ui-react'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -48,11 +47,6 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    )
-
     document.addEventListener('scroll', this.fetchOlderMessages)
 
     fetch(`${API_URL}/init`)
@@ -81,7 +75,6 @@ class App extends Component {
   }
 
   componentWillUnmount () {
-    clearInterval(this.timerID)
     clearInterval(this.fetchID)
   }
 
@@ -137,12 +130,6 @@ class App extends Component {
     }
 
     this.setState({isFetching: false})
-  }
-
-  tick () {
-    this.setState({
-      date: new Date()
-    })
   }
 
   handleReloadInfoDismiss () {
@@ -303,17 +290,6 @@ class App extends Component {
     )
   }
 
-  renderClock () {
-    return (
-      <Container textAlign='center'>
-        <Statistic>
-          <Statistic.Value>{this.state.date.toLocaleTimeString()}</Statistic.Value>
-          <Statistic.Label><Moment date={this.state.date} format='dddd, DD. MMMM YYYY'/></Statistic.Label>
-        </Statistic>
-      </Container>
-    )
-  }
-
   renderCredits () {
     return (
       <Container textAlign='right' style={{color: 'rgba(0, 0, 0, .5)'}}>
@@ -335,7 +311,6 @@ class App extends Component {
             {this.renderMessages()}
           </Grid.Column>
           <Grid.Column width={6}>
-            {this.renderClock()}
             {this.renderTicker()}
             {this.renderCredits()}
           </Grid.Column>
