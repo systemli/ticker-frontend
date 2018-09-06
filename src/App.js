@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import Moment from "react-moment";
-import ReactMarkdown from 'react-markdown';
+import React, { Component } from 'react'
+import Moment from 'react-moment'
+import ReactMarkdown from 'react-markdown'
 import {
   Card,
   Container,
@@ -211,7 +211,7 @@ class App extends Component {
     return (
       <Card fluid>
         <Card.Content header={this.state.ticker.title}/>
-        <Card.Content content={<ReactMarkdown source={this.state.ticker.description} />}/>
+        <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
         <Card.Content>
           <Header size='small'>Informationen</Header>
           <List>
@@ -382,8 +382,8 @@ class App extends Component {
             </Header>
             <Card fluid>
               <Card.Content>
-                <ReactMarkdown source={this.state.settings.inactive_settings.description} />
-       </Card.Content>
+                <ReactMarkdown source={this.state.settings.inactive_settings.description}/>
+              </Card.Content>
               <Card.Content>
                 <Header size='small'>Information</Header>
                 <List>
