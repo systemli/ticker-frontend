@@ -162,7 +162,7 @@ class App extends Component {
     const messages = this.state.messages
 
     return (
-      <Container>
+      <div>
         {messages.map(message =>
           <Card key={message.id} fluid>
             <Card.Content>
@@ -182,10 +182,8 @@ class App extends Component {
             </Card.Content>
           </Card>
         )}
-        <Container textAlign='right'>
           <Loader active={this.state.isFetching} size='tiny'/>
-        </Container>
-      </Container>
+      </div>
     )
   }
 
@@ -291,11 +289,11 @@ class App extends Component {
 
   renderCredits () {
     return (
-      <Container textAlign='right' style={{color: 'rgba(0, 0, 0, .5)'}}>
+      <div style={{color: 'rgba(0, 0, 0, .5)', textAlign: 'right'}}>
         <Icon name='code'/> with <Icon name='heart' color='red'/> by <a href='https://www.systemli.org'
                                                                         target='_blank'
                                                                         rel='noopener noreferrer'>systemli.org</a>
-      </Container>
+      </div>
     )
   }
 
@@ -307,10 +305,10 @@ class App extends Component {
         </Dimmer>
         {this.renderReloadInfoMessage()}
         <Grid>
-          <Grid.Column width={10}>
+          <Grid.Column computer={10} mobile={16} tablet={10}>
             {this.renderMessages()}
           </Grid.Column>
-          <Grid.Column width={6}>
+          <Grid.Column computer={6} mobile={16} tablet={6}>
             {this.renderTicker()}
             {this.renderCredits()}
           </Grid.Column>
