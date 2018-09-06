@@ -163,10 +163,6 @@ class App extends Component {
 
     return (
       <Container>
-        {this.renderReloadInfoMessage()}
-        <Container textAlign='right'>
-          <Loader inline active={this.state.isFetching} size='tiny'/>
-        </Container>
         {messages.map(message =>
           <Card key={message.id} fluid>
             <Card.Content>
@@ -186,6 +182,9 @@ class App extends Component {
             </Card.Content>
           </Card>
         )}
+        <Container textAlign='right'>
+          <Loader active={this.state.isFetching} size='tiny'/>
+        </Container>
       </Container>
     )
   }
@@ -306,6 +305,7 @@ class App extends Component {
         <Dimmer active={this.state.isLoading} page>
           <Loader size='huge' content='Initializing...'/>
         </Dimmer>
+        {this.renderReloadInfoMessage()}
         <Grid>
           <Grid.Column width={10}>
             {this.renderMessages()}
