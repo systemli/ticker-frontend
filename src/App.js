@@ -21,7 +21,6 @@ class App extends Component {
     super(props)
 
     this.state = {
-      date: new Date(),
       ticker: null,
       settings: {
         refresh_interval: 10000,
