@@ -64,6 +64,8 @@ class App extends Component {
         if (response.data !== undefined && response.data.ticker !== null && response.data.ticker.active) {
           this.setState({ticker: response.data.ticker})
 
+          document.title = this.state.ticker.title
+
           if (this.state.ticker.active) {
             this.fetchMessages()
 
