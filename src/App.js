@@ -187,6 +187,19 @@ class App extends Component {
     )
   }
 
+  renderHeadline () {
+    let headline = ''
+    if (this.state.ticker === null || this.state.ticker.title === undefined) {
+      headline = 'Ticker'
+    } else {
+      headline = this.state.ticker.title
+    }
+
+    return (
+      <Header content={headline} size={'large'}/>
+    )
+  }
+
   renderTicker () {
     if (this.state.ticker === null || this.state.ticker.id === undefined) {
       return
@@ -194,7 +207,6 @@ class App extends Component {
 
     return (
       <Card fluid>
-        <Card.Content header={this.state.ticker.title}/>
         <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
         <Card.Content>
           <Header size='small'>Informationen</Header>
@@ -303,6 +315,7 @@ class App extends Component {
         <Dimmer active={this.state.isLoading} page>
           <Loader size='huge' content='Initializing...'/>
         </Dimmer>
+        {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid>
           <Grid.Column computer={10} mobile={16} tablet={10}>
