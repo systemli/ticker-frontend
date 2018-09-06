@@ -11,7 +11,7 @@ import {
   List,
   Loader,
   Message,
-  Popup
+  Popup, Sticky
 } from 'semantic-ui-react'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -207,9 +207,9 @@ class App extends Component {
 
     return (
       <Card fluid>
+        <Card.Content><Card.Header>Informationen</Card.Header></Card.Content>
         <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
         <Card.Content>
-          <Header size='small'>Informationen</Header>
           <List>
             {this.renderAuthorItem()}
             {this.renderEmailItem()}
@@ -322,8 +322,10 @@ class App extends Component {
             {this.renderMessages()}
           </Grid.Column>
           <Grid.Column computer={6} mobile={16} tablet={6}>
-            {this.renderTicker()}
-            {this.renderCredits()}
+            <Sticky offset={30}>
+              {this.renderTicker()}
+              {this.renderCredits()}
+            </Sticky>
           </Grid.Column>
         </Grid>
       </Container>
