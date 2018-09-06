@@ -39,7 +39,7 @@ class App extends Component {
       messages: [],
       isLoading: true,
       isFetching: false,
-      showReloadInfo: true,
+      showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
 
     this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
@@ -147,6 +147,24 @@ class App extends Component {
 
   handleReloadInfoDismiss () {
     this.setState({showReloadInfo: false})
+
+    localStorage.setItem('showReloadInfo', '0')
+  }
+
+  renderReloadInfoMessage () {
+    if (localStorage.getItem('showReloadInfo') === '0') {
+      return
+    }
+
+    return (
+      <Message
+        color='teal' icon='info'
+        hidden={!this.state.showReloadInfo}
+        onDismiss={this.handleReloadInfoDismiss}
+        header='Information'
+        content='The messages update automatically. There is no need to reload the entire page.'
+      />
+    )
   }
 
   renderMessages () {
@@ -158,12 +176,7 @@ class App extends Component {
 
     return (
       <Container>
-        <Message
-          color='teal' icon='info'
-          onDismiss={this.handleReloadInfoDismiss}
-          header='Information'
-          content='The messages updates automatically. There is no need to reload the entire page.'
-        />
+        {this.renderReloadInfoMessage()}
         <Container textAlign='right'>
           <Loader inline active={this.state.isFetching} size='tiny'/>
         </Container>
