@@ -48,19 +48,9 @@ class App extends Component {
   }
 
   componentDidMount () {
+    this.initializeScrollListener()
     window.addEventListener('resize', () => {
-        let w = window,
-            d = document,
-            documentElement = d.documentElement,
-            body = d.getElementsByTagName('body')[0],
-            width = w.innerWidth || documentElement.clientWidth || body.clientWidth
-
-        // the mobile breakpoint
-        if (768 <= width) {
-            document.addEventListener('scroll', this.fetchOlderMessages)
-        } else {
-            document.removeEventListener('scroll', this.fetchOlderMessages)
-        }
+       this.initializeScrollListener()
     })
 
     fetch(`${API_URL}/init`)
@@ -91,6 +81,21 @@ class App extends Component {
   componentWillUnmount () {
     clearInterval(this.fetchID)
     window.removeEventListener('scroll', this.fetchOlderMessages())
+  }
+
+  initializeScrollListener() {
+    let w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName('body')[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+
+    // the mobile breakpoint
+    if (768 <= width) {
+      document.addEventListener('scroll', this.fetchOlderMessages)
+    } else {
+      document.removeEventListener('scroll', this.fetchOlderMessages)
+    }
   }
 
   static replaceMagic (text) {
