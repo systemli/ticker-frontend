@@ -39,6 +39,7 @@ class App extends Component {
       messages: [],
       isLoading: true,
       isLoadingOlderMessages: false,
+      reachedMessagesEnd: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
 
@@ -118,9 +119,11 @@ class App extends Component {
           .then(response => {
               if (response.data !== undefined && response.data.messages !== null) {
                 this.setState({
-                messages: this.state.messages.concat(response.data.messages)
-              })
-            }
+                  messages: this.state.messages.concat(response.data.messages)
+                })
+              } else if (response.data !== undefined && response.data.messages == null) {
+                this.setState({reachedMessagesEnd: true})
+              }
             return response
           }).finally(() => {
             this.setState({isLoadingOlderMessages: false})
@@ -366,9 +369,9 @@ class App extends Component {
   }
 
   renderLoadMoreButton() {
-      if (this.state.isLoadingOlderMessages) {
+      if (this.state.isLoadingOlderMessages && !this.state.reachedMessagesEnd) {
         return (<Button loading floated='right'>Loading</Button>)
-      } else {
+      } else if (!this.state.isLoadingOlderMessages && !this.state.reachedMessagesEnd) {
         return (<Button onClick={() => this.fetchOlderMessages()} floated='right'>Older</Button>)
       }
   }
