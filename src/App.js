@@ -38,18 +38,26 @@ class App extends Component {
       },
       messages: [],
       isLoading: true,
+      isLoadingOlderMessages: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
 
     this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
     this.fetchMessages = this.fetchMessages.bind(this)
     this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
-    this.showMobileLoadMoreButton = this.showMobileLoadMoreButton.bind(this)
   }
 
   componentDidMount () {
-    document.addEventListener('scroll', this.fetchOlderMessages)
-    window.addEventListener('resize', this.showMobileLoadMoreButton())
+    let w = window,
+        d = document,
+        documentElement = d.documentElement,
+        body = d.getElementsByTagName('body')[0],
+        width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+
+    // the mobile breakpoint
+    if (768 <= width) {
+       // document.addEventListener('scroll', this.fetchOlderMessages)
+    }
 
     fetch(`${API_URL}/init`)
       .then(response => response.json())
@@ -96,28 +104,22 @@ class App extends Component {
       let message = this.state.messages[this.state.messages.length - 1]
 
       if (message !== undefined) {
+        this.setState({isLoadingOlderMessages: true})
         fetch(`${API_URL}/timeline?before=${message.id}`)
-          .then(response => response.json())
+          .then(response => {
+            response.json()
+            this.setState({isLoadingOlderMessages: false})
+          })
           .then(response => {
             if (response.data !== undefined && response.data.messages !== null) {
-              this.setState({messages: this.state.messages.concat(response.data.messages)})
+              this.setState({
+                messages: this.state.messages.concat(response.data.messages),
+                isLoadingOlderMessages: false
+              })
             }
           })
       }
     }
-  }
-
-  showMobileLoadMoreButton() {
-      console.log('resize');
-      let w = window,
-          d = document,
-          documentElement = d.documentElement,
-          body = d.getElementsByTagName('body')[0],
-          width = w.innerWidth || documentElement.clientWidth || body.clientWidth
-
-      if (768 > width) {
-          console.log('mobile');
-      }
   }
 
   fetchMessages () {
@@ -336,7 +338,7 @@ class App extends Component {
           </Grid.Row>
           <Grid.Row columns={2} only='mobile'>
             <Grid.Column mobile={16}>
-              <Button floated='right'>More</Button>
+              {this.renderLoadMoreButton()}
             </Grid.Column>
           </Grid.Row>
 
@@ -354,6 +356,14 @@ class App extends Component {
         </Grid>
       </Container>
     )
+  }
+
+  renderLoadMoreButton() {
+      if (this.state.isLoadingOlderMessages) {
+        return (<Button loading floated='right'>Loading</Button>)
+      } else {
+        return (<Button onClick={() => this.fetchOlderMessages()} floated='right'>Older</Button>)
+      }
   }
 
   renderInactiveMode () {
