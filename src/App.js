@@ -109,7 +109,6 @@ class App extends Component {
 
   fetchOlderMessages () {
     const root = document.getElementById('root')
-      console.log('yolo');
       if (Math.floor(root.getBoundingClientRect().bottom) <= window.innerHeight) {
       let message = this.state.messages[this.state.messages.length - 1]
         if (message !== undefined) {
