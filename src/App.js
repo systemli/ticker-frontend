@@ -103,24 +103,22 @@ class App extends Component {
 
   fetchOlderMessages () {
     const root = document.getElementById('root')
-
-    if (root.getBoundingClientRect().bottom <= window.innerHeight) {
+      console.log('yolo');
+      if (Math.floor(root.getBoundingClientRect().bottom) <= window.innerHeight) {
       let message = this.state.messages[this.state.messages.length - 1]
-
-      if (message !== undefined) {
+        if (message !== undefined) {
         this.setState({isLoadingOlderMessages: true})
         fetch(`${API_URL}/timeline?before=${message.id}`)
+          .then(response => response.json())
           .then(response => {
-            response.json()
-            this.setState({isLoadingOlderMessages: false})
-          })
-          .then(response => {
-            if (response.data !== undefined && response.data.messages !== null) {
-              this.setState({
-                messages: this.state.messages.concat(response.data.messages),
-                isLoadingOlderMessages: false
+              if (response.data !== undefined && response.data.messages !== null) {
+                this.setState({
+                messages: this.state.messages.concat(response.data.messages)
               })
             }
+            return response
+          }).finally(() => {
+            this.setState({isLoadingOlderMessages: false})
           })
       }
     }
