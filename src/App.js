@@ -48,16 +48,20 @@ class App extends Component {
   }
 
   componentDidMount () {
-    let w = window,
-        d = document,
-        documentElement = d.documentElement,
-        body = d.getElementsByTagName('body')[0],
-        width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+    window.addEventListener('resize', () => {
+        let w = window,
+            d = document,
+            documentElement = d.documentElement,
+            body = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || documentElement.clientWidth || body.clientWidth
 
-    // the mobile breakpoint
-    if (768 <= width) {
-       // document.addEventListener('scroll', this.fetchOlderMessages)
-    }
+        // the mobile breakpoint
+        if (768 <= width) {
+            document.addEventListener('scroll', this.fetchOlderMessages)
+        } else {
+            document.removeEventListener('scroll', this.fetchOlderMessages)
+        }
+    })
 
     fetch(`${API_URL}/init`)
       .then(response => response.json())
@@ -86,7 +90,7 @@ class App extends Component {
 
   componentWillUnmount () {
     clearInterval(this.fetchID)
-    window.removeEventListener('resize', this.showMobileLoadMoreButton())
+    window.removeEventListener('scroll', this.fetchOlderMessages())
   }
 
   static replaceMagic (text) {
