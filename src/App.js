@@ -11,7 +11,9 @@ import {
   List,
   Loader,
   Message,
-  Popup, Sticky
+  Popup,
+  Sticky,
+  Button
 } from 'semantic-ui-react'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -42,10 +44,12 @@ class App extends Component {
     this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
     this.fetchMessages = this.fetchMessages.bind(this)
     this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
+    this.showMobileLoadMoreButton = this.showMobileLoadMoreButton.bind(this)
   }
 
   componentDidMount () {
     document.addEventListener('scroll', this.fetchOlderMessages)
+    window.addEventListener('resize', this.showMobileLoadMoreButton())
 
     fetch(`${API_URL}/init`)
       .then(response => response.json())
@@ -74,6 +78,7 @@ class App extends Component {
 
   componentWillUnmount () {
     clearInterval(this.fetchID)
+    window.removeEventListener('resize', this.showMobileLoadMoreButton())
   }
 
   static replaceMagic (text) {
@@ -100,6 +105,19 @@ class App extends Component {
           })
       }
     }
+  }
+
+  showMobileLoadMoreButton() {
+      console.log('resize');
+      let w = window,
+          d = document,
+          documentElement = d.documentElement,
+          body = d.getElementsByTagName('body')[0],
+          width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+
+      if (768 > width) {
+          console.log('mobile');
+      }
   }
 
   fetchMessages () {
@@ -311,15 +329,28 @@ class App extends Component {
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid>
-          <Grid.Column computer={10} mobile={16} tablet={10}>
-            {this.renderMessages()}
-          </Grid.Column>
-          <Grid.Column computer={6} mobile={16} tablet={6}>
-            <Sticky offset={30}>
-              {this.renderTicker()}
-              {this.renderCredits()}
-            </Sticky>
-          </Grid.Column>
+          <Grid.Row columns={2} only='mobile'>
+            <Grid.Column mobile={16}>
+              {this.renderMessages()}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2} only='mobile'>
+            <Grid.Column mobile={16}>
+              <Button floated='right'>More</Button>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row only="computer tablet">
+            <Grid.Column computer={10} mobile={16} tablet={10}>
+              {this.renderMessages()}
+            </Grid.Column>
+            <Grid.Column computer={6} mobile={16} tablet={6}>
+              <Sticky offset={30}>
+                {this.renderTicker()}
+                {this.renderCredits()}
+              </Sticky>
+            </Grid.Column>
+           </Grid.Row>
         </Grid>
       </Container>
     )
