@@ -23,6 +23,7 @@ deploy:
   file:
   - ticker-frontend-$RELEASE_VERSION.tar.gz
   - sha512sums.txt
+  skip_cleanup: true
   on:
     repo: systemli/ticker-frontend
     tags: true
