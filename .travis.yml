@@ -1,10 +1,28 @@
 language: node_js
 
 node_js:
-- "stable"
+- stable
+
 cache:
   directories:
   - node_modules
 
 script:
 - npm run build
+
+before_deploy:
+- export RELEASE_VERSION=$(git --no-pager describe --tags --always)
+- npm run dist
+- tar czf ticker-frontend-$RELEASE_VERSION.tar.gz -C dist/ .
+- shasum -a 512 ticker-frontend-$RELEASE_VERSION.tar.gz > sha512sums.txt
+
+deploy:
+  provider: releases
+  api_key:
+    secure: XLD+gXCz3Ydf8PltAoX8Ew0CZb+m+CHRzN9HtBJhptFvSnsoQ+2P2U9m/UR4qzNdzggM45Qhtn4VWYBrcLYdoaW/TRp3WB0kdjk5Q4IQVVEkFGMBUBRlxmd8ERwJBvaeowC2lmuzfmyHRjLYHeQpDxJzaYJvxy62Co0Y3jy17Vs5HMwmxGycr6FCCRHQ377on5LRBy8gNzIDaKFyt4KLCftB/PV5uliiODQ0x+SA4j/bIIc/mFoTibrX/g353/xtnlHY5uDtOuDKKpqFkTbdRR6w5DSMGsTBMNYRs4oc2+O5mcEevZQXvr2nqCKkfPHPv1Z4AJ/hMJdmUGdME3zUKv72OIxE3qfWTuJobh9LxLjXb3fMLqw0ZiMPLQb2mLBapXzTFQsisKMee3geKL8Zh9v142eb4Uwuc5m49EYxntNmqWossAAgoGHFgjlNbkpthVEAPDjti+8/4Cj8ti80Qwl9Hre6g+Zo+bqM44y2QilNzAOUv/IfOLN51uJbs6hu9sbZC2vYK6oHPjREbrw4o9UKBVLqrqI2SIPWHmBK1egzsCEaLbTLQVD+Ri9PLu2DAbfxr5CAmOftwgDOsqScP6dLQRlJIu+2SJosXKNeQ5/e2JH0LTRJ8CW2l+RyvUHtJbpD6/jkPATxbd3Q3wHKSlDtJzPCna3feKZQ4CZtOqg=
+  file:
+  - ticker-frontend-$RELEASE_VERSION.tar.gz
+  - sha512sums.txt
+  on:
+    repo: systemli/ticker-frontend
+    tags: true
