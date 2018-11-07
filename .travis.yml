@@ -12,7 +12,6 @@ script:
 
 before_deploy:
 - export RELEASE_VERSION=$(git --no-pager describe --tags --always)
-- npm run dist
 - tar czf ticker-frontend-$RELEASE_VERSION.tar.gz -C dist/ .
 - shasum -a 512 ticker-frontend-$RELEASE_VERSION.tar.gz > sha512sums.txt
 

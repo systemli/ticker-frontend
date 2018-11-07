@@ -60,8 +60,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "dist": "tar -C dist -c -z -f release.tar.gz ."
+    "build": "webpack --config webpack.prod.js"
   },
   "eslintConfig": {
     "extends": "react-app"
