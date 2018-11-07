@@ -1,4 +1,4 @@
-# ticker-frontend
+# ticker-frontend [![Build Status](https://travis-ci.org/systemli/ticker-frontend.svg)](https://travis-ci.org/systemli/ticker-frontend)
 
 ## development
 
