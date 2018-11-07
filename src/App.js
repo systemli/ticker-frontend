@@ -11,7 +11,9 @@ import {
   List,
   Loader,
   Message,
-  Popup, Sticky
+  Popup,
+  Sticky,
+  Button
 } from 'semantic-ui-react'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -36,6 +38,8 @@ class App extends Component {
       },
       messages: [],
       isLoading: true,
+      isLoadingOlderMessages: false,
+      reachedMessagesEnd: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
 
@@ -45,7 +49,10 @@ class App extends Component {
   }
 
   componentDidMount () {
-    document.addEventListener('scroll', this.fetchOlderMessages)
+    this.initializeScrollListener()
+    window.addEventListener('resize', () => {
+       this.initializeScrollListener()
+    })
 
     fetch(`${API_URL}/init`)
       .then(response => response.json())
@@ -74,6 +81,22 @@ class App extends Component {
 
   componentWillUnmount () {
     clearInterval(this.fetchID)
+    window.removeEventListener('scroll', this.fetchOlderMessages())
+  }
+
+  initializeScrollListener() {
+    let w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName('body')[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+
+    // the mobile breakpoint
+    if (768 <= width) {
+      document.addEventListener('scroll', this.fetchOlderMessages)
+    } else {
+      document.removeEventListener('scroll', this.fetchOlderMessages)
+    }
   }
 
   static replaceMagic (text) {
@@ -86,17 +109,23 @@ class App extends Component {
 
   fetchOlderMessages () {
     const root = document.getElementById('root')
-
-    if (root.getBoundingClientRect().bottom <= window.innerHeight) {
+      if (Math.floor(root.getBoundingClientRect().bottom) <= window.innerHeight) {
       let message = this.state.messages[this.state.messages.length - 1]
-
-      if (message !== undefined) {
+        if (message !== undefined) {
+        this.setState({isLoadingOlderMessages: true})
         fetch(`${API_URL}/timeline?before=${message.id}`)
           .then(response => response.json())
           .then(response => {
-            if (response.data !== undefined && response.data.messages !== null) {
-              this.setState({messages: this.state.messages.concat(response.data.messages)})
-            }
+              if (response.data !== undefined && response.data.messages !== null) {
+                this.setState({
+                  messages: this.state.messages.concat(response.data.messages)
+                })
+              } else if (response.data !== undefined && response.data.messages == null) {
+                this.setState({reachedMessagesEnd: true})
+              }
+            return response
+          }).finally(() => {
+            this.setState({isLoadingOlderMessages: false})
           })
       }
     }
@@ -311,18 +340,39 @@ class App extends Component {
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid>
-          <Grid.Column computer={10} mobile={16} tablet={10}>
-            {this.renderMessages()}
-          </Grid.Column>
-          <Grid.Column computer={6} mobile={16} tablet={6}>
-            <Sticky offset={30}>
-              {this.renderTicker()}
-              {this.renderCredits()}
-            </Sticky>
-          </Grid.Column>
+          <Grid.Row columns={2} only='mobile'>
+            <Grid.Column mobile={16}>
+              {this.renderMessages()}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2} only='mobile'>
+            <Grid.Column mobile={16}>
+              {this.renderLoadMoreButton()}
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row only="computer tablet">
+            <Grid.Column computer={10} mobile={16} tablet={10}>
+              {this.renderMessages()}
+            </Grid.Column>
+            <Grid.Column computer={6} mobile={16} tablet={6}>
+              <Sticky offset={30}>
+                {this.renderTicker()}
+                {this.renderCredits()}
+              </Sticky>
+            </Grid.Column>
+           </Grid.Row>
         </Grid>
       </Container>
     )
+  }
+
+  renderLoadMoreButton() {
+      if (this.state.isLoadingOlderMessages && !this.state.reachedMessagesEnd) {
+        return (<Button loading floated='right'>Loading</Button>)
+      } else if (!this.state.isLoadingOlderMessages && !this.state.reachedMessagesEnd) {
+        return (<Button onClick={() => this.fetchOlderMessages()} floated='right'>Older</Button>)
+      }
   }
 
   renderInactiveMode () {
