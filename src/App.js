@@ -439,7 +439,7 @@ class App extends Component {
       return this.renderActiveMode()
     }
 
-    if (this.state.settings.inactive_settings !== undefined) {
+    if (this.state.ticker !== null && this.state.settings.inactive_settings !== undefined) {
       return this.renderInactiveMode()
     }
 
