@@ -175,9 +175,9 @@ class App extends Component {
   renderMessages () {
     if (this.state.messages === undefined || this.state.messages.length === 0) {
       return (
-        <Segment style={{margin: '2em 0 0'}}>
-          <Header icon size={'small'}>
-            <Icon name='hourglass half' color={'grey'} size={'small'}/>
+        <Segment placeholder>
+          <Header icon>
+            <Icon name='hourglass half' color={'grey'}/>
             We dont have any messages at the moment.
           </Header>
         </Segment>
