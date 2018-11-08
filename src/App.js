@@ -41,6 +41,7 @@ class App extends Component {
       messages: [],
       isLoading: true,
       isLoadingOlderMessages: false,
+      isInitialized: false,
       reachedMessagesEnd: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
@@ -127,27 +128,25 @@ class App extends Component {
   }
 
   fetchMessages () {
+    let url = `${API_URL}/timeline`
+
     if (this.state.messages[0] !== undefined) {
       let after = this.state.messages[0].id
-
       if (after !== undefined) {
-        fetch(`${API_URL}/timeline?after=${after}`)
-          .then(response => response.json())
-          .then(response => {
-            if (response.data !== undefined && response.data.messages !== null) {
-              this.setState({messages: response.data.messages.concat(this.state.messages)})
-            }
-          })
+        url = `${API_URL}/timeline?after=${after}`
       }
-    } else {
-      fetch(`${API_URL}/timeline`)
-        .then(response => response.json())
-        .then(response => {
-          if (response.data !== undefined && response.data.messages !== null) {
-            this.setState({messages: response.data.messages})
-          }
-        })
     }
+
+    fetch(url)
+      .then(response => response.json())
+      .then(response => {
+        if (response.data !== undefined && response.data.messages !== null) {
+          this.setState({messages: response.data.messages})
+        }
+
+        this.setState({isInitialized: true})
+      })
+
   }
 
   handleReloadInfoDismiss () {
@@ -443,7 +442,7 @@ class App extends Component {
   }
 
   render () {
-    if (this.state.ticker !== null && this.state.ticker.active) {
+    if (this.state.ticker !== null && this.state.ticker.active && this.state.isInitialized) {
       return this.renderActiveMode()
     }
 
