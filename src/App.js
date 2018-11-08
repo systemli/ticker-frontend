@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Moment from 'react-moment'
 import ReactMarkdown from 'react-markdown'
 import {
+  Button,
   Card,
   Container,
   Dimmer,
@@ -10,10 +11,9 @@ import {
   Icon,
   List,
   Loader,
-  Message,
+  Message, Modal,
   Popup,
-  Sticky,
-  Button
+  Sticky
 } from 'semantic-ui-react'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -49,10 +49,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.initializeScrollListener()
-    window.addEventListener('resize', () => {
-      this.initializeScrollListener()
-    })
+    document.addEventListener('scroll', this.fetchOlderMessages)
 
     fetch(`${API_URL}/init`)
       .then(response => response.json())
@@ -84,14 +81,6 @@ class App extends Component {
     document.removeEventListener('scroll', this.fetchOlderMessages)
   }
 
-  initializeScrollListener () {
-    if (App.isMobile()) {
-      document.removeEventListener('scroll', this.fetchOlderMessages)
-    } else {
-      document.addEventListener('scroll', this.fetchOlderMessages)
-    }
-  }
-
   static isMobile () {
     let w = window,
       d = document,
@@ -100,7 +89,7 @@ class App extends Component {
       width = w.innerWidth || documentElement.clientWidth || body.clientWidth
 
     // the mobile breakpoint
-    return width <= 768
+    return width < 768
   }
 
   static replaceMagic (text) {
@@ -222,7 +211,7 @@ class App extends Component {
     }
 
     return (
-      <Header content={headline} size={'large'}/>
+      <Header content={headline} size={'large'} style={{margin: '0 0 1rem'}}/>
     )
   }
 
@@ -335,21 +324,47 @@ class App extends Component {
     )
   }
 
-  renderActiveMode () {
+  renderInformationModal () {
     return (
-      <Container style={{paddingTop: 50}}>
-        <Dimmer active={this.state.isLoading} page>
-          <Loader size='huge' content='Initializing...'/>
-        </Dimmer>
+      <Modal closeIcon
+             dimmer={'blurring'}
+             trigger={<Button circular floated={'right'} icon color={'blue'}><Icon name={'info'}/></Button>}>
+        <Modal.Description>
+          {this.renderTicker()}
+        </Modal.Description>
+      </Modal>
+    )
+  }
+
+  renderMobile () {
+    return (
+      <Container style={{padding: '1em 0'}}>
+        {this.renderInformationModal()}
+        {this.renderHeadline()}
+        {this.renderReloadInfoMessage()}
+        {this.renderMessages()}
+        <div style={{paddingTop: '1em'}}>
+          {this.renderCredits()}
+        </div>
+      </Container>
+    )
+  }
+
+  renderActiveMode () {
+    if (App.isMobile()) {
+      return this.renderMobile()
+    }
+
+    return (
+      <Container style={{padding: '1em 0'}}>
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid divided={'vertically'}>
           <Grid.Row columns={2}>
-            <Grid.Column computer={10} mobile={16} tablet={10}>
+            <Grid.Column computer={10} tablet={10}>
               {this.renderMessages()}
-              {this.renderLoadMoreButton()}
             </Grid.Column>
-            <Grid.Column computer={6} mobile={16} tablet={6}>
+            <Grid.Column computer={6} tablet={6}>
               <Sticky offset={30}>
                 {this.renderTicker()}
                 {this.renderCredits()}
@@ -358,22 +373,6 @@ class App extends Component {
           </Grid.Row>
         </Grid>
       </Container>
-    )
-  }
-
-  renderLoadMoreButton () {
-    if (!App.isMobile() || this.state.reachedMessagesEnd) {
-      return
-    }
-
-    let button = <Button color={'blue'} fluid onClick={() => this.fetchOlderMessages()}>Older</Button>
-
-    if (this.state.isLoadingOlderMessages) {
-      button = <Button color={'blue'} fluid loading>Loading</Button>
-    }
-
-    return (
-      <div style={{marginTop: '1em'}}>{button}</div>
     )
   }
 
