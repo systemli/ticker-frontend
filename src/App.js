@@ -11,8 +11,10 @@ import {
   Icon,
   List,
   Loader,
-  Message, Modal,
+  Message,
+  Modal,
   Popup,
+  Segment,
   Sticky
 } from 'semantic-ui-react'
 
@@ -172,7 +174,14 @@ class App extends Component {
 
   renderMessages () {
     if (this.state.messages === undefined || this.state.messages.length === 0) {
-      return
+      return (
+        <Segment style={{margin: '2em 0 0'}}>
+          <Header icon size={'small'}>
+            <Icon name='hourglass half' color={'grey'} size={'small'}/>
+            We dont have any messages at the moment.
+          </Header>
+        </Segment>
+      )
     }
 
     const messages = this.state.messages
