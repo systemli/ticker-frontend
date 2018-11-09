@@ -1,10 +1,11 @@
-const Dotenv = require('dotenv-webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const ManifestPlugin = require('webpack-manifest-plugin');
-const OfflinePlugin = require('offline-plugin');
+const Dotenv = require('dotenv-webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
+const OfflinePlugin = require('offline-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -30,8 +31,8 @@ module.exports = {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader"
+          'css-loader',
+          'postcss-loader'
         ]
       },
       {
@@ -60,8 +61,8 @@ module.exports = {
       favicon: __dirname + '/public/favicon.ico',
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css?[hash:8]",
-      chunkFilename: "[id].css?[hash:8]"
+      filename: '[name].css?[hash:8]',
+      chunkFilename: '[id].css?[hash:8]'
     }),
     new ManifestPlugin(),
     new OfflinePlugin({
@@ -70,10 +71,11 @@ module.exports = {
         '/'
       ]
     }),
+    new CopyWebpackPlugin(['public/robots.txt'])
   ],
   output: {
     publicPath: '/',
     filename: '[name].js?[hash:8]',
     path: __dirname + '/dist',
   }
-};
+}
