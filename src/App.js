@@ -141,7 +141,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response.data !== undefined && response.data.messages !== null) {
-          this.setState({messages: response.data.messages})
+          this.setState({messages: response.data.messages.concat(this.state.messages)})
         }
 
         this.setState({isInitialized: true})
