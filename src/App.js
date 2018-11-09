@@ -237,25 +237,28 @@ class App extends Component {
     )
   }
 
-  renderTicker () {
+  renderAboutCard () {
     if (this.state.ticker === null || this.state.ticker.id === undefined) {
       return
     }
 
     return (
-      <Card fluid>
-        <Card.Content><Card.Header>Informationen</Card.Header></Card.Content>
-        <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
-        <Card.Content>
-          <List>
-            {this.renderAuthorItem()}
-            {this.renderEmailItem()}
-            {this.renderHomepageItem()}
-            {this.renderTwitterItem()}
-            {this.renderFacebookItem()}
-          </List>
-        </Card.Content>
-      </Card>
+      <div>
+        <Card fluid>
+          <Card.Content><Card.Header>About</Card.Header></Card.Content>
+          <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
+          <Card.Content>
+            <List>
+              {this.renderAuthorItem()}
+              {this.renderEmailItem()}
+              {this.renderHomepageItem()}
+              {this.renderTwitterItem()}
+              {this.renderFacebookItem()}
+            </List>
+          </Card.Content>
+        </Card>
+        {this.renderCredits()}
+      </div>
     )
   }
 
@@ -346,14 +349,27 @@ class App extends Component {
     )
   }
 
-  renderInformationModal () {
+  renderAboutModal () {
     return (
       <Modal closeIcon
              dimmer={'blurring'}
              trigger={<Button circular floated={'right'} icon color={'blue'}><Icon name={'info'}/></Button>}>
-        <Modal.Description>
-          {this.renderTicker()}
-        </Modal.Description>
+        <Modal.Header>About</Modal.Header>
+        <Modal.Content>
+          <ReactMarkdown source={this.state.ticker.description}/>
+        </Modal.Content>
+        <Modal.Content>
+          <List>
+            {this.renderAuthorItem()}
+            {this.renderEmailItem()}
+            {this.renderHomepageItem()}
+            {this.renderTwitterItem()}
+            {this.renderFacebookItem()}
+          </List>
+        </Modal.Content>
+        <Modal.Content>
+          {this.renderCredits()}
+        </Modal.Content>
       </Modal>
     )
   }
@@ -362,13 +378,10 @@ class App extends Component {
     return (
       <Container style={{padding: '1em 0'}}>
         {this.renderUpdateAvailable()}
-        {this.renderInformationModal()}
+        {this.renderAboutModal()}
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         {this.renderMessages()}
-        <div style={{paddingTop: '1em'}}>
-          {this.renderCredits()}
-        </div>
       </Container>
     )
   }
@@ -390,8 +403,7 @@ class App extends Component {
             </Grid.Column>
             <Grid.Column computer={6} tablet={6}>
               <Sticky offset={30}>
-                {this.renderTicker()}
-                {this.renderCredits()}
+                {this.renderAboutCard()}
               </Sticky>
             </Grid.Column>
           </Grid.Row>
