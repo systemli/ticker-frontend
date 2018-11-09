@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
+const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry: {
@@ -63,6 +64,12 @@ module.exports = {
       chunkFilename: "[id].css?[hash:8]"
     }),
     new ManifestPlugin(),
+    new OfflinePlugin({
+      appShell: '/',
+      externals: [
+        '/'
+      ]
+    }),
   ],
   output: {
     publicPath: '/',

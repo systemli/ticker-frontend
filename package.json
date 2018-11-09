@@ -32,6 +32,7 @@
     "jwt-decode": "^2.2.0",
     "mini-css-extract-plugin": "^0.4.2",
     "moment": "^2.22.2",
+    "offline-plugin": "^5.0.5",
     "postcss": "^7.0.2",
     "postcss-loader": "^3.0.0",
     "postcss-remove-google-fonts": "^1.1.0",
