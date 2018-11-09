@@ -20,6 +20,8 @@ import {
 
 const API_URL = process.env.REACT_APP_API_URL
 
+const runtime = require('offline-plugin/runtime')
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -42,9 +44,21 @@ class App extends Component {
       isLoading: true,
       isLoadingOlderMessages: false,
       isInitialized: false,
+      isUpdateAvailable: false,
       reachedMessagesEnd: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
     }
+
+    runtime.install({
+      onUpdating: () => {},
+      onUpdateReady: () => {
+        runtime.applyUpdate()
+      },
+      onUpdated: () => {
+        this.setState({isUpdateAvailable: true})
+      },
+      onUpdateFailed: () => {}
+    })
 
     this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
     this.fetchMessages = this.fetchMessages.bind(this)
@@ -347,6 +361,7 @@ class App extends Component {
   renderMobile () {
     return (
       <Container style={{padding: '1em 0'}}>
+        {this.renderUpdateAvailable()}
         {this.renderInformationModal()}
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
@@ -365,6 +380,7 @@ class App extends Component {
 
     return (
       <Container style={{padding: '1em 0'}}>
+        {this.renderUpdateAvailable()}
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid divided={'vertically'}>
@@ -409,6 +425,7 @@ class App extends Component {
 
     return (
       <Container style={{paddingTop: 50}}>
+        {this.renderUpdateAvailable()}
         <Grid centered>
           <Grid.Column width={8}>
             <Header size='huge' icon textAlign='center'>
@@ -438,6 +455,21 @@ class App extends Component {
           </Grid.Column>
         </Grid>
       </Container>
+    )
+  }
+
+  renderUpdateAvailable () {
+    if (!this.state.isUpdateAvailable) {
+      return
+    }
+
+    return (
+      <div style={{position: 'absolute', bottom: '1em', left: '1em', right: '1em', textAlign: 'center'}}>
+        <Message color={'yellow'} negative>
+          An update is available. Click <a onClick={() => {window.location.reload()}}
+                                           style={{cursor: 'pointer'}}>here</a> to update the App.
+        </Message>
+      </div>
     )
   }
 

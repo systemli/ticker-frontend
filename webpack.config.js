@@ -3,7 +3,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
 const OfflinePlugin = require('offline-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -64,12 +63,11 @@ module.exports = {
       filename: '[name].css?[hash:8]',
       chunkFilename: '[id].css?[hash:8]'
     }),
-    new ManifestPlugin(),
     new OfflinePlugin({
-      appShell: '/',
-      externals: [
-        '/'
-      ]
+      autoUpdate: true,
+      ServiceWorker: {
+        events: true
+      }
     }),
     new CopyWebpackPlugin(['public/robots.txt'])
   ],
