@@ -47,6 +47,7 @@ class App extends Component {
       isUpdateAvailable: false,
       reachedMessagesEnd: false,
       showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
+      offline: false,
     }
 
     runtime.install({
@@ -89,8 +90,11 @@ class App extends Component {
           }
         }
 
-        this.setState({isLoading: false})
+        this.setState({isLoading: false, offline: false})
       })
+      .catch(function () {
+        this.setState({offline: true})
+      }.bind(this))
   }
 
   componentWillUnmount () {
@@ -134,9 +138,11 @@ class App extends Component {
               this.setState({reachedMessagesEnd: true})
             }
             return response
-          }).finally(() => {
-          this.setState({isLoadingOlderMessages: false})
-        })
+          })
+          .catch(function () {})
+          .finally(() => {
+            this.setState({isLoadingOlderMessages: false})
+          })
       }
     }
   }
@@ -160,6 +166,7 @@ class App extends Component {
 
         this.setState({isInitialized: true})
       })
+      .catch(function () {})
 
   }
 
@@ -470,6 +477,21 @@ class App extends Component {
     )
   }
 
+  renderOfflineMode () {
+    return (
+      <Container style={{paddingTop: '1em'}}>
+        <Segment placeholder>
+          <Header icon>
+            <Icon name='ban'/>
+            Seems you are offline
+          </Header>
+          <Button primary onClick={() => window.location.reload()}>Try reload</Button>
+        </Segment>
+        {this.renderCredits()}
+      </Container>
+    )
+  }
+
   renderUpdateAvailable () {
     if (!this.state.isUpdateAvailable) {
       return
@@ -492,6 +514,10 @@ class App extends Component {
 
     if (this.state.ticker !== null && this.state.settings.inactive_settings !== undefined) {
       return this.renderInactiveMode()
+    }
+
+    if (this.state.offline) {
+      return this.renderOfflineMode()
     }
 
     return (
