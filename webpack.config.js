@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WebpackPwaManifest = require('webpack-pwa-manifest')
+const path = require('path')
 
 module.exports = {
   entry: {
@@ -69,7 +71,25 @@ module.exports = {
         events: true
       }
     }),
-    new CopyWebpackPlugin(['public/robots.txt'])
+    new CopyWebpackPlugin(['public/robots.txt']),
+    new WebpackPwaManifest({
+      name: 'Ticker',
+      short_name: 'Ticker',
+      description: 'Ticker App to receive recent news from the streets',
+      orientation: 'portrait',
+      background_color: '#fff',
+      ios: true,
+      icons: [{
+        src: path.resolve('src/assets/app_icon_1024.png'),
+        sizes: [96, 128, 192, 256, 384, 512, 1024],
+        ios: true,
+      }, {
+        src: path.resolve('src/assets/app_icon_1024.png'),
+        size: 1024,
+        ios: 'startup',
+      }],
+      fingerprints: false,
+    }),
   ],
   output: {
     publicPath: '/',
