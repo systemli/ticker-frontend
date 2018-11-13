@@ -82,10 +82,12 @@ module.exports = {
       icons: [{
         src: path.resolve('src/assets/app_icon_1024.png'),
         sizes: [96, 128, 192, 256, 384, 512, 1024],
+        destination: path.join('images', 'icons'),
         ios: true,
       }, {
         src: path.resolve('src/assets/app_icon_1024.png'),
         size: 1024,
+        destination: path.join('images', 'icons'),
         ios: 'startup',
       }],
       fingerprints: false,
