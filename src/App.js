@@ -64,6 +64,7 @@ class App extends Component {
     this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
     this.fetchMessages = this.fetchMessages.bind(this)
     this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
+    this.handleContextRef = this.handleContextRef.bind(this)
   }
 
   componentDidMount () {
@@ -119,6 +120,10 @@ class App extends Component {
       .replace(/#(\S+)/g, '<a target="_blank" href="https://twitter.com/search?q=%23$1">#$1</a>')
       .replace(/@(\S+)/g, '<a target="_blank" href="https://twitter.com/$1">@$1</a>')
       .replace(/(?:\r\n|\r|\n)/g, '<br/>'))
+  }
+
+  handleContextRef (stickyContext) {
+    this.setState({stickyContext})
   }
 
   fetchOlderMessages () {
@@ -398,6 +403,8 @@ class App extends Component {
       return this.renderMobile()
     }
 
+    const {stickyContext} = this.state
+
     return (
       <Container style={{padding: '1em 0'}}>
         {this.renderUpdateAvailable()}
@@ -406,10 +413,12 @@ class App extends Component {
         <Grid divided={'vertically'}>
           <Grid.Row columns={2}>
             <Grid.Column computer={10} tablet={10}>
-              {this.renderMessages()}
+              <div ref={this.handleContextRef}>
+                {this.renderMessages()}
+              </div>
             </Grid.Column>
             <Grid.Column computer={6} tablet={6}>
-              <Sticky offset={30}>
+              <Sticky context={stickyContext} offset={30}>
                 {this.renderAboutCard()}
               </Sticky>
             </Grid.Column>
