@@ -476,7 +476,7 @@ class App extends Component {
     }
 
     return (
-      <div style={{position: 'absolute', bottom: '1em', left: '1em', right: '1em', textAlign: 'center'}}>
+      <div style={{position: 'absolute', bottom: '1em', left: '1em', right: '1em', textAlign: 'center', zIndex: 1}}>
         <Message color={'yellow'} negative>
           An update is available. Click <a onClick={() => {window.location.reload()}}
                                            style={{cursor: 'pointer'}}>here</a> to update the App.
