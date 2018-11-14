@@ -92,6 +92,10 @@ class App extends Component {
         }
 
         this.setState({isLoading: false, offline: false})
+
+        if (response.data.ticker === null) {
+          this.setState({isInitialized: true})
+        }
       })
       .catch(function () {
         this.setState({offline: true})
@@ -521,7 +525,7 @@ class App extends Component {
       return this.renderActiveMode()
     }
 
-    if (this.state.ticker !== null && this.state.settings.inactive_settings !== undefined) {
+    if (this.state.ticker === null && this.state.settings.inactive_settings !== undefined && this.state.isInitialized) {
       return this.renderInactiveMode()
     }
 
