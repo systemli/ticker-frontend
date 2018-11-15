@@ -8,7 +8,6 @@ import {
   Header,
   Icon,
   Loader,
-  Message,
   Popup,
   Segment,
   Sticky
@@ -18,6 +17,7 @@ import InactiveView from './views/InactiveView'
 import UpdateMessage from './components/UpdateMessage'
 import Ticker from './models/Ticker'
 import About from './components/About'
+import ReloadInfo from './components/ReloadInfo'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -39,7 +39,6 @@ class App extends Component {
       isInitialized: false,
       isUpdateAvailable: false,
       reachedMessagesEnd: false,
-      showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
       offline: false,
     }
 
@@ -54,7 +53,6 @@ class App extends Component {
       onUpdateFailed: () => {}
     })
 
-    this.handleReloadInfoDismiss = this.handleReloadInfoDismiss.bind(this)
     this.fetchMessages = this.fetchMessages.bind(this)
     this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
     this.handleContextRef = this.handleContextRef.bind(this)
@@ -172,28 +170,6 @@ class App extends Component {
 
   }
 
-  handleReloadInfoDismiss () {
-    this.setState({showReloadInfo: false})
-
-    localStorage.setItem('showReloadInfo', '0')
-  }
-
-  renderReloadInfoMessage () {
-    if (localStorage.getItem('showReloadInfo') === '0') {
-      return
-    }
-
-    return (
-      <Message
-        color='teal' icon='info'
-        hidden={!this.state.showReloadInfo}
-        onDismiss={this.handleReloadInfoDismiss}
-        header='Information'
-        content='The messages update automatically. There is no need to reload the entire page.'
-      />
-    )
-  }
-
   renderMessages () {
     if (this.state.messages === undefined || this.state.messages.length === 0) {
       return (
@@ -252,7 +228,7 @@ class App extends Component {
         <UpdateMessage update={this.state.isUpdateAvailable}/>
         <About type='modal' ticker={this.state.ticker}/>
         {this.renderHeadline()}
-        {this.renderReloadInfoMessage()}
+        <ReloadInfo/>
         {this.renderMessages()}
       </Container>
     )
@@ -269,7 +245,7 @@ class App extends Component {
       <Container style={{padding: '1em 0'}}>
         <UpdateMessage update={this.state.isUpdateAvailable}/>
         {this.renderHeadline()}
-        {this.renderReloadInfoMessage()}
+        <ReloadInfo/>
         <Grid divided={'vertically'}>
           <Grid.Row columns={2}>
             <Grid.Column computer={10} tablet={10}>
