@@ -18,6 +18,7 @@ import UpdateMessage from './components/UpdateMessage'
 import Ticker from './models/Ticker'
 import About from './components/About'
 import ReloadInfo from './components/ReloadInfo'
+import { isMobile, replaceMagic } from './Helper'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -98,25 +99,6 @@ class App extends Component {
     document.removeEventListener('scroll', this.fetchOlderMessages)
   }
 
-  static isMobile () {
-    let w = window,
-      d = document,
-      documentElement = d.documentElement,
-      body = d.getElementsByTagName('body')[0],
-      width = w.innerWidth || documentElement.clientWidth || body.clientWidth
-
-    // the mobile breakpoint
-    return width < 768
-  }
-
-  static replaceMagic (text) {
-    return (text
-      .replace(/(https?:\/\/([^\s]+))/g, '<a href="$1" target="_blank">$2</a>')
-      .replace(/#(\S+)/g, '<a target="_blank" href="https://twitter.com/search?q=%23$1">#$1</a>')
-      .replace(/@(\S+)/g, '<a target="_blank" href="https://twitter.com/$1">@$1</a>')
-      .replace(/(?:\r\n|\r|\n)/g, '<br/>'))
-  }
-
   handleContextRef (stickyContext) {
     this.setState({stickyContext})
   }
@@ -189,7 +171,7 @@ class App extends Component {
         {messages.map(message =>
           <Card key={message.id} fluid>
             <Card.Content>
-              <div dangerouslySetInnerHTML={{__html: App.replaceMagic(message.text)}}/>
+              <div dangerouslySetInnerHTML={{__html: replaceMagic(message.text)}}/>
             </Card.Content>
             <Card.Content extra>
               <Card.Meta>
@@ -235,7 +217,7 @@ class App extends Component {
   }
 
   renderActiveMode () {
-    if (App.isMobile()) {
+    if (isMobile()) {
       return this.renderMobile()
     }
 
