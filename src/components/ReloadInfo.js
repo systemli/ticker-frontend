@@ -6,7 +6,7 @@ export default class ReloadInfo extends Component {
     super(props)
 
     this.state = {
-      showReloadInfo: localStorage.getItem('showReloadInfo') !== '0' || true,
+      showReloadInfo: null === localStorage.getItem('showReloadInfo'),
     }
 
     this.handleOnDismiss = this.handleOnDismiss.bind(this)
