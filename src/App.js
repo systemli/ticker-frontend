@@ -1,26 +1,23 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import ReactMarkdown from 'react-markdown'
 import {
-  Button,
   Card,
   Container,
   Dimmer,
   Grid,
   Header,
   Icon,
-  List,
   Loader,
   Message,
-  Modal,
   Popup,
   Segment,
   Sticky
 } from 'semantic-ui-react'
-import Credits from './components/Credits'
 import OfflineView from './views/OfflineView'
 import InactiveView from './views/InactiveView'
 import UpdateMessage from './components/UpdateMessage'
+import Ticker from './models/Ticker'
+import About from './components/About'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -73,7 +70,7 @@ class App extends Component {
           this.setState({settings: response.data.settings})
         }
         if (response.data !== undefined && response.data.ticker !== null && response.data.ticker.active) {
-          this.setState({ticker: response.data.ticker})
+          this.setState({ticker: new Ticker(response.data.ticker)})
 
           document.title = this.state.ticker.title
 
@@ -249,138 +246,11 @@ class App extends Component {
     )
   }
 
-  renderAboutCard () {
-    if (this.state.ticker === null || this.state.ticker.id === undefined) {
-      return
-    }
-
-    return (
-      <div>
-        <Card fluid>
-          <Card.Content><Card.Header>About</Card.Header></Card.Content>
-          <Card.Content content={<ReactMarkdown source={this.state.ticker.description}/>}/>
-          <Card.Content>
-            <List>
-              {this.renderAuthorItem()}
-              {this.renderEmailItem()}
-              {this.renderHomepageItem()}
-              {this.renderTwitterItem()}
-              {this.renderFacebookItem()}
-            </List>
-          </Card.Content>
-        </Card>
-        <Credits/>
-      </div>
-    )
-  }
-
-  renderAuthorItem () {
-    if (!this.state.ticker.information.author) {
-      return
-    }
-
-    return (
-      <List.Item>
-        <List.Icon name='users'/>
-        <List.Content>{this.state.ticker.information.author}</List.Content>
-      </List.Item>
-    )
-  }
-
-  renderEmailItem () {
-    if (!this.state.ticker.information.email) {
-      return
-    }
-
-    return (
-      <List.Item>
-        <List.Icon name='mail'/>
-        <List.Content><a
-          target='_blank'
-          rel='noopener noreferrer'
-          href={`mailto:${this.state.ticker.information.email}`}>{this.state.ticker.information.email}</a></List.Content>
-      </List.Item>
-    )
-  }
-
-  renderHomepageItem () {
-    if (!this.state.ticker.information.url) {
-      return
-    }
-
-    return (
-      <List.Item>
-        <List.Icon name='linkify'/>
-        <List.Content><a
-          target='_blank'
-          rel='noopener noreferrer'
-          href={`${this.state.ticker.information.url}`}>{this.state.ticker.information.url.replace(/http[s]:\/\/?/, '')}</a></List.Content>
-      </List.Item>
-    )
-  }
-
-  renderTwitterItem () {
-    if (!this.state.ticker.information.twitter) {
-      return
-    }
-
-    return (
-      <List.Item>
-        <List.Icon name='twitter'/>
-        <List.Content><a
-          target='_blank'
-          rel='noopener noreferrer'
-          href={`https://twitter.com/${this.state.ticker.information.twitter}`}>@{this.state.ticker.information.twitter}</a></List.Content>
-      </List.Item>
-    )
-  }
-
-  renderFacebookItem () {
-    if (!this.state.ticker.information.facebook) {
-      return
-    }
-
-    return (
-      <List.Item>
-        <List.Icon name='facebook'/>
-        <List.Content><a
-          target='_blank'
-          rel='noopener noreferrer'
-          href={`https://fb.com/${this.state.ticker.information.facebook}`}>fb.com/{this.state.ticker.information.facebook}</a></List.Content>
-      </List.Item>
-    )
-  }
-
-  renderAboutModal () {
-    return (
-      <Modal closeIcon
-             dimmer={'blurring'}
-             trigger={<Button circular floated={'right'} icon color={'blue'}><Icon name={'info'}/></Button>}>
-        <Modal.Header>About</Modal.Header>
-        <Modal.Content>
-          <ReactMarkdown source={this.state.ticker.description}/>
-        </Modal.Content>
-        <Modal.Content>
-          <List>
-            {this.renderAuthorItem()}
-            {this.renderEmailItem()}
-            {this.renderHomepageItem()}
-            {this.renderTwitterItem()}
-            {this.renderFacebookItem()}
-          </List>
-        </Modal.Content>
-        <Modal.Content>
-          <Credits/>
-        </Modal.Content>
-      </Modal>
-    )
-  }
-
   renderMobile () {
     return (
       <Container style={{padding: '1em 0'}}>
         <UpdateMessage update={this.state.isUpdateAvailable}/>
-        {this.renderAboutModal()}
+        <About type='modal' ticker={this.state.ticker}/>
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         {this.renderMessages()}
@@ -409,7 +279,7 @@ class App extends Component {
             </Grid.Column>
             <Grid.Column computer={6} tablet={6}>
               <Sticky context={stickyContext} offset={30}>
-                {this.renderAboutCard()}
+                <About ticker={this.state.ticker}/>
               </Sticky>
             </Grid.Column>
           </Grid.Row>
