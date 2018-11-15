@@ -17,8 +17,10 @@ import {
   Segment,
   Sticky
 } from 'semantic-ui-react'
-import Credits from './views/Credits'
+import Credits from './components/Credits'
 import OfflineView from './views/OfflineView'
+import InactiveView from './views/InactiveView'
+import UpdateMessage from './components/UpdateMessage'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -32,15 +34,7 @@ class App extends Component {
       ticker: null,
       settings: {
         refresh_interval: 10000,
-        inactive_settings: {
-          author: '',
-          description: '',
-          email: '',
-          headline: '',
-          homepage: '',
-          sub_headline: '',
-          twitter: '',
-        },
+        inactive_settings: {},
       },
       messages: [],
       isLoading: true,
@@ -385,7 +379,7 @@ class App extends Component {
   renderMobile () {
     return (
       <Container style={{padding: '1em 0'}}>
-        {this.renderUpdateAvailable()}
+        <UpdateMessage update={this.state.isUpdateAvailable}/>
         {this.renderAboutModal()}
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
@@ -403,7 +397,7 @@ class App extends Component {
 
     return (
       <Container style={{padding: '1em 0'}}>
-        {this.renderUpdateAvailable()}
+        <UpdateMessage update={this.state.isUpdateAvailable}/>
         {this.renderHeadline()}
         {this.renderReloadInfoMessage()}
         <Grid divided={'vertically'}>
@@ -424,86 +418,13 @@ class App extends Component {
     )
   }
 
-  renderInactiveMode () {
-    const authorItem = (this.state.settings.inactive_settings.author) ? <List.Item>
-      <List.Icon name='users'/>
-      <List.Content>{this.state.settings.inactive_settings.author}</List.Content>
-    </List.Item> : ''
-
-    const emailItem = (this.state.settings.inactive_settings.email) ? <List.Item>
-      <List.Icon name='mail'/>
-      <List.Content><a
-        href={'mailto:' + this.state.settings.inactive_settings.email}>Email</a></List.Content>
-    </List.Item> : ''
-
-    const homepageItem = (this.state.settings.inactive_settings.homepage) ? <List.Item>
-      <List.Icon name='linkify'/>
-      <List.Content><a href={this.state.settings.inactive_settings.homepage}>Homepage</a></List.Content>
-    </List.Item> : ''
-
-    const twitterItem = (this.state.settings.inactive_settings.twitter) ? <List.Item>
-      <List.Icon name='twitter'/>
-      <List.Content><a
-        href={'https://twitter.com/' + this.state.settings.inactive_settings.twitter}>@{this.state.settings.inactive_settings.twitter}</a></List.Content>
-    </List.Item> : ''
-
-    return (
-      <Container style={{paddingTop: 50}}>
-        {this.renderUpdateAvailable()}
-        <Grid centered>
-          <Grid.Column width={8}>
-            <Header size='huge' icon textAlign='center'>
-              <Icon name='hide'/>
-              <Header.Content>
-                {this.state.settings.inactive_settings.headline}
-                <Header.Subheader>
-                  {this.state.settings.inactive_settings.sub_headline}
-                </Header.Subheader>
-              </Header.Content>
-            </Header>
-            <Card fluid>
-              <Card.Content>
-                <ReactMarkdown source={this.state.settings.inactive_settings.description}/>
-              </Card.Content>
-              <Card.Content>
-                <Header size='small'>Information</Header>
-                <List>
-                  {authorItem}
-                  {emailItem}
-                  {homepageItem}
-                  {twitterItem}
-                </List>
-              </Card.Content>
-            </Card>
-            <Credits/>
-          </Grid.Column>
-        </Grid>
-      </Container>
-    )
-  }
-
-  renderUpdateAvailable () {
-    if (!this.state.isUpdateAvailable) {
-      return
-    }
-
-    return (
-      <div style={{position: 'absolute', bottom: '1em', left: '1em', right: '1em', textAlign: 'center', zIndex: 1}}>
-        <Message color={'yellow'} negative>
-          An update is available. Click <a onClick={() => {window.location.reload()}}
-                                           style={{cursor: 'pointer'}}>here</a> to update the App.
-        </Message>
-      </div>
-    )
-  }
-
   render () {
     if (this.state.ticker !== null && this.state.ticker.active && this.state.isInitialized) {
       return this.renderActiveMode()
     }
 
     if (this.state.ticker === null && this.state.settings.inactive_settings !== undefined && this.state.isInitialized) {
-      return this.renderInactiveMode()
+      return (<InactiveView settings={this.state.settings.inactive_settings} update={this.state.isUpdateAvailable}/>)
     }
 
     if (this.state.offline) {

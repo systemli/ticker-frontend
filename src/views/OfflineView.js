@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react'
-import Credits from './Credits'
+import Credits from '../components/Credits'
 
 export default class OfflineView extends Component {
   render () {
