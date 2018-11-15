@@ -17,6 +17,8 @@ import {
   Segment,
   Sticky
 } from 'semantic-ui-react'
+import Credits from './views/Credits'
+import OfflineView from './views/OfflineView'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -273,7 +275,7 @@ class App extends Component {
             </List>
           </Card.Content>
         </Card>
-        {this.renderCredits()}
+        <Credits/>
       </div>
     )
   }
@@ -355,16 +357,6 @@ class App extends Component {
     )
   }
 
-  renderCredits () {
-    return (
-      <div style={{color: 'rgba(0, 0, 0, .5)', textAlign: 'right'}}>
-        <Icon name='code'/> with <Icon name='heart' color='red'/> by <a href='https://www.systemli.org'
-                                                                        target='_blank'
-                                                                        rel='noopener noreferrer'>systemli.org</a>
-      </div>
-    )
-  }
-
   renderAboutModal () {
     return (
       <Modal closeIcon
@@ -384,7 +376,7 @@ class App extends Component {
           </List>
         </Modal.Content>
         <Modal.Content>
-          {this.renderCredits()}
+          <Credits/>
         </Modal.Content>
       </Modal>
     )
@@ -483,24 +475,9 @@ class App extends Component {
                 </List>
               </Card.Content>
             </Card>
-            {this.renderCredits()}
+            <Credits/>
           </Grid.Column>
         </Grid>
-      </Container>
-    )
-  }
-
-  renderOfflineMode () {
-    return (
-      <Container style={{paddingTop: '1em'}}>
-        <Segment placeholder>
-          <Header icon>
-            <Icon name='ban'/>
-            Seems you are offline
-          </Header>
-          <Button primary onClick={() => window.location.reload()}>Try reload</Button>
-        </Segment>
-        {this.renderCredits()}
       </Container>
     )
   }
@@ -530,7 +507,7 @@ class App extends Component {
     }
 
     if (this.state.offline) {
-      return this.renderOfflineMode()
+      return (<OfflineView/>)
     }
 
     return (
