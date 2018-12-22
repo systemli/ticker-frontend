@@ -103,7 +103,7 @@ export default class InactiveView extends Component {
       <Container style={{paddingTop: 50}}>
         <UpdateMessage update={this.props.update}/>
         <Grid centered>
-          <Grid.Column width={8}>
+          <Grid.Column mobile={16} tablet={8} computer={8}>
             {this.renderHeader()}
             <Card fluid>
               <Card.Content>
