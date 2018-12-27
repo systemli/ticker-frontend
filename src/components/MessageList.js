@@ -80,6 +80,8 @@ export default class MessageList extends Component {
             isLoading: false,
           })
         }
+
+        this.setState({isLoading: false})
       })
       .catch(function () {})
 
