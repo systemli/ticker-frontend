@@ -9,7 +9,9 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -19,17 +21,21 @@
     "dotenv": "^4.0.0",
     "dotenv-expand": "^4.2.0",
     "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.11.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.1.2",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "file-loader": "^2.0.0",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^21.3.0-beta.15",
     "jwt-decode": "^2.2.0",
     "mini-css-extract-plugin": "^0.4.5",
     "moment": "^2.23.0",
@@ -46,7 +52,9 @@
     "react-moment": "^0.7.9",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.7.0",
     "react-twitter-auth": "0.0.12",
+    "regenerator-runtime": "^0.13.1",
     "resolve": "^1.9.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
@@ -62,9 +70,16 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "testURL": "http://localhost/",
+    "coveragePathIgnorePatterns": [
+      "/src/tests/"
+    ]
   }
 }
