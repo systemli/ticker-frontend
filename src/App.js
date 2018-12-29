@@ -60,7 +60,7 @@ export default class App extends Component {
         }
       })
       .catch(function () {
-        this.setState({offline: true})
+        this.setState({offline: true, isLoading: false})
       }.bind(this))
   }
 
@@ -75,6 +75,10 @@ export default class App extends Component {
       )
     }
 
+    if (this.state.offline) {
+      return (<OfflineView/>)
+    }
+
     if (this.state.ticker !== null && this.state.ticker.active) {
       return (<ActiveView ticker={this.state.ticker} update={this.state.isUpdateAvailable}
                           refreshInterval={this.state.settings.refresh_interval}/>)
@@ -82,10 +86,6 @@ export default class App extends Component {
 
     if (this.state.ticker === null && this.state.settings.inactive_settings !== undefined) {
       return (<InactiveView settings={this.state.settings.inactive_settings} update={this.state.isUpdateAvailable}/>)
-    }
-
-    if (this.state.offline) {
-      return (<OfflineView/>)
     }
 
     return (
