@@ -9,7 +9,7 @@ import InactiveView from './views/InactiveView'
 import Ticker from './models/Ticker'
 import ActiveView from './views/ActiveView'
 
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/v1';
 
 const runtime = require('offline-plugin/runtime')
 

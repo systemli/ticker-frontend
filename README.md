@@ -1,15 +1,21 @@
 # ticker-frontend [![Build Status](https://travis-ci.com/systemli/ticker-frontend.svg?branch=master)](https://travis-ci.com/systemli/ticker-frontend)
 
-## development
+## Development
 
-you need the go ticker-backend running under localhost:8080
+**Requirement:** Running instance of [ticker](https://github.com/systemli/ticker), default: http://localhost:8080/v1
+
 ```
-npm i
-npm start # starts a local server on localhost:4000
+# Install dependencies
+yarn
+
+# Start development server (http://localhost:4000)
+yarn start
 ```
 
-.env
-```
-REACT_APP_API_URL="http://localhost:8080/v1"
-```
+## Configuration
 
+Place configuration in `.env` file and restart/rebuild the ticker-admin
+
+```
+REACT_APP_API_URL=http://localhost:8080/v1
+```
