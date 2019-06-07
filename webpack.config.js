@@ -3,7 +3,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const OfflinePlugin = require('offline-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 const path = require('path')
@@ -64,12 +63,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css?[hash:8]',
       chunkFilename: '[id].css?[hash:8]'
-    }),
-    new OfflinePlugin({
-      autoUpdate: true,
-      ServiceWorker: {
-        events: true
-      }
     }),
     new CopyWebpackPlugin(['public/robots.txt']),
     new WebpackPwaManifest({
