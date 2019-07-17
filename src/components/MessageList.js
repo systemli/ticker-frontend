@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Dimmer, Header, Icon, Loader, Popup, Segment } from 'semantic-ui-react'
-import { replaceMagic } from '../Helper'
-import Moment from 'react-moment'
+import Message from './Message'
 import Ticker from '../models/Ticker'
 import PropTypes from 'prop-types'
 
@@ -116,23 +115,7 @@ export default class MessageList extends Component {
     return (
       <div>
         {messages.map(message =>
-          <Card key={message.id} fluid>
-            <Card.Content>
-              <div dangerouslySetInnerHTML={{__html: replaceMagic(message.text)}}/>
-            </Card.Content>
-            <Card.Content extra>
-              <Card.Meta>
-                <Popup
-                  flowing inverted
-                  size='tiny'
-                  trigger={<div><Icon name='clock'/><span className='date'><Moment fromNow
-                                                                                   date={message.creation_date}/></span>
-                  </div>}
-                  content={<Moment date={message.creation_date}/>}
-                />
-              </Card.Meta>
-            </Card.Content>
-          </Card>
+          <Message key={message.id} attributes={message} />
         )}
       </div>
     )

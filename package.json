@@ -2,7 +2,10 @@
   "name": "ticker-frontend",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "leaflet": "^1.5.1",
+    "react-leaflet": "^2.4.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
