@@ -16,6 +16,8 @@ export default class MessageList extends Component {
       isLoadingOlderMessages: false,
       reachedMessagesEnd: false,
     }
+
+    this.fetchOlderMessages = this.fetchOlderMessages.bind(this);
   }
 
   componentDidMount () {
