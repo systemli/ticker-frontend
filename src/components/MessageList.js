@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Dimmer, Header, Icon, Loader, Popup, Segment } from 'semantic-ui-react'
+import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
 import Message from './Message'
 import Ticker from '../models/Ticker'
 import PropTypes from 'prop-types'
@@ -17,7 +17,7 @@ export default class MessageList extends Component {
       reachedMessagesEnd: false,
     }
 
-    this.fetchOlderMessages = this.fetchOlderMessages.bind(this);
+    this.fetchOlderMessages = this.fetchOlderMessages.bind(this)
   }
 
   componentDidMount () {
@@ -117,7 +117,7 @@ export default class MessageList extends Component {
     return (
       <div>
         {messages.map(message =>
-          <Message key={message.id} attributes={message} />
+          <Message key={message.id} attributes={message}/>
         )}
       </div>
     )
