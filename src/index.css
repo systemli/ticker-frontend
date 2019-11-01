@@ -5,6 +5,29 @@ body {
 }
 
 .leaflet-container {
-    height: 400px;
-    z-index: 1;
+  height: 100px;
+  z-index: 1;
+}
+
+.leaflet-container--extended {
+  height: 400px;
+}
+
+.message-map {
+  position: relative;
+}
+
+.message-map-expand.ui.icon.button {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 5px;
+  padding: 7px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.message-map-expand.ui.icon.button:hover {
+  background: #f4f4f4;
 }

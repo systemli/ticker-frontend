@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
-import { Card, Icon, Popup, Grid } from 'semantic-ui-react'
+import { Button, Card, Icon, Popup, Grid } from 'semantic-ui-react'
 import { replaceMagic } from '../Helper'
 import PropTypes from 'prop-types'
 import Moment from 'react-moment'
@@ -10,37 +10,34 @@ export default class Message extends Component {
     super(props)
 
     this.state = {
-      showMap: false,
+      expandMap: false,
       featureCollection: this.props.attributes.geo_information !== undefined ? JSON.parse(this.props.attributes.geo_information) : null,
     }
+
+    this.toggleExpand = this.toggleExpand.bind(this);
   }
 
   _hasFeatureCollection () {
-    return (this.state.featureCollection !== null && this.state.featureCollection.features.length > 1)
+    return (this.state.featureCollection !== null && this.state.featureCollection.features.length > 0)
   }
 
-  _renderMapToggle () {
+  _renderMap () {
     if (!this._hasFeatureCollection()) return null
     return (
-      <div onClick={() => this.setState({showMap: !this.state.showMap})} style={{cursor: 'pointer'}}>
-        <Popup
-          flowing inverted
-          size='tiny'
-          trigger={<Icon disabled={!this.state.showMap} name='world'/>}
-          content={this.state.showMap ? 'Hide geo information' : 'Show geo information'}
-        />
+      <div className='message-map'>
+        <Map center={[0, 0]} zoom={1} className = {this.state.expandMap ? 'leaflet-container--extended' : ''} ref={(ref) => { this.map = ref; }}>
+          <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/>
+          <GeoJSON data={this.state.featureCollection} onAdd={this.onGeoInformationAdded}/>
+        </Map>
+        <Button icon={this.state.expandMap ? 'compress' : 'expand'} onClick={this.toggleExpand} className='message-map-expand' />
       </div>
     )
   }
 
-  _renderMap () {
-    if (!this._hasFeatureCollection() || !this.state.showMap) return null
-    return (
-      <Map center={[0, 0]} zoom={1}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-        <GeoJSON data={this.state.featureCollection} onAdd={this.onGeoInformationAdded}/>
-      </Map>
-    )
+  toggleExpand () {
+    this.setState({expandMap: !this.state.expandMap})
+    window.dispatchEvent(new Event('resize'))
+    // TODO: fitBounds
   }
 
   onGeoInformationAdded (event) {
@@ -78,9 +75,6 @@ export default class Message extends Component {
                   </div>}
                   content={<Moment date={attributes.creation_date}/>}
                 />
-              </Grid.Column>
-              <Grid.Column width={6} textAlign='right'>
-                {this._renderMapToggle()}
               </Grid.Column>
             </Grid.Row>
           </Grid>
