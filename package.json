@@ -60,7 +60,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.1.5",
-    "webpack-pwa-manifest": "^3.8.0",
+    "webpack-pwa-manifest": "^4.1.1",
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
