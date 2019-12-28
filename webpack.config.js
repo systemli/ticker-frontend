@@ -1,5 +1,5 @@
 const Dotenv = require('dotenv-webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -55,7 +55,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv(),
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: __dirname + '/public/index.html',
       favicon: __dirname + '/public/favicon.ico',
