@@ -117,7 +117,7 @@ export default class MessageList extends Component {
     return (
       <div>
         {messages.map(message =>
-          <Message key={message.id} attributes={message}/>
+          <Message key={message.id} message={message}/>
         )}
       </div>
     )

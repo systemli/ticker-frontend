@@ -4,6 +4,7 @@ import { replaceMagic } from '../Helper'
 import PropTypes from 'prop-types'
 import Moment from 'react-moment'
 import Map from './Map'
+import Attachments from './Attachments'
 
 export default class Message extends Component {
   constructor (props) {
@@ -11,19 +12,22 @@ export default class Message extends Component {
   }
 
   render () {
-    const {attributes} = this.props
+    const {message} = this.props
     const trigger = <div>
       <Icon name='clock'/>
-      <span className='date'><Moment fromNow date={attributes.creation_date}/></span>
+      <span className='date'><Moment fromNow date={message.creation_date}/></span>
     </div>
-    const content = <Moment date={attributes.creation_date}/>
+    const content = <Moment date={message.creation_date}/>
 
     return (
       <Card fluid>
         <Card.Content>
-          <div dangerouslySetInnerHTML={{__html: replaceMagic(attributes.text)}}/>
+          <div dangerouslySetInnerHTML={{__html: replaceMagic(message.text)}}/>
         </Card.Content>
-        <Map featureCollection={attributes.geo_information}/>
+        <Card.Content style={{padding: 0}}>
+          <Attachments attachments={message.attachments}/>
+        </Card.Content>
+        <Map featureCollection={message.geo_information}/>
         <Card.Content extra>
           <Grid>
             <Grid.Row>
@@ -44,5 +48,5 @@ export default class Message extends Component {
 }
 
 Message.propTypes = {
-  attributes: PropTypes.object.isRequired
+  message: PropTypes.object.isRequired
 }
