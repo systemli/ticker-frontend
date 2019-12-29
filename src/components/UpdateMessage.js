@@ -9,14 +9,15 @@ export default class UpdateMessage extends Component {
 
   render () {
     if (true !== this.props.update) {
-      return ''
+      return null
     }
 
+    const link = <a onClick={() => {window.location.reload()}} style={{cursor: 'pointer'}}>here</a>
+
     return (
-      <div style={{position: 'absolute', bottom: '1em', left: '1em', right: '1em', textAlign: 'center', zIndex: 1}}>
+      <div style={{position: 'fixed', bottom: '1em', left: '1em', right: '1em', textAlign: 'center', zIndex: 1}}>
         <Message color={'yellow'} negative>
-          An update is available. Click <a onClick={() => {window.location.reload()}}
-                                           style={{cursor: 'pointer'}}>here</a> to update the App.
+          An update is available. Click {link} to update the App.
         </Message>
       </div>
     )
