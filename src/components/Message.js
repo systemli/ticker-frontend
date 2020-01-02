@@ -11,6 +11,24 @@ export default class Message extends Component {
     super(props)
   }
 
+  attachments() {
+    const {message} = this.props
+
+    if (message.attachments === null) {
+      return null
+    }
+
+    if (message.attachments.length === 0) {
+      return null
+    }
+
+    return (
+      <Card.Content style={{padding: 0}}>
+        <Attachments attachments={message.attachments}/>
+      </Card.Content>
+    )
+  }
+
   render () {
     const {message} = this.props
     const trigger = <div>
@@ -24,9 +42,7 @@ export default class Message extends Component {
         <Card.Content>
           <div dangerouslySetInnerHTML={{__html: replaceMagic(message.text)}}/>
         </Card.Content>
-        <Card.Content style={{padding: 0}}>
-          <Attachments attachments={message.attachments}/>
-        </Card.Content>
+        {this.attachments()}
         <Map featureCollection={message.geo_information}/>
         <Card.Content extra>
           <Grid>
