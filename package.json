@@ -37,7 +37,7 @@
     "offline-plugin": "^5.0.6",
     "postcss": "^7.0.26",
     "postcss-loader": "^3.0.0",
-    "postcss-remove-google-fonts": "^1.1.4",
+    "postcss-remove-google-fonts": "^1.1.5",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "pure-react-carousel": "^1.24.1",
