@@ -1,4 +1,4 @@
-# ticker-frontend [![Build Status](https://travis-ci.com/systemli/ticker-frontend.svg?branch=master)](https://travis-ci.com/systemli/ticker-frontend)
+# ticker-frontend ![CI/CD](https://github.com/systemli/ticker-frontend/workflows/CI/CD/badge.svg)
 
 ## Development
 
