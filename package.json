@@ -36,7 +36,7 @@
     "moment": "^2.28.0",
     "offline-plugin": "^5.0.6",
     "postcss": "^7.0.34",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^4.0.4",
     "postcss-remove-google-fonts": "^1.1.5",
     "promise": "^8.1.0",
     "prop-types": "^15.6.2",
