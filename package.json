@@ -42,7 +42,7 @@
     "prop-types": "^15.6.2",
     "pure-react-carousel": "^1.27.3",
     "react": "^16.13.1",
-    "react-dev-utils": "^10.2.1",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-markdown": "^4.3.1",
