@@ -1,9 +1,15 @@
 import { FC } from 'react'
 import { Icon } from 'semantic-ui-react'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+    color: rgba(0, 0, 0, 0.5);
+    text-align: right;
+`
 
 const Credits: FC = () => {
     return (
-        <div style={{ color: 'rgba(0, 0, 0, .5)', textAlign: 'right' }}>
+        <Wrapper>
             <Icon name="code" /> with <Icon color="red" name="heart" /> by{' '}
             <a
                 href="https://www.systemli.org"
@@ -12,7 +18,7 @@ const Credits: FC = () => {
             >
                 systemli.org
             </a>
-        </div>
+        </Wrapper>
     )
 }
 

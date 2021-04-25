@@ -1,10 +1,16 @@
 import { FC } from 'react'
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react'
+import styled from 'styled-components'
 import { Credits } from '../components'
+import { spacing } from '../lib/theme'
+
+const Wrapper = styled(Container)`
+    padding-top: ${spacing.normal};
+`
 
 const OfflineView: FC = () => {
     return (
-        <Container style={{ paddingTop: '1em' }}>
+        <Wrapper>
             <Segment placeholder>
                 <Header icon>
                     <Icon name="ban" />
@@ -15,7 +21,7 @@ const OfflineView: FC = () => {
                 </Button>
             </Segment>
             <Credits />
-        </Container>
+        </Wrapper>
     )
 }
 

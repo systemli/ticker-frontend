@@ -1,30 +1,39 @@
 import { FC } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Card, Container, Grid, Header, Icon, List } from 'semantic-ui-react'
-import { Credits } from '../components'
-import { InactiveSettings } from '../types'
+import styled from 'styled-components'
+import { Credits, DescriptionItem } from '../components'
+import { DescriptionTypes, InactiveSettings } from '../types'
+
+const Wrapper = styled(Container)`
+    padding-top: 50px;
+`
 
 interface Props {
     settings: InactiveSettings
 }
 
 const InactiveView: FC<Props> = props => {
+    const renderHeader = () => (
+        <Header size="huge" textAlign="center" icon>
+            <Icon name="hide" />
+            <Header.Content>
+                {props.settings.headline}
+                <Header.Subheader>
+                    {props.settings.sub_headline}
+                </Header.Subheader>
+            </Header.Content>
+        </Header>
+    )
+
     return (
-        <Container style={{ paddingTop: 50 }}>
+        <Wrapper>
             {/* <UpdateMessage update={this.props.update} /> */}
             <Grid centered>
                 <Grid.Column computer={8} mobile={16} tablet={8}>
-                    {props.settings.headline && props.settings.sub_headline && (
-                        <Header size="huge" textAlign="center" icon>
-                            <Icon name="hide" />
-                            <Header.Content>
-                                {props.settings.headline}
-                                <Header.Subheader>
-                                    {props.settings.sub_headline}
-                                </Header.Subheader>
-                            </Header.Content>
-                        </Header>
-                    )}
+                    {props.settings.headline &&
+                        props.settings.sub_headline &&
+                        renderHeader()}
                     <Card fluid>
                         <Card.Content>
                             {props.settings.description && (
@@ -34,50 +43,30 @@ const InactiveView: FC<Props> = props => {
                             )}
                         </Card.Content>
                         <Card.Content>
-                            <Header size="small">Information</Header>
                             <List>
                                 {props.settings.author && (
-                                    <List.Item>
-                                        <List.Icon name="users" />
-                                        <List.Content>
-                                            {props.settings.author}
-                                        </List.Content>
-                                    </List.Item>
+                                    <DescriptionItem
+                                        info={props.settings.author}
+                                        type={DescriptionTypes.Author}
+                                    />
                                 )}
                                 {props.settings.email && (
-                                    <List.Item>
-                                        <List.Icon name="mail" />
-                                        <List.Content>
-                                            <a
-                                                href={`mailto:
-                                                    ${props.settings.email}`}
-                                            >
-                                                Email
-                                            </a>
-                                        </List.Content>
-                                    </List.Item>
+                                    <DescriptionItem
+                                        info={props.settings.email}
+                                        type={DescriptionTypes.Email}
+                                    />
                                 )}
                                 {props.settings.homepage && (
-                                    <List.Item>
-                                        <List.Icon name="linkify" />
-                                        <List.Content>
-                                            <a href={props.settings.homepage}>
-                                                Homepage
-                                            </a>
-                                        </List.Content>
-                                    </List.Item>
+                                    <DescriptionItem
+                                        info={props.settings.homepage}
+                                        type={DescriptionTypes.Homepage}
+                                    />
                                 )}
                                 {props.settings.twitter && (
-                                    <List.Item>
-                                        <List.Icon name="twitter" />
-                                        <List.Content>
-                                            <a
-                                                href={`https://twitter.com/${props.settings.twitter}`}
-                                            >
-                                                @{props.settings.twitter}
-                                            </a>
-                                        </List.Content>
-                                    </List.Item>
+                                    <DescriptionItem
+                                        info={props.settings.twitter}
+                                        type={DescriptionTypes.Twitter}
+                                    />
                                 )}
                             </List>
                         </Card.Content>
@@ -85,7 +74,7 @@ const InactiveView: FC<Props> = props => {
                     <Credits />
                 </Grid.Column>
             </Grid>
-        </Container>
+        </Wrapper>
     )
 }
 
