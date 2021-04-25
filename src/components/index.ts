@@ -1,1 +1,5 @@
+export { default as About } from './About'
 export { default as Credits } from './Credits'
+export { default as DescriptionItem } from './DescriptionItem'
+export { default as MessageList } from './MessageList'
+export { default as ReloadInfo } from './ReloadInfo'

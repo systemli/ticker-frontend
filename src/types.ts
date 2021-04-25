@@ -5,7 +5,15 @@ export interface Ticker {
     domain: string
     id: string
     title: string
-    information: string
+    information: TickerInformation
+}
+
+interface TickerInformation {
+    author: string
+    email: string
+    facebook: string
+    twitter: string
+    url: string
 }
 
 export interface Settings {
@@ -21,4 +29,12 @@ export interface InactiveSettings {
     headline: string
     sub_headline: string
     description: string
+}
+
+export enum DescriptionTypes {
+    Author = 'AUTHOR',
+    Email = 'EMAIL',
+    Facebook = 'FACEBOOK',
+    Homepage = 'HOMEPAGE',
+    Twitter = 'TWITTER',
 }

@@ -1,16 +1,19 @@
 import { FC, useEffect, useState } from 'react'
 import { Container, Dimmer, Loader } from 'semantic-ui-react'
-import { ActiveView, InactiveView, OfflineView } from './views'
 import { Ticker, Settings } from './types'
+import { ActiveView, InactiveView, OfflineView } from './views'
 
 const App: FC = () => {
     const [ticker, setTicker] = useState<Ticker | null>(null)
     const [settings, setSettings] = useState<Settings>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [offline, setOffline] = useState<boolean>(false)
+    const [isUpdateAvailable, setisUpdateAvailable] = useState<boolean>(false)
 
     const fetchInit = () => {
-        const url = 'http://localhost:8080/v1/init'
+        const url =
+            process.env.REACT_APP_API_URL || 'http://localhost:8080/v1/init'
+
         fetch(url)
             .then(response => response.json())
             .then(response => {
@@ -55,7 +58,13 @@ const App: FC = () => {
     }
 
     if (ticker?.active) {
-        return <ActiveView ticker={ticker} update />
+        return (
+            <ActiveView
+                refreshInterval={settings?.refresh_interval || 0}
+                ticker={ticker}
+                update={isUpdateAvailable}
+            />
+        )
     }
 
     if (ticker === null && settings?.inactive_settings !== undefined) {
