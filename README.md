@@ -19,3 +19,7 @@ Place configuration in `.env` file and restart/rebuild the ticker-admin
 ```
 REACT_APP_API_URL=http://localhost:8080/v1
 ```
+
+## Using in production
+
+[INSTALLATION.MD](INSTALLATION.MD)
