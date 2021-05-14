@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { List } from 'semantic-ui-react'
-import { DescriptionTypes } from '../types'
+import { DescriptionTypes } from '../lib/types'
 
 interface Props {
     info: string

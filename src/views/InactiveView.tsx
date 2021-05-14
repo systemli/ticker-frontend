@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import { Card, Container, Grid, Header, Icon, List } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Credits, DescriptionItem } from '../components'
-import { DescriptionTypes, InactiveSettings } from '../types'
+import { DescriptionTypes, InactiveSettings } from '../lib/types'
 
 const Wrapper = styled(Container)`
     padding-top: 50px;

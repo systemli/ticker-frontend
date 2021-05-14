@@ -3,3 +3,7 @@ export const spacing = {
     normal: '16px',
     large: '24px',
 }
+
+export const breakpoints = {
+    mobile: 768,
+}
