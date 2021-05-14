@@ -14,7 +14,7 @@ yarn start
 
 ## Configuration
 
-Place configuration in `.env` file and restart/rebuild the ticker-admin
+Place configuration in `.env` file and restart/rebuild the ticker-frontend
 
 ```
 REACT_APP_API_URL=http://localhost:8080/v1
