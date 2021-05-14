@@ -32,8 +32,10 @@ Install the dependencies
 5. `vim .env`
 Fill your .env file with the following content:
 ```.env
-REACT_APP_API_URL=https://<domain of your ticker api>/v1
+REACT_APP_API_URL=https://api.domain.tld/v1
 ```
+_Change `api.domain.tld` to the URL you chose at ticker API server creation_
+
 7. `yarn build`
 Build the application
 6. `chown www-data:www-data dist/ -R`
