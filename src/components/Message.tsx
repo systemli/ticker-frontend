@@ -5,9 +5,15 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { replaceMagic } from '../lib/helper'
+import Attachments from './Attachments'
+import styled from 'styled-components'
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
+
+const AttachmentsWrapper = styled(Card.Content)`
+    padding: 0;
+`
 
 interface Props {
     message: MessageType
@@ -31,6 +37,11 @@ const Message: FC<Props> = props => {
                     }}
                 />
             </CardContent>
+            {props.message.attachments && (
+                <AttachmentsWrapper>
+                    <Attachments attachments={props.message.attachments} />
+                </AttachmentsWrapper>
+            )}
             <Card.Content extra>
                 <Grid>
                     <Grid.Row>

@@ -17,6 +17,7 @@
         "eslint-config-prettier": "^8.2.0",
         "eslint-plugin-prettier": "^3.4.0",
         "prettier": "^2.2.1",
+        "pure-react-carousel": "^1.27.6",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-markdown": "^6.0.0",
@@ -28,7 +29,7 @@
         "web-vitals": "^1.0.1"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "PORT=4000 react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",

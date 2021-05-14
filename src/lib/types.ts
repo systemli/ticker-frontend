@@ -46,7 +46,12 @@ export type Message = {
     creation_date: Date
     tweet_id: string
     tweet_user: string
+    attachments: Attachment[]
     // FIXME
-    attachements: any
     geo_information: any
+}
+
+export type Attachment = {
+    content_type: string
+    url: string
 }
