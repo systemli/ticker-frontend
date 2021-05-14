@@ -3,11 +3,11 @@ import ReactMarkdown from 'react-markdown'
 import { Button, Card, Icon, List, Modal } from 'semantic-ui-react'
 import Credits from './Credits'
 import DescriptionItem from './DescriptionItem'
-import { DescriptionTypes, Ticker } from '../types'
+import { DescriptionTypes, Ticker } from '../lib/types'
 
 interface Props {
     ticker: Ticker
-    isModal: boolean
+    isModal?: boolean
 }
 
 const About: FC<Props> = props => {

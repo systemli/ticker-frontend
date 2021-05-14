@@ -1,4 +1,4 @@
-export interface Ticker {
+export type Ticker = {
     active: boolean
     creation_date: Date
     description: string
@@ -8,7 +8,7 @@ export interface Ticker {
     information: TickerInformation
 }
 
-interface TickerInformation {
+type TickerInformation = {
     author: string
     email: string
     facebook: string
@@ -16,12 +16,12 @@ interface TickerInformation {
     url: string
 }
 
-export interface Settings {
+export type Settings = {
     refresh_interval: number
     inactive_settings: InactiveSettings
 }
 
-export interface InactiveSettings {
+export type InactiveSettings = {
     author: string
     email: string
     homepage: string
@@ -37,4 +37,16 @@ export enum DescriptionTypes {
     Facebook = 'FACEBOOK',
     Homepage = 'HOMEPAGE',
     Twitter = 'TWITTER',
+}
+
+export type Message = {
+    id: string
+    text: string
+    ticker: number
+    creation_date: Date
+    tweet_id: string
+    tweet_user: string
+    // FIXME
+    attachements: any
+    geo_information: any
 }

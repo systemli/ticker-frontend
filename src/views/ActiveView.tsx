@@ -3,14 +3,15 @@ import { Container, Grid, Header, Sticky } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { About, MessageList, ReloadInfo } from '../components'
 import { spacing } from '../lib/theme'
-import { Ticker } from '../types'
+import { Ticker } from '../lib/types'
+import { isMobile } from '../lib/helper'
 
 const Wrapper = styled(Container)`
     padding: ${spacing.normal} 0;
 `
 
 const HeaderWrapper = styled(Header)`
-    margin: 0 0 ${spacing.normal};
+    margin: 0 0 ${spacing.normal} !important;
 `
 
 interface Props {
@@ -32,6 +33,23 @@ const ActiveView: FC<Props> = props => {
         setStickyContext(stickyContextValue)
     }
 
+    if (isMobile()) {
+        return (
+            <Wrapper>
+                {/* <UpdateMessage update={props.update} /> */}
+                <About ticker={props.ticker} isModal />
+                {headline && (
+                    <HeaderWrapper content={headline} size={'large'} />
+                )}
+                <ReloadInfo />
+                <MessageList
+                    refreshInterval={props.refreshInterval}
+                    ticker={props.ticker}
+                />
+            </Wrapper>
+        )
+    }
+
     return (
         <Wrapper>
             {/* <UpdateMessage update={props.update} /> */}
@@ -49,7 +67,7 @@ const ActiveView: FC<Props> = props => {
                     </Grid.Column>
                     <Grid.Column computer={6} tablet={6}>
                         <Sticky context={stickyContext} offset={30}>
-                            <About ticker={props.ticker} isModal />
+                            <About ticker={props.ticker} />
                         </Sticky>
                     </Grid.Column>
                 </Grid.Row>
