@@ -1,5 +1,9 @@
 # ticker-frontend ![CI/CD](https://github.com/systemli/ticker-frontend/workflows/CI/CD/badge.svg)
 
+__Currently this is the last commit that works on most machines as production commit due to an legacy dependency in NodeJS: [`d03982f`](https://github.com/systemli/ticker-frontend/commit/d03982f3059d6335a9e9ec0abcb71813ccbafef7)!__
+
+Checkout this branch like this: `git checkout d03982f3059d6335a9e9ec0abcb71813ccbafef7`
+
 ## Development
 
 **Requirement:** Running instance of [ticker](https://github.com/systemli/ticker), default: http://localhost:8080/v1
