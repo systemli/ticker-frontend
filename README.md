@@ -22,4 +22,4 @@ REACT_APP_API_URL=http://localhost:8080/v1
 
 ## Using in production
 
-[INSTALLATION.MD](INSTALLATION.MD)
+[INSTALLATION.MD](docs/INSTALLATION.MD)
