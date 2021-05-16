@@ -47,11 +47,12 @@ export type Message = {
     tweet_id: string
     tweet_user: string
     attachments: Attachment[]
-    // FIXME
-    geo_information: any
+    // Stringified GeoJSON.FeatureCollection
+    geo_information: string
 }
 
 export type Attachment = {
+    // FIXME: Enum?
     content_type: string
     url: string
 }

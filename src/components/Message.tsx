@@ -7,6 +7,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { replaceMagic } from '../lib/helper'
 import Attachments from './Attachments'
 import styled from 'styled-components'
+import Map from './Map'
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
@@ -42,6 +43,7 @@ const Message: FC<Props> = props => {
                     <Attachments attachments={props.message.attachments} />
                 </AttachmentsWrapper>
             )}
+            <Map featureCollection={props.message.geo_information} />
             <Card.Content extra>
                 <Grid>
                     <Grid.Row>
