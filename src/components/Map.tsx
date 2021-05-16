@@ -2,12 +2,12 @@ import { FC, useState } from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
 import { Button } from 'semantic-ui-react'
 import styled from 'styled-components'
-import '../leaflet.config.js'
 import { LeafletEvent } from 'leaflet'
+import '../leaflet.config.js'
+import { zIndex } from '../lib/theme'
 
 const MapWrapper = styled(MapContainer)`
     height: 100px;
-    z-index: 1;
 `
 
 const MapWrapperExpanded = styled(MapWrapper)`
@@ -17,7 +17,7 @@ const MapWrapperExpanded = styled(MapWrapper)`
 const ExpandButton = styled(Button)`
     &.ui.icon.button {
         position: absolute;
-        z-index: 1000;
+        z-index: ${zIndex.expandButtonOnLeafletMap};
         top: 10px;
         right: 5px;
         padding: 7px;

@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { Container, Dimmer, Loader } from 'semantic-ui-react'
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 import { apiUrl } from './lib/helper'
 import { Ticker, Settings } from './lib/types'
 import { ActiveView, InactiveView, OfflineView } from './views'
@@ -10,6 +11,11 @@ const App: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [offline, setOffline] = useState<boolean>(false)
     const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean>(false)
+
+    OfflinePluginRuntime.install({
+        onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+        onUpdated: () => setIsUpdateAvailable(true),
+    })
 
     const fetchInit = () => {
         const url = `${apiUrl}/init`
@@ -67,7 +73,12 @@ const App: FC = () => {
     }
 
     if (ticker === null && settings?.inactive_settings !== undefined) {
-        return <InactiveView settings={settings.inactive_settings} />
+        return (
+            <InactiveView
+                settings={settings.inactive_settings}
+                update={isUpdateAvailable}
+            />
+        )
     }
 
     return <div>...</div>

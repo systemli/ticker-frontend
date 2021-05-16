@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
 import { apiUrl } from '../lib/helper'
 import { Message as MessageType, Ticker } from '../lib/types'
