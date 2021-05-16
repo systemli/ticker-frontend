@@ -1,7 +1,7 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { Container, Grid, Header, Sticky } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { About, MessageList, ReloadInfo } from '../components'
+import { About, MessageList, ReloadInfo, UpdateMessage } from '../components'
 import { spacing } from '../lib/theme'
 import { Ticker } from '../lib/types'
 import { isMobile } from '../lib/helper'
@@ -29,14 +29,14 @@ const ActiveView: FC<Props> = props => {
             : props.ticker.title
 
     // FIXME
-    const handleContextRef = (stickyContextValue: any) => {
+    const handleContextRef = useCallback((stickyContextValue: any) => {
         setStickyContext(stickyContextValue)
-    }
+    }, [])
 
     if (isMobile()) {
         return (
             <Wrapper>
-                {/* <UpdateMessage update={props.update} /> */}
+                <UpdateMessage update={props.update} />
                 <About ticker={props.ticker} isModal />
                 {headline && (
                     <HeaderWrapper content={headline} size={'large'} />
@@ -52,7 +52,7 @@ const ActiveView: FC<Props> = props => {
 
     return (
         <Wrapper>
-            {/* <UpdateMessage update={props.update} /> */}
+            <UpdateMessage update={props.update} />
             {headline && <HeaderWrapper content={headline} size={'large'} />}
             <ReloadInfo />
             <Grid divided={'vertically'}>
