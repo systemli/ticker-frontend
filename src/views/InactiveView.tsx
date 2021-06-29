@@ -16,7 +16,7 @@ interface Props {
 
 const InactiveView: FC<Props> = props => {
     const renderHeader = () => (
-        <Header size="huge" textAlign="center" icon>
+        <Header icon size="huge" textAlign="center">
             <Icon name="hide" />
             <Header.Content>
                 {props.settings.headline}

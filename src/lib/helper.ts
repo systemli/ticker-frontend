@@ -2,7 +2,7 @@ import { breakpoints } from './theme'
 
 // FIXME: Not sure if checking the width once and using it to decide upon
 // what markup to render actually is the best solution here.
-export const isMobile = () => {
+export const isMobile = (): boolean => {
     const width =
         window.innerWidth ||
         document.documentElement.clientWidth ||
@@ -15,7 +15,7 @@ export const apiUrl =
 
 // FIXME: Might be better to use a library like validator.js
 // to catch more cases.
-export const replaceMagic = (text: string) => {
+export const replaceMagic = (text: string): string => {
     return text
         .replace(
             /(https?:\/\/([a-zA-Z0-9._\-/]+))/g,

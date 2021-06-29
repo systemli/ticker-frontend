@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useCallback } from 'react'
 import { Message } from 'semantic-ui-react'
 
 const ReloadInfo: FC = () => {
@@ -6,10 +6,10 @@ const ReloadInfo: FC = () => {
         localStorage.getItem('showReloadInfo') === null
     )
 
-    const handleDismiss = () => {
+    const handleDismiss = useCallback(() => {
         setShowReloadInfo(false)
         localStorage.setItem('showReloadInfo', '0')
-    }
+    }, [])
 
     return (
         <Message

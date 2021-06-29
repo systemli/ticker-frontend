@@ -49,13 +49,13 @@ const About: FC<Props> = props => {
     if (props.isModal) {
         return (
             <Modal
+                closeIcon
                 dimmer={'blurring'}
                 trigger={
-                    <Button color={'blue'} floated={'right'} circular icon>
+                    <Button circular color={'blue'} floated={'right'} icon>
                         <Icon name={'info'} />
                     </Button>
                 }
-                closeIcon
             >
                 <Modal.Header>About</Modal.Header>
                 <Modal.Content>
