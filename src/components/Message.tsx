@@ -50,10 +50,10 @@ const Message: FC<Props> = props => {
                         <Grid.Column width={10}>
                             <Popup
                                 content={creationDate}
-                                size="tiny"
-                                trigger={relativeCreationDate}
                                 flowing
                                 inverted
+                                size="tiny"
+                                trigger={relativeCreationDate}
                             />
                         </Grid.Column>
                     </Grid.Row>

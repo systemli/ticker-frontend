@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useCallback } from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
 import { Button } from 'semantic-ui-react'
 import styled from 'styled-components'
@@ -42,12 +42,12 @@ const Map: FC<Props> = props => {
         props.featureCollection
     )
 
+    const handleIconClick = useCallback(() => {
+        setMapExpanded(!mapExpanded)
+    }, [mapExpanded])
+
     if (featureCollection.features.length === 0) {
         return null
-    }
-
-    const handleIconClick = () => {
-        setMapExpanded(!mapExpanded)
     }
 
     const handleDataAdd = (event: LeafletEvent) => {

@@ -37,7 +37,7 @@ const ActiveView: FC<Props> = props => {
         return (
             <Wrapper>
                 <UpdateMessage update={props.update} />
-                <About ticker={props.ticker} isModal />
+                <About isModal ticker={props.ticker} />
                 {headline && (
                     <HeaderWrapper content={headline} size={'large'} />
                 )}
