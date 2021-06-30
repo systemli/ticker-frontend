@@ -8,6 +8,10 @@ const Wrapper = styled(Container)`
     padding-top: ${spacing.normal};
 `
 
+const handleClick = () => {
+    window.location.reload()
+}
+
 const OfflineView: FC = () => {
     return (
         <Wrapper>
@@ -16,7 +20,7 @@ const OfflineView: FC = () => {
                     <Icon name="ban" />
                     Seems you are offline
                 </Header>
-                <Button onClick={() => window.location.reload()} primary>
+                <Button onClick={handleClick} primary>
                     Try reload
                 </Button>
             </Segment>

@@ -9,11 +9,16 @@ interface Props {
     refreshInterval: number
 }
 
-const MessageList: FC<Props> = props => {
+const MessageList: FC<Props> = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [
+        isLoadingOlderMessages,
+        setIsLoadingOlderMessages,
+    ] = useState<boolean>(false)
     const [messages, setMessages] = useState<MessageType[]>([])
 
     const fetchMessages = useCallback(() => {
+        // TODO: in which case would this value be defined?
         const after = messages[0]?.id
         const url = `${apiUrl}/timeline` + (after ? `?after=${after}` : '')
 
@@ -32,6 +37,38 @@ const MessageList: FC<Props> = props => {
             })
     }, [messages])
 
+    // FIXME: messages are currently empty on first load
+    const fetchOlderMessages = useCallback(() => {
+        const root = document.getElementById('root')
+        if (
+            root &&
+            Math.floor(root.getBoundingClientRect().bottom) <=
+                window.innerHeight
+        ) {
+            const oldestMessage = messages[messages.length - 1]
+            if (oldestMessage !== undefined) {
+                setIsLoadingOlderMessages(true)
+                fetch(`${apiUrl}/timeline?before=${oldestMessage.id}`)
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.data?.messages !== null) {
+                            setMessages([
+                                ...messages,
+                                ...response.data.messages,
+                            ])
+                        }
+                    })
+                    .catch(error => {
+                        // eslint-disable-next-line no-console
+                        console.error(error)
+                    })
+                    .finally(() => {
+                        setIsLoadingOlderMessages(false)
+                    })
+            }
+        }
+    }, [messages])
+
     const renderPlaceholder = () => (
         <Segment placeholder>
             <Header icon>
@@ -43,6 +80,13 @@ const MessageList: FC<Props> = props => {
 
     useEffect(() => {
         fetchMessages()
+        document.addEventListener('scroll', fetchOlderMessages)
+
+        //clean up (~ componentDidUnmount)
+        return () => {
+            document.removeEventListener('scroll', fetchOlderMessages)
+        }
+
         // This should only be executed once on load (~ componentDidMount)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -66,6 +110,9 @@ const MessageList: FC<Props> = props => {
             {messages.map(message => (
                 <Message key={message.id} message={message} />
             ))}
+            {isLoadingOlderMessages && (
+                <Loader active inline="centered" size="tiny" />
+            )}
         </div>
     )
 }
