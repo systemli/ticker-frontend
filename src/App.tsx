@@ -3,13 +3,14 @@ import { Container, Dimmer, Loader } from 'semantic-ui-react'
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 import { apiUrl } from './lib/helper'
 import { Ticker, Settings } from './lib/types'
-import { ActiveView, InactiveView, OfflineView } from './views'
+import { ActiveView, ErrorView, InactiveView, OfflineView } from './views'
 
 const App: FC = () => {
     const [ticker, setTicker] = useState<Ticker | null>(null)
     const [settings, setSettings] = useState<Settings>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [offline, setOffline] = useState<boolean>(false)
+    const [isOffline, setIsOffline] = useState<boolean>(false)
+    const [gotError, setGotError] = useState<boolean>(false)
     const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean>(false)
 
     OfflinePluginRuntime.install({
@@ -20,7 +21,13 @@ const App: FC = () => {
     const fetchInit = () => {
         const url = `${apiUrl}/init`
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    setGotError(true)
+                    return
+                }
+                return response.json()
+            })
             .then(response => {
                 if (response.data?.settings) {
                     setSettings(response.data.settings)
@@ -34,10 +41,9 @@ const App: FC = () => {
                 }
 
                 setIsLoading(false)
-                setOffline(false)
             })
             .catch(() => {
-                setOffline(true)
+                setIsOffline(true)
                 setIsLoading(false)
             })
     }
@@ -58,7 +64,11 @@ const App: FC = () => {
         )
     }
 
-    if (offline) {
+    if (gotError) {
+        return <ErrorView />
+    }
+
+    if (isOffline) {
         return <OfflineView />
     }
 

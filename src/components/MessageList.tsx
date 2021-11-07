@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from 'react'
+import { FC, useState, useEffect, useCallback, useRef } from 'react'
 import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
 import { apiUrl } from '../lib/helper'
 import { Message as MessageType, Ticker } from '../lib/types'
@@ -9,16 +9,16 @@ interface Props {
     refreshInterval: number
 }
 
-const MessageList: FC<Props> = () => {
+const MessageList: FC<Props> = props => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [
-        isLoadingOlderMessages,
-        setIsLoadingOlderMessages,
-    ] = useState<boolean>(false)
     const [messages, setMessages] = useState<MessageType[]>([])
+    const [lastMessageReceived, setLastMessageReceived] = useState<boolean>(
+        false
+    )
+
+    const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
 
     const fetchMessages = useCallback(() => {
-        // TODO: in which case would this value be defined?
         const after = messages[0]?.id
         const url = `${apiUrl}/timeline` + (after ? `?after=${after}` : '')
 
@@ -26,7 +26,7 @@ const MessageList: FC<Props> = () => {
             .then(response => response.json())
             .then(response => {
                 if (response.data?.messages) {
-                    setMessages(response.data?.messages)
+                    setMessages([...response.data?.messages, ...messages])
                 }
                 setIsLoading(false)
             })
@@ -37,37 +37,64 @@ const MessageList: FC<Props> = () => {
             })
     }, [messages])
 
-    // FIXME: messages are currently empty on first load
     const fetchOlderMessages = useCallback(() => {
-        const root = document.getElementById('root')
-        if (
-            root &&
-            Math.floor(root.getBoundingClientRect().bottom) <=
-                window.innerHeight
-        ) {
-            const oldestMessage = messages[messages.length - 1]
-            if (oldestMessage !== undefined) {
-                setIsLoadingOlderMessages(true)
-                fetch(`${apiUrl}/timeline?before=${oldestMessage.id}`)
-                    .then(response => response.json())
-                    .then(response => {
-                        if (response.data?.messages !== null) {
-                            setMessages([
-                                ...messages,
-                                ...response.data.messages,
-                            ])
-                        }
-                    })
-                    .catch(error => {
-                        // eslint-disable-next-line no-console
-                        console.error(error)
-                    })
-                    .finally(() => {
-                        setIsLoadingOlderMessages(false)
-                    })
-            }
+        const oldestMessage = messages[messages.length - 1]
+        if (oldestMessage !== undefined) {
+            fetch(`${apiUrl}/timeline?before=${oldestMessage.id}`)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.data?.messages !== null) {
+                        setMessages([...messages, ...response.data.messages])
+                    } else {
+                        setLastMessageReceived(true)
+                    }
+                })
+                .catch(error => {
+                    // eslint-disable-next-line no-console
+                    console.error(error)
+                })
         }
     }, [messages])
+
+    const intersectionObserverOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
+    }
+
+    const callback = useCallback(
+        (entries: IntersectionObserverEntry[]) => {
+            if (entries[0].isIntersecting) {
+                fetchOlderMessages()
+            }
+        },
+        [fetchOlderMessages]
+    )
+
+    useEffect(() => {
+        fetchMessages()
+
+        // This should only be executed once on load (~ componentDidMount)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            callback,
+            intersectionObserverOptions
+        )
+        const currentRef = loadMoreSpinnerRef.current
+
+        if (currentRef) {
+            observer.observe(currentRef)
+        }
+
+        return () => {
+            if (currentRef) {
+                observer.unobserve(currentRef)
+            }
+        }
+    }, [callback, intersectionObserverOptions, loadMoreSpinnerRef])
 
     const renderPlaceholder = () => (
         <Segment placeholder>
@@ -77,19 +104,6 @@ const MessageList: FC<Props> = () => {
             </Header>
         </Segment>
     )
-
-    useEffect(() => {
-        fetchMessages()
-        document.addEventListener('scroll', fetchOlderMessages)
-
-        //clean up (~ componentDidUnmount)
-        return () => {
-            document.removeEventListener('scroll', fetchOlderMessages)
-        }
-
-        // This should only be executed once on load (~ componentDidMount)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     if (isLoading) {
         return (
@@ -110,8 +124,10 @@ const MessageList: FC<Props> = () => {
             {messages.map(message => (
                 <Message key={message.id} message={message} />
             ))}
-            {isLoadingOlderMessages && (
-                <Loader active inline="centered" size="tiny" />
+            {!lastMessageReceived && (
+                <div ref={loadMoreSpinnerRef}>
+                    <Loader active inline="centered" size="tiny" />
+                </div>
             )}
         </div>
     )
