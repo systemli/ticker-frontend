@@ -1,11 +1,10 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react'
 import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
 import { apiUrl } from '../lib/helper'
-import { Message as MessageType, Ticker } from '../lib/types'
+import { Message as MessageType } from '../lib/types'
 import Message from './Message'
 
 interface Props {
-    ticker: Ticker
     refreshInterval: number
 }
 
@@ -95,6 +94,16 @@ const MessageList: FC<Props> = props => {
             }
         }
     }, [callback, intersectionObserverOptions, loadMoreSpinnerRef])
+
+    // periodically fetch new messages
+    useEffect(() => {
+        const interval = setInterval(
+            () => fetchMessages(),
+            props.refreshInterval
+        )
+
+        return () => clearInterval(interval)
+    }, [fetchMessages, messages, props.refreshInterval])
 
     const renderPlaceholder = () => (
         <Segment placeholder>

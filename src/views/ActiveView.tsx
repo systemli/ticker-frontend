@@ -42,10 +42,7 @@ const ActiveView: FC<Props> = props => {
                     <HeaderWrapper content={headline} size={'large'} />
                 )}
                 <ReloadInfo />
-                <MessageList
-                    refreshInterval={props.refreshInterval}
-                    ticker={props.ticker}
-                />
+                <MessageList refreshInterval={props.refreshInterval} />
             </Wrapper>
         )
     }
@@ -61,7 +58,6 @@ const ActiveView: FC<Props> = props => {
                         <div ref={handleContextRef}>
                             <MessageList
                                 refreshInterval={props.refreshInterval}
-                                ticker={props.ticker}
                             />
                         </div>
                     </Grid.Column>
