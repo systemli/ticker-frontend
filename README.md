@@ -1,4 +1,4 @@
-# ticker-frontend ![CI/CD](https://github.com/systemli/ticker-frontend/workflows/integration/badge.svg)
+# ticker-frontend [![Integration](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml/badge.svg)](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml)
 
 ## Development
 
