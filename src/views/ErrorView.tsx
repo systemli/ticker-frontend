@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Credits } from '../components'
@@ -8,18 +8,21 @@ const Wrapper = styled(Container)`
     padding-top: ${spacing.normal};
 `
 
-const handleClick = () => {
-    window.location.reload()
+interface Props {
+    message: string
 }
 
-const ErrorView: FC = () => {
+const ErrorView: FC<Props> = props => {
+    const handleClick = useCallback(() => {
+        window.location.reload()
+    }, [])
+
     return (
         <Wrapper>
             <Segment placeholder>
                 <Header icon>
                     <Icon name="ban" />
-                    There seems to be a problem connecting to the server. Please
-                    try again.
+                    {props.message}
                 </Header>
                 <Button onClick={handleClick} primary>
                     Try reload

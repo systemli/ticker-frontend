@@ -3,7 +3,7 @@ import { Container, Dimmer, Loader } from 'semantic-ui-react'
 // import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 import { apiUrl } from './lib/helper'
 import { Ticker, Settings } from './lib/types'
-import { ActiveView, ErrorView, InactiveView, OfflineView } from './views'
+import { ActiveView, ErrorView, InactiveView } from './views'
 
 const App: FC = () => {
     const [ticker, setTicker] = useState<Ticker | null>(null)
@@ -68,11 +68,13 @@ const App: FC = () => {
     }
 
     if (gotError) {
-        return <ErrorView />
+        return (
+            <ErrorView message="There seems to be a problem connecting to the server." />
+        )
     }
 
     if (isOffline) {
-        return <OfflineView />
+        return <ErrorView message="It seems that you are offline." />
     }
 
     if (ticker?.active) {
