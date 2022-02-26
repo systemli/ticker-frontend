@@ -14,7 +14,7 @@
     },
     "plugins": ["react", "react-hooks", "@typescript-eslint"],
     "rules": {
-        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": "warn",
         "no-console": "warn",

@@ -55,6 +55,8 @@ const MessageList: FC<Props> = props => {
         }
     }, [messages])
 
+    // FIXME: possibly triggers unnecessary rerenders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const intersectionObserverOptions = {
         root: null,
         rootMargin: '0px',
