@@ -1,8 +1,8 @@
-import { FC, useState, useEffect, useCallback, useRef } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
-import { apiUrl } from '../lib/helper'
 import { Message as MessageType } from '../lib/types'
 import Message from './Message'
+import { getTimeline } from '../lib/api'
 
 interface Props {
     refreshInterval: number
@@ -11,21 +11,18 @@ interface Props {
 const MessageList: FC<Props> = props => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [messages, setMessages] = useState<MessageType[]>([])
-    const [lastMessageReceived, setLastMessageReceived] = useState<boolean>(
-        false
-    )
+    const [lastMessageReceived, setLastMessageReceived] =
+        useState<boolean>(false)
 
     const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
 
     const fetchMessages = useCallback(() => {
         const after = messages[0]?.id
-        const url = `${apiUrl}/timeline` + (after ? `?after=${after}` : '')
 
-        fetch(url)
-            .then(response => response.json())
+        getTimeline({ after: after ? after : null })
             .then(response => {
-                if (response.data?.messages) {
-                    setMessages([...response.data?.messages, ...messages])
+                if (response.data.messages) {
+                    setMessages([...response.data.messages, ...messages])
                 }
                 setIsLoading(false)
             })
@@ -39,10 +36,9 @@ const MessageList: FC<Props> = props => {
     const fetchOlderMessages = useCallback(() => {
         const oldestMessage = messages[messages.length - 1]
         if (oldestMessage !== undefined) {
-            fetch(`${apiUrl}/timeline?before=${oldestMessage.id}`)
-                .then(response => response.json())
+            getTimeline({ before: oldestMessage.id })
                 .then(response => {
-                    if (response.data?.messages !== null) {
+                    if (response.data.messages !== null) {
                         setMessages([...messages, ...response.data.messages])
                     } else {
                         setLastMessageReceived(true)

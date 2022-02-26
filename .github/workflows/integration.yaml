@@ -7,12 +7,37 @@ on:
   pull_request:
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Test
+        run: yarn run test --coverage
+
+      - name: Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   build:
     name: Build
     runs-on: ubuntu-20.04
+    needs: [test]
     strategy:
       matrix:
-        node-version: ['12', '14', '16']
+        node-version: [ '12', '14', '16' ]
 
     steps:
       - name: Checkout
