@@ -61,7 +61,7 @@ const MessageList: FC<Props> = props => {
         threshold: 1.0,
     }
 
-    const callback = useCallback(
+    const fetchOlderMessagesCallback = useCallback(
         (entries: IntersectionObserverEntry[]) => {
             if (entries[0].isIntersecting) {
                 fetchOlderMessages()
@@ -79,7 +79,7 @@ const MessageList: FC<Props> = props => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            callback,
+            fetchOlderMessagesCallback,
             intersectionObserverOptions
         )
         const currentRef = loadMoreSpinnerRef.current
@@ -93,7 +93,11 @@ const MessageList: FC<Props> = props => {
                 observer.unobserve(currentRef)
             }
         }
-    }, [callback, intersectionObserverOptions, loadMoreSpinnerRef])
+    }, [
+        fetchOlderMessagesCallback,
+        intersectionObserverOptions,
+        loadMoreSpinnerRef,
+    ])
 
     // periodically fetch new messages
     useEffect(() => {

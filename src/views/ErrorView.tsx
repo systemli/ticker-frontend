@@ -18,7 +18,8 @@ const ErrorView: FC = () => {
             <Segment placeholder>
                 <Header icon>
                     <Icon name="ban" />
-                    TODO: error
+                    There seems to be a problem connecting to the server. Please
+                    try again.
                 </Header>
                 <Button onClick={handleClick} primary>
                     Try reload

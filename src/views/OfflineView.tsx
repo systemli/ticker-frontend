@@ -18,7 +18,7 @@ const OfflineView: FC = () => {
             <Segment placeholder>
                 <Header icon>
                     <Icon name="ban" />
-                    Seems you are offline
+                    It seems that you are offline.
                 </Header>
                 <Button onClick={handleClick} primary>
                     Try reload

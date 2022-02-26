@@ -19,7 +19,7 @@ const Wrapper = styled(CarouselProvider)`
 
 const DotWrapper = styled.div`
     position: absolute;
-    bottom: 5;
+    bottom: 5px;
     width: 100%;
     display: block;
     text-align: center;

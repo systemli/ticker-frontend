@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { Container, Dimmer, Loader } from 'semantic-ui-react'
-import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+// import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 import { apiUrl } from './lib/helper'
 import { Ticker, Settings } from './lib/types'
 import { ActiveView, ErrorView, InactiveView, OfflineView } from './views'
@@ -11,12 +11,15 @@ const App: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isOffline, setIsOffline] = useState<boolean>(false)
     const [gotError, setGotError] = useState<boolean>(false)
-    const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean>(false)
 
-    OfflinePluginRuntime.install({
-        onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
-        onUpdated: () => setIsUpdateAvailable(true),
-    })
+    // TODO: install and configure offline plugin
+    // const [isUpdateAvailable, setIsUpdateAvailable] = useState<boolean>(false)
+    const isUpdateAvailable = false
+
+    // OfflinePluginRuntime.install({
+    //     onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+    //     onUpdated: () => setIsUpdateAvailable(true),
+    // })
 
     const fetchInit = () => {
         const url = `${apiUrl}/init`
