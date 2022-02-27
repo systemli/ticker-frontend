@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react'
 import { Container, Dimmer, Loader } from 'semantic-ui-react'
 // import * as OfflinePluginRuntime from 'offline-plugin/runtime'
-import { apiUrl } from './lib/helper'
-import { Ticker, Settings } from './lib/types'
+import { Settings, Ticker } from './lib/types'
 import { ActiveView, ErrorView, InactiveView } from './views'
+import { getInit } from './lib/api'
 
 const App: FC = () => {
     const [ticker, setTicker] = useState<Ticker | null>(null)
@@ -22,21 +22,13 @@ const App: FC = () => {
     // })
 
     const fetchInit = () => {
-        const url = `${apiUrl}/init`
-        fetch(url)
+        getInit()
             .then(response => {
-                if (!response.ok) {
-                    setGotError(true)
-                    return
-                }
-                return response.json()
-            })
-            .then(response => {
-                if (response.data?.settings) {
+                if (response.data.settings) {
                     setSettings(response.data.settings)
                 }
 
-                if (response.data?.ticker?.active) {
+                if (response.data.ticker?.active) {
                     setTicker(response.data.ticker)
                     if (ticker?.title) {
                         document.title = ticker.title
@@ -45,8 +37,12 @@ const App: FC = () => {
 
                 setIsLoading(false)
             })
-            .catch(() => {
-                setIsOffline(true)
+            .catch(error => {
+                if (error instanceof TypeError) {
+                    setIsOffline(true)
+                } else {
+                    setGotError(true)
+                }
                 setIsLoading(false)
             })
     }

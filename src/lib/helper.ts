@@ -10,9 +10,6 @@ export const isMobile = (): boolean => {
     return width < breakpoints.mobile
 }
 
-export const apiUrl =
-    process.env.REACT_APP_API_URL || 'http://localhost:8080/v1'
-
 // FIXME: Might be better to use a library like validator.js
 // to catch more cases.
 export const replaceMagic = (text: string): string => {
