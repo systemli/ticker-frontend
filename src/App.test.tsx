@@ -26,10 +26,10 @@ describe('App', function () {
         domain: 'example.com',
         information: {
             author: 'Systemli Ticker Team',
-            url: '',
-            email: '',
-            twitter: '',
-            facebook: '',
+            url: 'https://demoticker.org',
+            email: 'admin@demoticker.org',
+            twitter: 'systemli',
+            facebook: 'betternot',
         },
     } as Ticker
 
@@ -41,6 +41,23 @@ describe('App', function () {
 
         expect(
             await screen.findByText('It seems that you are offline.')
+        ).toBeInTheDocument()
+    })
+
+    test('renders ErrorView', async function () {
+        jest.spyOn(api, 'getInit').mockRejectedValue(
+            new Error(
+                'The server responses with an error: Internal Server Error (500)'
+            )
+        )
+        render(<App />)
+
+        expect(screen.getByText('Loading')).toBeInTheDocument()
+
+        expect(
+            await screen.findByText(
+                'There seems to be a problem connecting to the server.'
+            )
         ).toBeInTheDocument()
     })
 
