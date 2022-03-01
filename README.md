@@ -1,4 +1,6 @@
-# ticker-frontend [![Integration](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml/badge.svg)](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml)
+# ticker-frontend 
+
+[![Integration](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml/badge.svg)](https://github.com/systemli/ticker-frontend/actions/workflows/integration.yaml) [![codecov](https://codecov.io/gh/systemli/ticker-frontend/branch/main/graph/badge.svg?token=bjZUlRawuh)](https://codecov.io/gh/systemli/ticker-frontend)
 
 ## Development
 
