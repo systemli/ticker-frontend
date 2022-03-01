@@ -1,0 +1,55 @@
+name: Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run ESLint
+        uses: wearerequired/lint-action@v1
+        with:
+          check_name: ESLint Results
+          eslint: true
+          eslint_dir: src
+          eslint_extensions: tsx
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Prettier
+        uses: wearerequired/lint-action@v1
+        with:
+          check_name: Prettier Results
+          prettier: true
+          prettier_dir: src
