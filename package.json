@@ -34,7 +34,7 @@
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.29.3",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "prettier": "^2.2.1"
+        "prettier": "^2.6.0"
     },
     "scripts": {
         "start": "PORT=4000 react-scripts start",
