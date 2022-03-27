@@ -1,37 +1,44 @@
 {
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "plugins": ["react", "react-hooks", "@typescript-eslint"],
-    "rules": {
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": "warn",
-        "no-console": "warn",
-        "react/jsx-boolean-value": ["warn", "never"],
-        "react/jsx-no-bind": "warn",
-        "react/jsx-sort-props": [
-            "warn",
-            {
-                "reservedFirst": true
-            }
-        ],
-        "react/prop-types": "off",
-        "react/react-in-jsx-scope": "off"
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-console": "warn",
+    "react/jsx-boolean-value": [
+      "warn",
+      "never"
+    ],
+    "react/jsx-no-bind": "warn",
+    "react/jsx-sort-props": [
+      "warn",
+      {
+        "reservedFirst": true
+      }
+    ],
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
