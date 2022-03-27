@@ -1,6 +1,6 @@
 import { Message, Settings, Ticker } from './types'
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080/v1'
+const apiUrl = process.env.REACT_APP_API_URL
 
 type InitResponseData = {
     settings: Settings
