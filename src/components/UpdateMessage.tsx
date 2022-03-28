@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   left: ${spacing.normal};
   bottom: ${spacing.normal};
   right: ${spacing.normal};
-  text-aling: center;
+  text-align: center;
   z-index: ${zIndex.updateMessage};
 `
 

@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateMessage renders correctly when active 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-iCfMLu iiqfvg"
+  >
+    <div
+      class="ui yellow negative message"
+    >
+      An update is available. Click 
+      <a
+        class="sc-furwcr enHelU"
+      >
+        here
+      </a>
+       to update the App.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UpdateMessage renders nothing when dismissed 1`] = `<DocumentFragment />`;
