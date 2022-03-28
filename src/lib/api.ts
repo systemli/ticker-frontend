@@ -3,55 +3,55 @@ import { Message, Settings, Ticker } from './types'
 const apiUrl = process.env.REACT_APP_API_URL
 
 type InitResponseData = {
-    settings: Settings
-    ticker: Ticker | null
+  settings: Settings
+  ticker: Ticker | null
 }
 
 export type InitResponse = {
-    data: InitResponseData
+  data: InitResponseData
 }
 
 type TimelineResponseData = {
-    messages: Message[]
+  messages: Message[]
 }
 
 export type TimelineResponse = {
-    data: TimelineResponseData
+  data: TimelineResponseData
 }
 
 async function get<T>(path: string, config?: RequestInit): Promise<T> {
-    const init = { method: 'get', ...config }
-    const request = new Request(path, init)
-    const response = await fetch(request)
+  const init = { method: 'get', ...config }
+  const request = new Request(path, init)
+  const response = await fetch(request)
 
-    if (!response.ok) {
-        throw new Error(
-            `The server responses with an error: ${response.statusText} (${response.status})`
-        )
-    }
+  if (!response.ok) {
+    throw new Error(
+      `The server responses with an error: ${response.statusText} (${response.status})`
+    )
+  }
 
-    return response.json().catch(() => ({}))
+  return response.json().catch(() => ({}))
 }
 
 export async function getInit(): Promise<InitResponse> {
-    return get(`${apiUrl}/init`)
+  return get(`${apiUrl}/init`)
 }
 
 export type TimelineOpts = {
-    after?: string | null
-    before?: string | null
+  after?: string | null
+  before?: string | null
 }
 
 export async function getTimeline(
-    opts: TimelineOpts
+  opts: TimelineOpts
 ): Promise<TimelineResponse> {
-    if (opts.after != null) {
-        return get(`${apiUrl}/timeline?after=${opts.after}`)
-    }
+  if (opts.after != null) {
+    return get(`${apiUrl}/timeline?after=${opts.after}`)
+  }
 
-    if (opts.before != null) {
-        return get(`${apiUrl}/timeline?before=${opts.before}`)
-    }
+  if (opts.before != null) {
+    return get(`${apiUrl}/timeline?before=${opts.before}`)
+  }
 
-    return get(`${apiUrl}/timeline`)
+  return get(`${apiUrl}/timeline`)
 }
