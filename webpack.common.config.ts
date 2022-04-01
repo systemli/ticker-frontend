@@ -1,5 +1,5 @@
-import HtmlWebpackPlugin = require('html-webpack-plugin')
-import dotenv = require('dotenv')
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import dotenv from 'dotenv'
 import { Configuration, DefinePlugin } from 'webpack'
 
 dotenv.config()

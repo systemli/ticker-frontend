@@ -1,7 +1,7 @@
 import { Configuration } from 'webpack'
 import baseConfig from './webpack.common.config'
 import merge from 'webpack-merge'
-import TerserPlugin = require('terser-webpack-plugin')
+import TerserPlugin from 'terser-webpack-plugin'
 
 const config: Configuration = merge(baseConfig, {
   mode: 'production',
