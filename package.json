@@ -11,7 +11,7 @@
   "dependencies": {
     "@semantic-ui-react/css-patch": "^1.0.0",
     "@types/leaflet": "^1.7.0",
-    "@types/react": "^17.0.40",
+    "@types/react": "^17.0.43",
     "@types/styled-components": "^5.1.24",
     "dayjs": "^1.11.0",
     "leaflet": "^1.7.1",
