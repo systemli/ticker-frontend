@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="ui fluid card"
+  >
+    <div
+      class="content"
+    >
+      <div>
+        message
+      </div>
+    </div>
+    <div
+      class="content sc-jRQBWg hMTiXY"
+    >
+      <div
+        class="carousel sc-bdvvtL kERQPB"
+      >
+        <div
+          aria-label="slider"
+          aria-live="polite"
+          class="horizontalSlider___281Ls carousel__slider carousel__slider--horizontal"
+          role="listbox"
+          tabindex="0"
+        >
+          <div
+            class="carousel__slider-tray-wrapper carousel__slider-tray-wrap--horizontal"
+          >
+            <div
+              class="sliderTray___-vHFQ sliderAnimation___300FY carousel__slider-tray carousel__slider-tray--horizontal"
+              style="width: 0%; transform: translateX(NaN%) translateX(0px); flex-direction: row;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="extra content"
+    >
+      <div
+        class="ui grid"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="ten wide column"
+          >
+            <div>
+              <i
+                aria-hidden="true"
+                class="clock icon"
+              />
+              a few seconds ago
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Message renders with map correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="ui fluid card"
+  >
+    <div
+      class="content"
+    >
+      <div>
+        message
+      </div>
+    </div>
+    <div
+      class="content sc-jRQBWg hMTiXY"
+    >
+      <div
+        class="carousel sc-bdvvtL kERQPB"
+      >
+        <div
+          aria-label="slider"
+          aria-live="polite"
+          class="horizontalSlider___281Ls carousel__slider carousel__slider--horizontal"
+          role="listbox"
+          tabindex="0"
+        >
+          <div
+            class="carousel__slider-tray-wrapper carousel__slider-tray-wrap--horizontal"
+          >
+            <div
+              class="sliderTray___-vHFQ sliderAnimation___300FY carousel__slider-tray carousel__slider-tray--horizontal"
+              style="width: 0%; transform: translateX(NaN%) translateX(0px); flex-direction: row;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-dkPtRN fTTNQv leaflet-container leaflet-grab leaflet-touch-drag"
+      style="position: relative;"
+      tabindex="0"
+    >
+      <div
+        class="leaflet-pane leaflet-map-pane"
+        style="left: 0px; top: 0px;"
+      >
+        <div
+          class="leaflet-pane leaflet-tile-pane"
+        >
+          <div
+            class="leaflet-layer "
+            style="z-index: 1;"
+          >
+            <div
+              class="leaflet-tile-container leaflet-zoom-animated"
+              style="z-index: 18; left: 0px; top: 0px;"
+            >
+              <img
+                alt=""
+                class="leaflet-tile"
+                role="presentation"
+                src="https://a.tile.openstreetmap.org/13/4402/2687.png"
+                style="width: 256px; height: 256px; left: -111px; top: -68px;"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="leaflet-pane leaflet-shadow-pane"
+        >
+          <img
+            alt=""
+            class="leaflet-marker-shadow leaflet-zoom-hide"
+            src="[object Object]"
+            style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; left: 0px; top: 0px;"
+          />
+        </div>
+        <div
+          class="leaflet-pane leaflet-overlay-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-marker-pane"
+        >
+          <img
+            alt=""
+            class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+            src="[object Object]"
+            style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 0; z-index: 0;"
+            tabindex="0"
+          />
+        </div>
+        <div
+          class="leaflet-pane leaflet-tooltip-pane"
+        />
+        <div
+          class="leaflet-pane leaflet-popup-pane"
+        />
+      </div>
+      <div
+        class="leaflet-control-container"
+      >
+        <div
+          class="leaflet-top leaflet-left"
+        >
+          <div
+            class="leaflet-control-zoom leaflet-bar leaflet-control"
+          >
+            <a
+              aria-label="Zoom in"
+              class="leaflet-control-zoom-in"
+              href="#"
+              role="button"
+              title="Zoom in"
+            >
+              +
+            </a>
+            <a
+              aria-label="Zoom out"
+              class="leaflet-control-zoom-out"
+              href="#"
+              role="button"
+              title="Zoom out"
+            >
+              −
+            </a>
+          </div>
+        </div>
+        <div
+          class="leaflet-top leaflet-right"
+        />
+        <div
+          class="leaflet-bottom leaflet-left"
+        />
+        <div
+          class="leaflet-bottom leaflet-right"
+        >
+          <div
+            class="leaflet-control-attribution leaflet-control"
+          >
+            <a
+              href="https://leafletjs.com"
+              title="A JS library for interactive maps"
+            >
+              Leaflet
+            </a>
+          </div>
+        </div>
+      </div>
+      <button
+        class="ui icon button sc-eCImPb henPQY"
+      >
+        <i
+          aria-hidden="true"
+          class="expand icon"
+        />
+      </button>
+    </div>
+    <div
+      class="extra content"
+    >
+      <div
+        class="ui grid"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="ten wide column"
+          >
+            <div>
+              <i
+                aria-hidden="true"
+                class="clock icon"
+              />
+              a few seconds ago
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
