@@ -19,10 +19,8 @@ export type TimelineResponse = {
   data: TimelineResponseData
 }
 
-async function get<T>(path: string, config?: RequestInit): Promise<T> {
-  const init = { method: 'get', ...config }
-  const request = new Request(path, init)
-  const response = await fetch(request)
+async function get<T>(path: string): Promise<T> {
+  const response = await fetch(path)
 
   if (!response.ok) {
     throw new Error(

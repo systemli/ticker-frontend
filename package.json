@@ -69,6 +69,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "jest-dom": "^4.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "jest-transform-stub": "^2.0.0",
     "postcss": "^8.4.12",
     "postcss-loader": "^6.2.1",
@@ -90,7 +91,7 @@
     "webpack-dev-server": "^4.7.4",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.8.0"
-    },
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
