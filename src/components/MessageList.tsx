@@ -6,6 +6,7 @@ import { getTimeline } from '../lib/api'
 
 interface Props {
   refreshInterval: number
+  prependTime: boolean
 }
 
 const MessageList: FC<Props> = props => {
@@ -129,7 +130,11 @@ const MessageList: FC<Props> = props => {
   return (
     <div>
       {messages.map(message => (
-        <Message key={message.id} message={message} />
+        <Message
+          key={message.id}
+          message={message}
+          prependTime={props.prependTime}
+        />
       ))}
       {!lastMessageReceived && (
         <div ref={loadMoreSpinnerRef}>
