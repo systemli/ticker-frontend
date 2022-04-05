@@ -18,6 +18,7 @@ const AttachmentsWrapper = styled(Card.Content)`
 
 interface Props {
   message: MessageType
+  prependTime: boolean
 }
 
 const Message: FC<Props> = props => {
@@ -29,12 +30,20 @@ const Message: FC<Props> = props => {
   )
   const creationDate = dayjs(props.message.creation_date).format('LLLL')
 
+  function prependTime() {
+    if (props.prependTime) {
+      return dayjs(props.message.creation_date).format('HH:mm') + ' '
+    }
+
+    return ''
+  }
+
   return (
     <Card fluid>
       <CardContent>
         <div
           dangerouslySetInnerHTML={{
-            __html: replaceMagic(props.message.text),
+            __html: prependTime() + replaceMagic(props.message.text),
           }}
         />
       </CardContent>
