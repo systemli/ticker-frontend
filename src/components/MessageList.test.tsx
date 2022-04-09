@@ -15,7 +15,7 @@ describe('MessageList', function () {
       .fn()
       .mockImplementation(intersectionObserverMock)
 
-    render(<MessageList prependTime={false} refreshInterval={10} />)
+    render(<MessageList refreshInterval={10} />)
 
     expect(screen.getByText('Loading messages')).toBeInTheDocument()
     expect(

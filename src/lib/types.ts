@@ -5,7 +5,6 @@ export type Ticker = {
   domain: string
   id: string
   title: string
-  prepend_time: boolean
   information: TickerInformation
 }
 
