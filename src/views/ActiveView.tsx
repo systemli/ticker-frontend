@@ -16,7 +16,6 @@ const HeaderWrapper = styled(Header)`
 
 interface Props {
   ticker: Ticker
-  update: boolean
   refreshInterval: number
 }
 
@@ -36,7 +35,7 @@ const ActiveView: FC<Props> = props => {
   if (isMobile()) {
     return (
       <Wrapper>
-        <UpdateMessage update={props.update} />
+        <UpdateMessage />
         <About isModal ticker={props.ticker} />
         {headline && <HeaderWrapper content={headline} size={'large'} />}
         <ReloadInfo />
@@ -50,7 +49,7 @@ const ActiveView: FC<Props> = props => {
 
   return (
     <Wrapper>
-      <UpdateMessage update={props.update} />
+      <UpdateMessage />
       {headline && <HeaderWrapper content={headline} size={'large'} />}
       <ReloadInfo />
       <Grid divided={'vertically'}>

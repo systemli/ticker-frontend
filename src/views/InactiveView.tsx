@@ -11,7 +11,6 @@ const Wrapper = styled(Container)`
 
 interface Props {
   settings: InactiveSettings
-  update: boolean
 }
 
 const InactiveView: FC<Props> = props => {
@@ -27,7 +26,7 @@ const InactiveView: FC<Props> = props => {
 
   return (
     <Wrapper>
-      <UpdateMessage update={props.update} />
+      <UpdateMessage />
       <Grid centered>
         <Grid.Column computer={8} mobile={16} tablet={8}>
           {props.settings.headline &&

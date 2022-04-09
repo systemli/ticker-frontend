@@ -19,27 +19,9 @@ describe('UpdateMessage', function () {
     })
   })
 
-  test('renders correctly when active', function () {
-    const { asFragment } = render(<UpdateMessage update />)
+  test('renders when no update is waiting', function () {
+    const { asFragment } = render(<UpdateMessage />)
 
     expect(asFragment()).toMatchSnapshot()
-  })
-
-  test('renders nothing when dismissed', function () {
-    const { asFragment } = render(<UpdateMessage update={false} />)
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
-  test('triggers reload correctly', function () {
-    render(<UpdateMessage update />)
-
-    expect(
-      screen.findByText('An update is available. Click here to update the App.')
-    )
-
-    screen.getByText('here').click()
-
-    expect(window.location.reload).toHaveBeenCalled()
   })
 })
