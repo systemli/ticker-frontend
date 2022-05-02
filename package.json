@@ -14,7 +14,7 @@
     "@types/react": "^17.0.43",
     "@types/styled-components": "^5.1.24",
     "dayjs": "^1.11.0",
-    "leaflet": "^1.7.1",
+    "leaflet": "^1.8.0",
     "pure-react-carousel": "^1.27.6",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",
