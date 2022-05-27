@@ -40,10 +40,7 @@ const ActiveView: FC<Props> = props => {
         <About isModal ticker={props.ticker} />
         {headline && <HeaderWrapper content={headline} size={'large'} />}
         <ReloadInfo />
-        <MessageList
-          prependTime={props.ticker.prepend_time}
-          refreshInterval={props.refreshInterval}
-        />
+        <MessageList refreshInterval={props.refreshInterval} />
       </Wrapper>
     )
   }
@@ -57,10 +54,7 @@ const ActiveView: FC<Props> = props => {
         <Grid.Row columns={2}>
           <Grid.Column computer={10} tablet={10}>
             <div ref={handleContextRef}>
-              <MessageList
-                prependTime={props.ticker.prepend_time}
-                refreshInterval={props.refreshInterval}
-              />
+              <MessageList refreshInterval={props.refreshInterval} />
             </div>
           </Grid.Column>
           <Grid.Column computer={6} tablet={6}>
