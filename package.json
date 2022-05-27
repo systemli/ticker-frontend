@@ -24,11 +24,11 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
     "styled-components": "^5.2.3",
-    "typescript": "^4.6.2"
+    "typescript": "^4.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
-    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/plugin-transform-runtime": "^7.18.2",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
@@ -62,7 +62,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.3",
     "eslint-plugin-react-hooks": "^4.5.0",
-    "eslint-plugin-testing-library": "^5.3.1",
+    "eslint-plugin-testing-library": "^5.5.1",
     "eslint-webpack-plugin": "^3.1.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
@@ -72,7 +72,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-transform-stub": "^2.0.0",
     "postcss": "^8.4.12",
-    "postcss-loader": "^6.2.1",
+    "postcss-loader": "^7.0.0",
     "postcss-remove-google-fonts": "^1.2.0",
     "prettier": "^2.6.1",
     "react-dev-utils": "^12.0.0",
