@@ -3,14 +3,14 @@
 exports[`UpdateMessage renders correctly when active 1`] = `
 <DocumentFragment>
   <div
-    class="sc-iCfMLu iiqfvg"
+    class="sc-iBkjds hnOzZn"
   >
     <div
       class="ui yellow negative message"
     >
       An update is available. Click 
       <a
-        class="sc-furwcr enHelU"
+        class="sc-ftvSup uBGUH"
       >
         here
       </a>

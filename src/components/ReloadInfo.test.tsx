@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ReloadInfo } from './index'
 
 describe('ReloadInfo', function () {
@@ -7,7 +8,7 @@ describe('ReloadInfo', function () {
     localStorage.removeItem('showReloadInfo')
   })
 
-  test('renders correctly', function () {
+  test('renders correctly', async function () {
     const { container } = render(<ReloadInfo />)
 
     expect(
@@ -17,7 +18,8 @@ describe('ReloadInfo', function () {
     ).toBeVisible()
 
     const close = container.querySelector('i.close') as HTMLElement
-    close.click()
+    const user = userEvent.setup()
+    await user.click(close)
 
     expect(localStorage.getItem('showReloadInfo')).toBe('0')
   })

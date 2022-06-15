@@ -108,7 +108,7 @@ describe('App', function () {
     ).toBeInTheDocument()
 
     expect(
-      screen.getByText('We dont have any messages at the moment.')
+      await screen.findByText('We dont have any messages at the moment.')
     ).toBeInTheDocument()
   })
 })
