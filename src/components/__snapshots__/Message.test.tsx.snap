@@ -13,10 +13,10 @@ exports[`Message renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="content sc-jRQBWg hMTiXY"
+      class="content sc-jSMfEi bNJnoD"
     >
       <div
-        class="carousel sc-bdvvtL kERQPB"
+        class="carousel sc-bczRLJ ehiAyy"
       >
         <div
           aria-label="slider"
@@ -76,10 +76,10 @@ exports[`Message renders with map correctly 1`] = `
       </div>
     </div>
     <div
-      class="content sc-jRQBWg hMTiXY"
+      class="content sc-jSMfEi bNJnoD"
     >
       <div
-        class="carousel sc-bdvvtL kERQPB"
+        class="carousel sc-bczRLJ ehiAyy"
       >
         <div
           aria-label="slider"
@@ -100,7 +100,7 @@ exports[`Message renders with map correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-dkPtRN fTTNQv leaflet-container leaflet-grab leaflet-touch-drag"
+      class="sc-dkzDqf caXGek leaflet-container leaflet-grab leaflet-touch-drag"
       style="position: relative;"
       tabindex="0"
     >
@@ -211,7 +211,7 @@ exports[`Message renders with map correctly 1`] = `
         </div>
       </div>
       <button
-        class="ui icon button sc-eCImPb henPQY"
+        class="ui icon button sc-eCYdqJ ebewNW"
       >
         <i
           aria-hidden="true"

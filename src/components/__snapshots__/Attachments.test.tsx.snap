@@ -3,7 +3,7 @@
 exports[`Attachment renders multiple images as slider 1`] = `
 <DocumentFragment>
   <div
-    class="carousel sc-bdvvtL kERQPB"
+    class="carousel sc-bczRLJ ehiAyy"
   >
     <div
       aria-label="slider"
@@ -61,7 +61,7 @@ exports[`Attachment renders multiple images as slider 1`] = `
       </div>
     </div>
     <div
-      class="sc-gsDKAQ icWGny"
+      class="sc-gsnTZi UmfOC"
     >
       <div
         class="ui mini buttons"
@@ -119,7 +119,7 @@ exports[`Attachment renders multiple images as slider 1`] = `
 exports[`Attachment renders single image correctly 1`] = `
 <DocumentFragment>
   <div
-    class="carousel sc-bdvvtL kERQPB"
+    class="carousel sc-bczRLJ ehiAyy"
   >
     <div
       aria-label="slider"
