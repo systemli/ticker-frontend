@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react'
 import { Container, Grid, Header, Sticky } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { About, MessageList, ReloadInfo, UpdateMessage } from '../components'
+import { About, MessageList, ReloadInfo } from '../components'
 import { spacing } from '../lib/theme'
 import { Ticker } from '../lib/types'
 import { isMobile } from '../lib/helper'
@@ -16,7 +16,6 @@ const HeaderWrapper = styled(Header)`
 
 interface Props {
   ticker: Ticker
-  update: boolean
   refreshInterval: number
 }
 
@@ -36,7 +35,6 @@ const ActiveView: FC<Props> = props => {
   if (isMobile()) {
     return (
       <Wrapper>
-        <UpdateMessage update={props.update} />
         <About isModal ticker={props.ticker} />
         {headline && <HeaderWrapper content={headline} size={'large'} />}
         <ReloadInfo />
@@ -47,7 +45,6 @@ const ActiveView: FC<Props> = props => {
 
   return (
     <Wrapper>
-      <UpdateMessage update={props.update} />
       {headline && <HeaderWrapper content={headline} size={'large'} />}
       <ReloadInfo />
       <Grid divided={'vertically'}>
