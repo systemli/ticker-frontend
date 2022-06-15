@@ -20,7 +20,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-leaflet": "^3.1.0",
     "react-markdown": "^8.0.1",
-    "react-refresh": "^0.13.0",
+    "react-refresh": "^0.14.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
     "styled-components": "^5.2.3",
