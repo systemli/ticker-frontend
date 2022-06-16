@@ -1,10 +1,15 @@
 {
+  "env": {
+    "browser": true,
+    "jest": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,22 +24,20 @@
   ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-console": "warn",
-    "react/jsx-boolean-value": [
-      "warn",
-      "never"
-    ],
-    "react/jsx-no-bind": "warn",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-console": "error",
+    "react/jsx-no-bind": "error",
     "react/jsx-sort-props": [
       "warn",
       {
         "reservedFirst": true
       }
     ],
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/prop-types": "error",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   },
   "settings": {
     "react": {
