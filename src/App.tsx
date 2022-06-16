@@ -1,8 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import { Container, Dimmer, Loader } from 'semantic-ui-react'
 import { Settings, Ticker } from './lib/types'
-import { ActiveView, ErrorView, InactiveView } from './views'
 import { getInit } from './lib/api'
+import ErrorView from './views/ErrorView'
+import ActiveView from './views/ActiveView'
+import InactiveView from './views/InactiveView'
 
 const App: FC = () => {
   const [ticker, setTicker] = useState<Ticker | null>(null)

@@ -1,7 +1,6 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { ReloadInfo } from './index'
+import ReloadInfo from './ReloadInfo'
 
 describe('ReloadInfo', function () {
   beforeAll(function () {

@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { Credits } from '../components'
+import Credits from '../components/Credits'
 import { spacing } from '../lib/theme'
 
 const Wrapper = styled(Container)`
