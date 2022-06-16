@@ -1,10 +1,12 @@
 import { FC, useCallback, useState } from 'react'
 import { Container, Grid, Header, Sticky } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { About, MessageList, ReloadInfo } from '../components'
 import { spacing } from '../lib/theme'
 import { Ticker } from '../lib/types'
 import { isMobile } from '../lib/helper'
+import About from '../components/About'
+import ReloadInfo from '../components/ReloadInfo'
+import MessageList from '../components/MessageList'
 
 const Wrapper = styled(Container)`
   padding: ${spacing.normal} 0;

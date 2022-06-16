@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { ErrorView } from './index'
+import ErrorView from './ErrorView'
 
 describe('ErrorView', function () {
   const original = window.location

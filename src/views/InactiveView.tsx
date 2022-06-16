@@ -2,7 +2,8 @@ import { FC } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Card, Container, Grid, Header, Icon, List } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { Credits, DescriptionItem } from '../components'
+import Credits from '../components/Credits'
+import DescriptionItem from '../components/DescriptionItem'
 import { DescriptionTypes, InactiveSettings } from '../lib/types'
 
 const Wrapper = styled(Container)`
