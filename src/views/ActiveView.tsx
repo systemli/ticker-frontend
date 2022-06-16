@@ -21,16 +21,17 @@ interface Props {
   refreshInterval: number
 }
 
+type StickyContext = Document | Window | HTMLElement | React.Ref<HTMLElement>
+
 const ActiveView: FC<Props> = props => {
-  const [stickyContext, setStickyContext] = useState()
+  const [stickyContext, setStickyContext] = useState<StickyContext>()
 
   const headline =
     props.ticker === null || props.ticker.title == undefined
       ? 'Ticker'
       : props.ticker.title
 
-  // FIXME
-  const handleContextRef = useCallback((stickyContextValue: any) => {
+  const handleContextRef = useCallback((stickyContextValue: StickyContext) => {
     setStickyContext(stickyContextValue)
   }, [])
 

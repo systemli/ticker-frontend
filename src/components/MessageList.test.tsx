@@ -1,4 +1,3 @@
-import React from 'react'
 import * as api from '../lib/api'
 import MessageList from './MessageList'
 import { render, screen } from '@testing-library/react'
