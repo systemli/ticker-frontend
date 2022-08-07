@@ -9,7 +9,7 @@
     "postinstall": "semantic-ui-css-patch"
   },
   "dependencies": {
-    "@semantic-ui-react/css-patch": "^1.0.0",
+    "@semantic-ui-react/css-patch": "^1.1.1",
     "@types/leaflet": "^1.7.0",
     "@types/react": "^18.0.12",
     "@types/styled-components": "^5.1.24",
