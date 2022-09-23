@@ -37,7 +37,7 @@ const MessageList: FC<Props> = props => {
     if (oldestMessage !== undefined) {
       getTimeline({ before: oldestMessage.id })
         .then(response => {
-          if (response.data.messages !== null) {
+          if (response.data.messages.length !== 0) {
             setMessages([...messages, ...response.data.messages])
           } else {
             setLastMessageReceived(true)
