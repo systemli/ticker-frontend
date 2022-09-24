@@ -100,7 +100,7 @@ exports[`Message renders with map correctly 1`] = `
       </div>
     </div>
     <div
-      class="sc-dkzDqf caXGek leaflet-container leaflet-grab leaflet-touch-drag"
+      class="sc-dkzDqf caXGek leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
       style="position: relative;"
       tabindex="0"
     >
@@ -122,13 +122,15 @@ exports[`Message renders with map correctly 1`] = `
               <img
                 alt=""
                 class="leaflet-tile"
-                role="presentation"
                 src="https://a.tile.openstreetmap.org/13/4402/2687.png"
                 style="width: 256px; height: 256px; left: -111px; top: -68px;"
               />
             </div>
           </div>
         </div>
+        <div
+          class="leaflet-pane leaflet-overlay-pane"
+        />
         <div
           class="leaflet-pane leaflet-shadow-pane"
         >
@@ -140,14 +142,12 @@ exports[`Message renders with map correctly 1`] = `
           />
         </div>
         <div
-          class="leaflet-pane leaflet-overlay-pane"
-        />
-        <div
           class="leaflet-pane leaflet-marker-pane"
         >
           <img
-            alt=""
+            alt="Marker"
             class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+            role="button"
             src="[object Object]"
             style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 0; z-index: 0;"
             tabindex="0"
@@ -170,22 +170,32 @@ exports[`Message renders with map correctly 1`] = `
             class="leaflet-control-zoom leaflet-bar leaflet-control"
           >
             <a
+              aria-disabled="false"
               aria-label="Zoom in"
               class="leaflet-control-zoom-in"
               href="#"
               role="button"
               title="Zoom in"
             >
-              +
+              <span
+                aria-hidden="true"
+              >
+                +
+              </span>
             </a>
             <a
+              aria-disabled="false"
               aria-label="Zoom out"
               class="leaflet-control-zoom-out"
               href="#"
               role="button"
               title="Zoom out"
             >
-              −
+              <span
+                aria-hidden="true"
+              >
+                −
+              </span>
             </a>
           </div>
         </div>
@@ -203,7 +213,7 @@ exports[`Message renders with map correctly 1`] = `
           >
             <a
               href="https://leafletjs.com"
-              title="A JS library for interactive maps"
+              title="A JavaScript library for interactive maps"
             >
               Leaflet
             </a>
