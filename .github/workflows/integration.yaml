@@ -54,3 +54,15 @@ jobs:
 
       - name: Build
         run: yarn run build
+
+  automerge:
+    name: Merge Automatically
+    needs: [test, build]
+    runs-on: ubuntu-20.04
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
