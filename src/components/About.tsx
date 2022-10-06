@@ -4,6 +4,7 @@ import { Button, Card, Icon, List, Modal } from 'semantic-ui-react'
 import Credits from './Credits'
 import DescriptionItem from './DescriptionItem'
 import { DescriptionTypes, Ticker } from '../lib/types'
+import { getAtomFeedUrl, getRssFeedUrl } from '../lib/api'
 
 interface Props {
   ticker: Ticker
@@ -49,6 +50,13 @@ const About: FC<Props> = props => {
           type={DescriptionTypes.Telegram}
         />
       )}
+      <List.Item>
+        <List.Icon name="feed" />
+        <List.Content>
+          <a href={getAtomFeedUrl()}>Atom</a> |{' '}
+          <a href={getRssFeedUrl()}>RSS</a>
+        </List.Content>
+      </List.Item>
     </List>
   )
 
