@@ -1,6 +1,6 @@
 import { Message, Settings, Ticker } from './types'
 
-const apiUrl = process.env.REACT_APP_API_URL
+export const ApiUrl = process.env.REACT_APP_API_URL
 
 type InitResponseData = {
   settings: Settings
@@ -32,7 +32,7 @@ async function get<T>(path: string): Promise<T> {
 }
 
 export async function getInit(): Promise<InitResponse> {
-  return get(`${apiUrl}/init`)
+  return get(`${ApiUrl}/init`)
 }
 
 export type TimelineOpts = {
@@ -44,12 +44,20 @@ export async function getTimeline(
   opts: TimelineOpts
 ): Promise<TimelineResponse> {
   if (opts.after != null) {
-    return get(`${apiUrl}/timeline?after=${opts.after}`)
+    return get(`${ApiUrl}/timeline?after=${opts.after}`)
   }
 
   if (opts.before != null) {
-    return get(`${apiUrl}/timeline?before=${opts.before}`)
+    return get(`${ApiUrl}/timeline?before=${opts.before}`)
   }
 
-  return get(`${apiUrl}/timeline`)
+  return get(`${ApiUrl}/timeline`)
+}
+
+export function getAtomFeedUrl(): string {
+  return `${ApiUrl}/feed?origin=${window.location.hostname}&format=atom`
+}
+
+export function getRssFeedUrl(): string {
+  return `${ApiUrl}/feed?origin=${window.location.hostname}&format=rss`
 }
