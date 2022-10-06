@@ -21,12 +21,7 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="mail" />
           <List.Content>
-            <a
-              href={`mailto:
-                                    ${props.info}`}
-            >
-              {props.info}
-            </a>
+            <a href={`mailto:${props.info}`}>{props.info}</a>
           </List.Content>
         </List.Item>
       )
@@ -50,7 +45,9 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="linkify" />
           <List.Content>
-            <a href={props.info}>{props.info}</a>
+            <a href={props.info} rel="noopener noreferrer" target="_blank">
+              {props.info}
+            </a>
           </List.Content>
         </List.Item>
       )
@@ -59,7 +56,28 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="twitter" />
           <List.Content>
-            <a href={`https://twitter.com/${props.info}`}>@{props.info}</a>
+            <a
+              href={`https://twitter.com/${props.info}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              @{props.info}
+            </a>
+          </List.Content>
+        </List.Item>
+      )
+    case DescriptionTypes.Telegram:
+      return (
+        <List.Item>
+          <List.Icon name="telegram" />
+          <List.Content>
+            <a
+              href={`https://t.me/${props.info}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              @{props.info}
+            </a>
           </List.Content>
         </List.Item>
       )
