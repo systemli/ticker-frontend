@@ -43,6 +43,12 @@ const About: FC<Props> = props => {
           type={DescriptionTypes.Facebook}
         />
       )}
+      {props.ticker.information.telegram && (
+        <DescriptionItem
+          info={props.ticker.information.telegram}
+          type={DescriptionTypes.Telegram}
+        />
+      )}
     </List>
   )
 

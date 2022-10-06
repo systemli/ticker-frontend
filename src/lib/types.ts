@@ -12,6 +12,7 @@ type TickerInformation = {
   author: string
   email: string
   facebook: string
+  telegram: string
   twitter: string
   url: string
 }
@@ -37,6 +38,7 @@ export enum DescriptionTypes {
   Facebook = 'FACEBOOK',
   Homepage = 'HOMEPAGE',
   Twitter = 'TWITTER',
+  Telegram = 'TELEGRAM',
 }
 
 export type Message = {
