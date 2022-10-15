@@ -22,9 +22,6 @@ const App: FC = () => {
 
         if (response.data.ticker?.active) {
           setTicker(response.data.ticker)
-          if (ticker?.title) {
-            document.title = ticker.title
-          }
         }
 
         setIsLoading(false)
@@ -44,6 +41,12 @@ const App: FC = () => {
     // This should only be executed once on load (~ componentDidMount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (ticker?.title) {
+      document.title = ticker.title
+    }
+  }, [ticker])
 
   if (isLoading) {
     return (
