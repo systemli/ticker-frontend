@@ -3,50 +3,56 @@ import ReactMarkdown from 'react-markdown'
 import { Button, Card, Icon, List, Modal } from 'semantic-ui-react'
 import Credits from './Credits'
 import DescriptionItem from './DescriptionItem'
-import { DescriptionTypes, Ticker } from '../lib/types'
+import { DescriptionTypes } from '../lib/types'
 import { getAtomFeedUrl, getRssFeedUrl } from '../lib/api'
+import useTicker from './useTicker'
 
 interface Props {
-  ticker: Ticker
   isModal?: boolean
 }
 
-const About: FC<Props> = props => {
+const About: FC<Props> = ({ isModal }) => {
+  const { ticker } = useTicker()
+
+  if (!ticker) {
+    return null
+  }
+
   const renderDescriptionList = () => (
     <List>
-      {props.ticker.information.author && (
+      {ticker.information.author && (
         <DescriptionItem
-          info={props.ticker.information.author}
+          info={ticker.information.author}
           type={DescriptionTypes.Author}
         />
       )}
-      {props.ticker.information.email && (
+      {ticker.information.email && (
         <DescriptionItem
-          info={props.ticker.information.email}
+          info={ticker.information.email}
           type={DescriptionTypes.Email}
         />
       )}
-      {props.ticker.information.url && (
+      {ticker.information.url && (
         <DescriptionItem
-          info={props.ticker.information.url}
+          info={ticker.information.url}
           type={DescriptionTypes.Homepage}
         />
       )}
-      {props.ticker.information.twitter && (
+      {ticker.information.twitter && (
         <DescriptionItem
-          info={props.ticker.information.twitter}
+          info={ticker.information.twitter}
           type={DescriptionTypes.Twitter}
         />
       )}
-      {props.ticker.information.facebook && (
+      {ticker.information.facebook && (
         <DescriptionItem
-          info={props.ticker.information.facebook}
+          info={ticker.information.facebook}
           type={DescriptionTypes.Facebook}
         />
       )}
-      {props.ticker.information.telegram && (
+      {ticker.information.telegram && (
         <DescriptionItem
-          info={props.ticker.information.telegram}
+          info={ticker.information.telegram}
           type={DescriptionTypes.Telegram}
         />
       )}
@@ -60,7 +66,7 @@ const About: FC<Props> = props => {
     </List>
   )
 
-  if (props.isModal) {
+  if (isModal) {
     return (
       <Modal
         closeIcon
@@ -73,7 +79,7 @@ const About: FC<Props> = props => {
       >
         <Modal.Header>About</Modal.Header>
         <Modal.Content>
-          <ReactMarkdown>{props.ticker.description}</ReactMarkdown>
+          <ReactMarkdown>{ticker.description || ''}</ReactMarkdown>
         </Modal.Content>
         <Modal.Content>
           {renderDescriptionList()}
@@ -90,7 +96,7 @@ const About: FC<Props> = props => {
           <Card.Header>About</Card.Header>
         </Card.Content>
         <Card.Content>
-          <ReactMarkdown>{props.ticker.description}</ReactMarkdown>
+          <ReactMarkdown>{ticker.description || ''}</ReactMarkdown>
         </Card.Content>
         <Card.Content>{renderDescriptionList()}</Card.Content>
       </Card>
