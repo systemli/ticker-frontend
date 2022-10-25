@@ -7,6 +7,7 @@ import { isMobile } from '../lib/helper'
 import About from '../components/About'
 import ReloadInfo from '../components/ReloadInfo'
 import MessageList from '../components/MessageList'
+import DynamicMetaTags from '../components/DynamicMetaTags'
 
 const Wrapper = styled(Container)`
   padding: ${spacing.normal} 0;
@@ -23,13 +24,11 @@ interface Props {
 
 type StickyContext = Document | Window | HTMLElement | React.Ref<HTMLElement>
 
-const ActiveView: FC<Props> = props => {
+const ActiveView: FC<Props> = ({ ticker, refreshInterval }) => {
   const [stickyContext, setStickyContext] = useState<StickyContext>()
 
   const headline =
-    props.ticker === null || props.ticker.title == undefined
-      ? 'Ticker'
-      : props.ticker.title
+    ticker === null || ticker.title == undefined ? 'Ticker' : ticker.title
 
   const handleContextRef = useCallback((stickyContextValue: StickyContext) => {
     setStickyContext(stickyContextValue)
@@ -38,28 +37,30 @@ const ActiveView: FC<Props> = props => {
   if (isMobile()) {
     return (
       <Wrapper>
-        <About isModal ticker={props.ticker} />
+        <DynamicMetaTags ticker={ticker} />
+        <About isModal ticker={ticker} />
         {headline && <HeaderWrapper content={headline} size={'large'} />}
         <ReloadInfo />
-        <MessageList refreshInterval={props.refreshInterval} />
+        <MessageList refreshInterval={refreshInterval} />
       </Wrapper>
     )
   }
 
   return (
     <Wrapper>
+      <DynamicMetaTags ticker={ticker} />
       {headline && <HeaderWrapper content={headline} size={'large'} />}
       <ReloadInfo />
       <Grid divided={'vertically'}>
         <Grid.Row columns={2}>
           <Grid.Column computer={10} tablet={10}>
             <div ref={handleContextRef}>
-              <MessageList refreshInterval={props.refreshInterval} />
+              <MessageList refreshInterval={refreshInterval} />
             </div>
           </Grid.Column>
           <Grid.Column computer={6} tablet={6}>
             <Sticky context={stickyContext} offset={30}>
-              <About ticker={props.ticker} />
+              <About ticker={ticker} />
             </Sticky>
           </Grid.Column>
         </Grid.Row>
