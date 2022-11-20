@@ -1,9 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 import { Message as MessageType } from '../lib/types'
 import Message from './Message'
 import { getTimeline } from '../lib/api'
 import useTicker from './useTicker'
+import MessagesLoader from './MessagesLoader'
+import MessagesPlaceholder from './MessagesPlaceholder'
 
 const MessageList: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -105,23 +107,10 @@ const MessageList: FC = () => {
     return () => clearInterval(interval)
   }, [fetchMessages, messages, settings?.refresh_interval])
 
-  const renderPlaceholder = () => (
-    <Segment placeholder>
-      <Header icon>
-        <Icon color={'grey'} name="hourglass half" />
-        We dont have any messages at the moment.
-      </Header>
-    </Segment>
-  )
+  const renderPlaceholder = () => <MessagesPlaceholder />
 
   if (isLoading) {
-    return (
-      <Dimmer active inverted>
-        <Loader inverted size="small">
-          Loading messages
-        </Loader>
-      </Dimmer>
-    )
+    return <MessagesLoader />
   }
 
   if (!messages.length) {

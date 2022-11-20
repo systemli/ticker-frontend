@@ -4,6 +4,7 @@ import ErrorView from './views/ErrorView'
 import ActiveView from './views/ActiveView'
 import InactiveView from './views/InactiveView'
 import useTicker from './components/useTicker'
+import EmbedActiveView from './views/EmbedActiveView'
 
 const ViewRenderer: FC = () => {
   const { ticker, settings, isLoading, isOffline, hasError } = useTicker()
@@ -35,7 +36,11 @@ const ViewRenderer: FC = () => {
   }
 
   if (ticker?.active) {
-    return <ActiveView />
+    return process.env.REACT_APP_BUILD_TARGET === 'embed' ? (
+      <EmbedActiveView />
+    ) : (
+      <ActiveView />
+    )
   }
 
   if (ticker === null && settings?.inactive_settings !== undefined) {

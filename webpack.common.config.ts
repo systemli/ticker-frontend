@@ -48,6 +48,9 @@ const baseConfig: Configuration = {
       'process.env.REACT_APP_API_URL': JSON.stringify(
         process.env.REACT_APP_API_URL || 'http://localhost:8080/v1'
       ),
+      'process.env.REACT_APP_BUILD_TARGET': JSON.stringify(
+        process.env.REACT_APP_BUILD_TARGET || 'app'
+      ),
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',

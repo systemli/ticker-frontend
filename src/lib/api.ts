@@ -38,6 +38,7 @@ export async function getInit(): Promise<InitResponse> {
 export type TimelineOpts = {
   after?: string | null
   before?: string | null
+  limit?: string | null
 }
 
 export async function getTimeline(
@@ -49,6 +50,10 @@ export async function getTimeline(
 
   if (opts.before != null) {
     return get(`${ApiUrl}/timeline?before=${opts.before}`)
+  }
+
+  if (opts.limit != null) {
+    return get(`${ApiUrl}/timeline?limit=${opts.limit}`)
   }
 
   return get(`${ApiUrl}/timeline`)

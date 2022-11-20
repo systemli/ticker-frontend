@@ -4,6 +4,7 @@
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
+    "build-embed": "REACT_APP_BUILD_TARGET=embed webpack --config webpack.prod.config.ts && cp -r dist/ public/embed && REACT_APP_BUILD_TARGET=app webpack --config webpack.prod.config.ts",
     "test": "jest",
     "lint": "eslint --ext=ts,tsx src",
     "postinstall": "semantic-ui-css-patch"
@@ -79,7 +80,6 @@
     "postcss-loader": "^7.0.0",
     "postcss-remove-google-fonts": "^1.2.0",
     "prettier": "^2.7.0",
-    "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "resolve": "^1.22.0",
     "resolve-url-loader": "^5.0.0",

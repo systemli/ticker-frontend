@@ -10,6 +10,7 @@
 
 # production
 /dist
+/public/embed
 
 # misc
 .DS_Store
