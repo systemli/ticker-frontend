@@ -99,7 +99,7 @@ const MessageList: FC = () => {
   useEffect(() => {
     const interval = setInterval(
       () => fetchMessages(),
-      settings?.refresh_interval || 0
+      settings?.refresh_interval || 60000
     )
 
     return () => clearInterval(interval)
