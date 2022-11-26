@@ -1,10 +1,10 @@
-import ViewRenderer from './ViewRenderer'
+import Ticker from './Ticker'
 import { render, screen } from '@testing-library/react'
 import * as api from './lib/api'
-import { Settings, Ticker } from './lib/types'
+import { Settings, Ticker as TickerType } from './lib/types'
 import { TickerProvider } from './components/useTicker'
 
-describe('ViewRenderer', function () {
+describe('Ticker', function () {
   const initSettings = {
     refresh_interval: 1000,
     inactive_settings: {
@@ -31,19 +31,19 @@ describe('ViewRenderer', function () {
       twitter: 'systemli',
       facebook: 'betternot',
     },
-  } as Ticker
+  } as TickerType
 
-  const renderViewRenderer = () => {
+  const renderTicker = () => {
     return render(
       <TickerProvider>
-        <ViewRenderer />
+        <Ticker />
       </TickerProvider>
     )
   }
 
   test('renders OfflineView', async function () {
     jest.spyOn(api, 'getInit').mockRejectedValue(new TypeError())
-    renderViewRenderer()
+    renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
@@ -60,7 +60,7 @@ describe('ViewRenderer', function () {
           'The server responses with an error: Internal Server Error (500)'
         )
       )
-    renderViewRenderer()
+    renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
@@ -78,7 +78,7 @@ describe('ViewRenderer', function () {
         ticker: null,
       },
     })
-    renderViewRenderer()
+    renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
@@ -105,7 +105,7 @@ describe('ViewRenderer', function () {
     window.IntersectionObserver = jest
       .fn()
       .mockImplementation(intersectionObserverMock)
-    renderViewRenderer()
+    renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 

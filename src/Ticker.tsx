@@ -5,7 +5,7 @@ import ActiveView from './views/ActiveView'
 import InactiveView from './views/InactiveView'
 import useTicker from './components/useTicker'
 
-const ViewRenderer: FC = () => {
+const Ticker: FC = () => {
   const { ticker, settings, isLoading, isOffline, hasError } = useTicker()
 
   useEffect(() => {
@@ -45,4 +45,4 @@ const ViewRenderer: FC = () => {
   return <div>...</div>
 }
 
-export default ViewRenderer
+export default Ticker

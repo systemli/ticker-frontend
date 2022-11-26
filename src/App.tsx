@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { TickerProvider } from './components/useTicker'
-import ViewRenderer from './ViewRenderer'
+import Ticker from './Ticker'
 
 const App: FC = () => {
   return (
     <TickerProvider>
-      <ViewRenderer />
+      <Ticker />
     </TickerProvider>
   )
 }
