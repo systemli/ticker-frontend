@@ -1,12 +1,14 @@
 import { FC } from 'react'
 import { Helmet } from 'react-helmet'
-import { Ticker } from '../lib/types'
+import useTicker from './useTicker'
 
-interface Props {
-  ticker: Ticker
-}
+const DynamicMetaTags: FC = () => {
+  const { ticker } = useTicker()
 
-const DynamicMetaTags: FC<Props> = ({ ticker }) => {
+  if (!ticker) {
+    return null
+  }
+
   return (
     <Helmet>
       <meta content={ticker.description} name="description" />

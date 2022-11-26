@@ -56,7 +56,7 @@ const Map: FC<Props> = props => {
 
     if (
       features.length === 1 &&
-      // FIXME: Type is currently not defined by DefinitelyTyped?
+      // Type is currently not defined by DefinitelyTyped
       // @ts-ignore
       features[0].feature.geometry.type === 'Point'
     ) {

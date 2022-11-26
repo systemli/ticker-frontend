@@ -3,15 +3,14 @@ import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
 import { Message as MessageType } from '../lib/types'
 import Message from './Message'
 import { getTimeline } from '../lib/api'
+import useTicker from './useTicker'
 
-interface Props {
-  refreshInterval: number
-}
-
-const MessageList: FC<Props> = props => {
+const MessageList: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [messages, setMessages] = useState<MessageType[]>([])
   const [lastMessageReceived, setLastMessageReceived] = useState<boolean>(false)
+
+  const { settings } = useTicker()
 
   const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
 
@@ -98,10 +97,13 @@ const MessageList: FC<Props> = props => {
 
   // periodically fetch new messages
   useEffect(() => {
-    const interval = setInterval(() => fetchMessages(), props.refreshInterval)
+    const interval = setInterval(
+      () => fetchMessages(),
+      settings?.refresh_interval || 60000
+    )
 
     return () => clearInterval(interval)
-  }, [fetchMessages, messages, props.refreshInterval])
+  }, [fetchMessages, messages, settings?.refresh_interval])
 
   const renderPlaceholder = () => (
     <Segment placeholder>
