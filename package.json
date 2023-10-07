@@ -75,7 +75,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-transform-stub": "^2.0.0",
-    "postcss": "^8.4.12",
+    "postcss": "^8.4.31",
     "postcss-loader": "^7.3.3",
     "postcss-remove-google-fonts": "^1.2.0",
     "prettier": "^3.0.3",
