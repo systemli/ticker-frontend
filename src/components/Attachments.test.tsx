@@ -4,7 +4,7 @@ import Attachments from './Attachments'
 describe('Attachment', function () {
   test('renders single image correctly', function () {
     const attachments = [
-      { content_type: 'image/jpeg', url: 'https://example.com/image.jpg' },
+      { contentType: 'image/jpeg', url: 'https://example.com/image.jpg' },
     ]
     const { asFragment } = render(<Attachments attachments={attachments} />)
 
@@ -13,8 +13,8 @@ describe('Attachment', function () {
 
   test('renders multiple images as slider', function () {
     const attachments = [
-      { content_type: 'image/jpeg', url: 'https://example.com/image.jpg' },
-      { content_type: 'image/jpeg', url: 'https://example.com/image.jpg' },
+      { contentType: 'image/jpeg', url: 'https://example.com/image.jpg' },
+      { contentType: 'image/jpeg', url: 'https://example.com/image.jpg' },
     ]
     const { asFragment } = render(<Attachments attachments={attachments} />)
 

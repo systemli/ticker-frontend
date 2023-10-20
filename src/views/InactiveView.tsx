@@ -20,7 +20,7 @@ const InactiveView: FC<Props> = props => {
       <Icon name="hide" />
       <Header.Content>
         {props.settings.headline}
-        <Header.Subheader>{props.settings.sub_headline}</Header.Subheader>
+        <Header.Subheader>{props.settings.subHeadline}</Header.Subheader>
       </Header.Content>
     </Header>
   )
@@ -30,7 +30,7 @@ const InactiveView: FC<Props> = props => {
       <Grid centered>
         <Grid.Column computer={8} mobile={16} tablet={8}>
           {props.settings.headline &&
-            props.settings.sub_headline &&
+            props.settings.subHeadline &&
             renderHeader()}
           <Card fluid>
             <Card.Content>

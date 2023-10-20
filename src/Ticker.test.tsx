@@ -6,21 +6,21 @@ import { TickerProvider } from './components/useTicker'
 
 describe('Ticker', function () {
   const initSettings = {
-    refresh_interval: 1000,
-    inactive_settings: {
+    refreshInterval: 1000,
+    inactiveSettings: {
       author: 'Systemli Ticker Team',
       email: 'admin@systemli.org',
       homepage: '',
       twitter: '',
       headline: 'The ticker is currently inactive.',
-      sub_headline: 'Please contact us if you want to use it.',
+      subHeadline: 'Please contact us if you want to use it.',
       description: '...',
     },
   } as Settings
   const ticker = {
     id: '1',
     active: true,
-    creation_date: new Date(),
+    createdAt: new Date(),
     title: 'Ticker Title',
     description: 'Ticker Description',
     domain: 'example.com',
