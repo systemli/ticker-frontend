@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,8 +17,8 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "yarn"
+          node-version: '18'
+          cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
@@ -33,11 +33,11 @@ jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: [test]
     strategy:
       matrix:
-        node-version: ["16", "18", "current"]
+        node-version: ['18', '20', 'current']
 
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
@@ -58,7 +58,7 @@ jobs:
   automerge:
     name: Merge Automatically
     needs: [test, build]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     permissions:
       pull-requests: write
