@@ -20,47 +20,16 @@ const About: FC<Props> = ({ isModal }) => {
 
   const renderDescriptionList = () => (
     <List>
-      {ticker.information.author && (
-        <DescriptionItem
-          info={ticker.information.author}
-          type={DescriptionTypes.Author}
-        />
-      )}
-      {ticker.information.email && (
-        <DescriptionItem
-          info={ticker.information.email}
-          type={DescriptionTypes.Email}
-        />
-      )}
-      {ticker.information.url && (
-        <DescriptionItem
-          info={ticker.information.url}
-          type={DescriptionTypes.Homepage}
-        />
-      )}
-      {ticker.information.twitter && (
-        <DescriptionItem
-          info={ticker.information.twitter}
-          type={DescriptionTypes.Twitter}
-        />
-      )}
-      {ticker.information.facebook && (
-        <DescriptionItem
-          info={ticker.information.facebook}
-          type={DescriptionTypes.Facebook}
-        />
-      )}
-      {ticker.information.telegram && (
-        <DescriptionItem
-          info={ticker.information.telegram}
-          type={DescriptionTypes.Telegram}
-        />
-      )}
+      {ticker.information.author && <DescriptionItem info={ticker.information.author} type={DescriptionTypes.Author} />}
+      {ticker.information.email && <DescriptionItem info={ticker.information.email} type={DescriptionTypes.Email} />}
+      {ticker.information.url && <DescriptionItem info={ticker.information.url} type={DescriptionTypes.Homepage} />}
+      {ticker.information.twitter && <DescriptionItem info={ticker.information.twitter} type={DescriptionTypes.Twitter} />}
+      {ticker.information.facebook && <DescriptionItem info={ticker.information.facebook} type={DescriptionTypes.Facebook} />}
+      {ticker.information.telegram && <DescriptionItem info={ticker.information.telegram} type={DescriptionTypes.Telegram} />}
       <List.Item>
         <List.Icon name="feed" />
         <List.Content>
-          <a href={getAtomFeedUrl()}>Atom</a> |{' '}
-          <a href={getRssFeedUrl()}>RSS</a>
+          <a href={getAtomFeedUrl()}>Atom</a> | <a href={getRssFeedUrl()}>RSS</a>
         </List.Content>
       </List.Item>
     </List>

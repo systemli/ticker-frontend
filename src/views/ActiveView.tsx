@@ -23,8 +23,7 @@ const ActiveView: FC = () => {
   const [stickyContext, setStickyContext] = useState<StickyContext>()
   const { ticker } = useTicker()
 
-  const headline =
-    ticker === null || ticker.title == undefined ? 'Ticker' : ticker.title
+  const headline = ticker === null || ticker.title == undefined ? 'Ticker' : ticker.title
 
   const handleContextRef = useCallback((stickyContextValue: StickyContext) => {
     setStickyContext(stickyContextValue)

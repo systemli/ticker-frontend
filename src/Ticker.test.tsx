@@ -47,28 +47,16 @@ describe('Ticker', function () {
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
-    expect(
-      await screen.findByText('It seems that you are offline.')
-    ).toBeInTheDocument()
+    expect(await screen.findByText('It seems that you are offline.')).toBeInTheDocument()
   })
 
   test('renders ErrorView', async function () {
-    jest
-      .spyOn(api, 'getInit')
-      .mockRejectedValue(
-        new Error(
-          'The server responses with an error: Internal Server Error (500)'
-        )
-      )
+    jest.spyOn(api, 'getInit').mockRejectedValue(new Error('The server responses with an error: Internal Server Error (500)'))
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
-    expect(
-      await screen.findByText(
-        'There seems to be a problem connecting to the server.'
-      )
-    ).toBeInTheDocument()
+    expect(await screen.findByText('There seems to be a problem connecting to the server.')).toBeInTheDocument()
   })
 
   test('renders InactiveView', async function () {
@@ -82,9 +70,7 @@ describe('Ticker', function () {
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
-    expect(
-      await screen.findByText('The ticker is currently inactive.')
-    ).toBeInTheDocument()
+    expect(await screen.findByText('The ticker is currently inactive.')).toBeInTheDocument()
   })
 
   test('renders ActiveView', async function () {
@@ -102,21 +88,13 @@ describe('Ticker', function () {
     const intersectionObserverMock = () => ({
       observe: () => null,
     })
-    window.IntersectionObserver = jest
-      .fn()
-      .mockImplementation(intersectionObserverMock)
+    window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock)
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
-    expect(
-      await screen.findByText(
-        'The messages update automatically. There is no need to reload the entire page.'
-      )
-    ).toBeInTheDocument()
+    expect(await screen.findByText('The messages update automatically. There is no need to reload the entire page.')).toBeInTheDocument()
 
-    expect(
-      await screen.findByText('We dont have any messages at the moment.')
-    ).toBeInTheDocument()
+    expect(await screen.findByText('We dont have any messages at the moment.')).toBeInTheDocument()
   })
 })

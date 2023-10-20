@@ -2,9 +2,7 @@ import { FC, useCallback, useState } from 'react'
 import { Message } from 'semantic-ui-react'
 
 const ReloadInfo: FC = () => {
-  const [showReloadInfo, setShowReloadInfo] = useState<boolean>(
-    localStorage.getItem('showReloadInfo') === null
-  )
+  const [showReloadInfo, setShowReloadInfo] = useState<boolean>(localStorage.getItem('showReloadInfo') === null)
 
   const handleDismiss = useCallback(() => {
     setShowReloadInfo(false)
