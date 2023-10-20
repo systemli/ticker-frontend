@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
 import { getInit } from '../lib/api'
 import { Settings, Ticker } from '../lib/types'
 import { useState } from 'react'
@@ -19,11 +13,7 @@ interface TickerContext {
 
 const TickerContext = createContext<TickerContext>({} as TickerContext)
 
-export function TickerProvider({
-  children,
-}: {
-  children: ReactNode
-}): JSX.Element {
+export function TickerProvider({ children }: { children: ReactNode }): JSX.Element {
   const [ticker, setTicker] = useState<Ticker | null>(null)
   const [settings, setSettings] = useState<Settings>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -68,11 +58,7 @@ export function TickerProvider({
     [ticker, settings, isLoading, isOffline, hasError]
   )
 
-  return (
-    <TickerContext.Provider value={memoedValue}>
-      {children}
-    </TickerContext.Provider>
-  )
+  return <TickerContext.Provider value={memoedValue}>{children}</TickerContext.Provider>
 }
 
 export default function useTicker() {

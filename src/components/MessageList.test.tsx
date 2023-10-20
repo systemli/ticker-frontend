@@ -10,15 +10,11 @@ describe('MessageList', function () {
     const intersectionObserverMock = () => ({
       observe: () => null,
     })
-    window.IntersectionObserver = jest
-      .fn()
-      .mockImplementation(intersectionObserverMock)
+    window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock)
 
     render(<MessageList />)
 
     expect(screen.getByText('Loading messages')).toBeInTheDocument()
-    expect(
-      await screen.findByText('We dont have any messages at the moment.')
-    ).toBeInTheDocument()
+    expect(await screen.findByText('We dont have any messages at the moment.')).toBeInTheDocument()
   })
 })

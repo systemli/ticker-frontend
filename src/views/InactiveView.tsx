@@ -29,41 +29,15 @@ const InactiveView: FC<Props> = props => {
     <Wrapper>
       <Grid centered>
         <Grid.Column computer={8} mobile={16} tablet={8}>
-          {props.settings.headline &&
-            props.settings.subHeadline &&
-            renderHeader()}
+          {props.settings.headline && props.settings.subHeadline && renderHeader()}
           <Card fluid>
-            <Card.Content>
-              {props.settings.description && (
-                <ReactMarkdown>{props.settings.description}</ReactMarkdown>
-              )}
-            </Card.Content>
+            <Card.Content>{props.settings.description && <ReactMarkdown>{props.settings.description}</ReactMarkdown>}</Card.Content>
             <Card.Content>
               <List>
-                {props.settings.author && (
-                  <DescriptionItem
-                    info={props.settings.author}
-                    type={DescriptionTypes.Author}
-                  />
-                )}
-                {props.settings.email && (
-                  <DescriptionItem
-                    info={props.settings.email}
-                    type={DescriptionTypes.Email}
-                  />
-                )}
-                {props.settings.homepage && (
-                  <DescriptionItem
-                    info={props.settings.homepage}
-                    type={DescriptionTypes.Homepage}
-                  />
-                )}
-                {props.settings.twitter && (
-                  <DescriptionItem
-                    info={props.settings.twitter}
-                    type={DescriptionTypes.Twitter}
-                  />
-                )}
+                {props.settings.author && <DescriptionItem info={props.settings.author} type={DescriptionTypes.Author} />}
+                {props.settings.email && <DescriptionItem info={props.settings.email} type={DescriptionTypes.Email} />}
+                {props.settings.homepage && <DescriptionItem info={props.settings.homepage} type={DescriptionTypes.Homepage} />}
+                {props.settings.twitter && <DescriptionItem info={props.settings.twitter} type={DescriptionTypes.Twitter} />}
               </List>
             </Card.Content>
           </Card>

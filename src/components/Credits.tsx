@@ -11,11 +11,7 @@ const Credits: FC = () => {
   return (
     <Wrapper>
       <Icon name="code" /> with <Icon color="red" name="heart" /> by{' '}
-      <a
-        href="https://www.systemli.org"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
+      <a href="https://www.systemli.org" rel="noopener noreferrer" target="_blank">
         systemli.org
       </a>
     </Wrapper>

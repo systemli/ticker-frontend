@@ -74,10 +74,7 @@ const MessageList: FC = () => {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      fetchOlderMessagesCallback,
-      intersectionObserverOptions
-    )
+    const observer = new IntersectionObserver(fetchOlderMessagesCallback, intersectionObserverOptions)
     const currentRef = loadMoreSpinnerRef.current
 
     if (currentRef) {
@@ -89,18 +86,11 @@ const MessageList: FC = () => {
         observer.unobserve(currentRef)
       }
     }
-  }, [
-    fetchOlderMessagesCallback,
-    intersectionObserverOptions,
-    loadMoreSpinnerRef,
-  ])
+  }, [fetchOlderMessagesCallback, intersectionObserverOptions, loadMoreSpinnerRef])
 
   // periodically fetch new messages
   useEffect(() => {
-    const interval = setInterval(
-      () => fetchMessages(),
-      settings?.refreshInterval || 60000
-    )
+    const interval = setInterval(() => fetchMessages(), settings?.refreshInterval || 60000)
 
     return () => clearInterval(interval)
   }, [fetchMessages, messages, settings?.refreshInterval])

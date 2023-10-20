@@ -38,9 +38,7 @@ interface Props {
 
 const Map: FC<Props> = props => {
   const [mapExpanded, setMapExpanded] = useState<boolean>(false)
-  const featureCollection: GeoJSON.FeatureCollection = JSON.parse(
-    props.featureCollection
-  )
+  const featureCollection: GeoJSON.FeatureCollection = JSON.parse(props.featureCollection)
 
   const handleIconClick = useCallback(() => {
     setMapExpanded(!mapExpanded)
@@ -79,10 +77,7 @@ const Map: FC<Props> = props => {
           add: handleDataAdd,
         }}
       />
-      <ExpandButton
-        icon={mapExpanded ? 'compress' : 'expand'}
-        onClick={handleIconClick}
-      />
+      <ExpandButton icon={mapExpanded ? 'compress' : 'expand'} onClick={handleIconClick} />
     </Wrapper>
   )
 }

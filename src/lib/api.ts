@@ -23,9 +23,7 @@ async function get<T>(path: string): Promise<T> {
   const response = await fetch(path)
 
   if (!response.ok) {
-    throw new Error(
-      `The server responses with an error: ${response.statusText} (${response.status})`
-    )
+    throw new Error(`The server responses with an error: ${response.statusText} (${response.status})`)
   }
 
   return response.json().catch(() => ({}))
@@ -40,9 +38,7 @@ export type TimelineOpts = {
   before?: string | null
 }
 
-export async function getTimeline(
-  opts: TimelineOpts
-): Promise<TimelineResponse> {
+export async function getTimeline(opts: TimelineOpts): Promise<TimelineResponse> {
   if (opts.after != null) {
     return get(`${ApiUrl}/timeline?after=${opts.after}`)
   }

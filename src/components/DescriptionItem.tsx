@@ -30,11 +30,7 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="facebook" />
           <List.Content>
-            <a
-              href={`https://fb.com/${props.info}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href={`https://fb.com/${props.info}`} rel="noopener noreferrer" target="_blank">
               fb.com/{props.info}
             </a>
           </List.Content>
@@ -56,11 +52,7 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="twitter" />
           <List.Content>
-            <a
-              href={`https://twitter.com/${props.info}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href={`https://twitter.com/${props.info}`} rel="noopener noreferrer" target="_blank">
               @{props.info}
             </a>
           </List.Content>
@@ -71,11 +63,7 @@ const DescriptionItem: FC<Props> = props => {
         <List.Item>
           <List.Icon name="telegram" />
           <List.Content>
-            <a
-              href={`https://t.me/${props.info}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <a href={`https://t.me/${props.info}`} rel="noopener noreferrer" target="_blank">
               @{props.info}
             </a>
           </List.Content>

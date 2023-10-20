@@ -41,9 +41,7 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(
-      'http://localhost:8080/v1/timeline?after=1'
-    )
+    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?after=1')
   })
 
   test('getTimeline w/ before pagination', async function () {
@@ -53,8 +51,6 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(
-      'http://localhost:8080/v1/timeline?before=1'
-    )
+    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?before=1')
   })
 })

@@ -1,13 +1,5 @@
 import { FC } from 'react'
-import {
-  ButtonBack,
-  ButtonNext,
-  CarouselProvider,
-  Dot,
-  Image,
-  Slide,
-  Slider,
-} from 'pure-react-carousel'
+import { ButtonBack, ButtonNext, CarouselProvider, Dot, Image, Slide, Slider } from 'pure-react-carousel'
 import styled from 'styled-components'
 import { Attachment } from '../lib/types'
 import 'pure-react-carousel/dist/react-carousel.es.css'
@@ -48,40 +40,18 @@ const Attachments: FC<Props> = props => {
             ))}
           </Button.Group>
         </DotWrapper>
-        <Button
-          as={ButtonBack}
-          color="grey"
-          floated="left"
-          icon="arrow circle left"
-          size="large"
-          style={{ ...style, ...{ left: 5 } }}
-        />
-        <Button
-          as={ButtonNext}
-          color="grey"
-          floated="right"
-          icon="arrow circle right"
-          size="large"
-          style={{ ...style, ...{ right: 5 } }}
-        />
+        <Button as={ButtonBack} color="grey" floated="left" icon="arrow circle left" size="large" style={{ ...style, ...{ left: 5 } }} />
+        <Button as={ButtonNext} color="grey" floated="right" icon="arrow circle right" size="large" style={{ ...style, ...{ right: 5 } }} />
       </>
     )
   }
 
   return (
-    <Wrapper
-      naturalSlideHeight={0.75}
-      naturalSlideWidth={1}
-      totalSlides={props.attachments.length}
-    >
+    <Wrapper naturalSlideHeight={0.75} naturalSlideWidth={1} totalSlides={props.attachments.length}>
       <Slider>
         {props.attachments.map((image, key) => (
           <Slide key={key} index={key}>
-            <Image
-              hasMasterSpinner={false}
-              src={image.url}
-              style={{ objectFit: 'scale-down' }}
-            />
+            <Image hasMasterSpinner={false} src={image.url} style={{ objectFit: 'scale-down' }} />
           </Slide>
         ))}
       </Slider>

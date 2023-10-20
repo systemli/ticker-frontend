@@ -25,9 +25,7 @@ const Ticker: FC = () => {
   }
 
   if (hasError) {
-    return (
-      <ErrorView message="There seems to be a problem connecting to the server." />
-    )
+    return <ErrorView message="There seems to be a problem connecting to the server." />
   }
 
   if (isOffline) {

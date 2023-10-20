@@ -10,11 +10,7 @@ describe('ReloadInfo', function () {
   test('renders correctly', async function () {
     const { container } = render(<ReloadInfo />)
 
-    expect(
-      screen.getByText(
-        'The messages update automatically. There is no need to reload the entire page.'
-      )
-    ).toBeVisible()
+    expect(screen.getByText('The messages update automatically. There is no need to reload the entire page.')).toBeVisible()
 
     const close = container.querySelector('i.close') as HTMLElement
     const user = userEvent.setup()
@@ -27,11 +23,7 @@ describe('ReloadInfo', function () {
     localStorage.setItem('showReloadInfo', '0')
     const { container } = render(<ReloadInfo />)
 
-    expect(
-      screen.getByText(
-        'The messages update automatically. There is no need to reload the entire page.'
-      )
-    ).toBeInTheDocument()
+    expect(screen.getByText('The messages update automatically. There is no need to reload the entire page.')).toBeInTheDocument()
     expect(container.firstElementChild).toHaveClass('hidden')
   })
 })
