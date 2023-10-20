@@ -4,7 +4,6 @@ import { Message as MessageType } from '../lib/types'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
-import { replaceMagic } from '../lib/helper'
 import Attachments from './Attachments'
 import styled from 'styled-components'
 import Map from './Map'
@@ -34,7 +33,7 @@ const Message: FC<Props> = props => {
       <CardContent>
         <div
           dangerouslySetInnerHTML={{
-            __html: replaceMagic(props.message.text),
+            __html: props.message.text.replace(/(?:\r\n|\r|\n)/g, '<br/>'),
           }}
         />
       </CardContent>
