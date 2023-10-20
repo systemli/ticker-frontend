@@ -32,15 +32,11 @@ const Ticker: FC = () => {
     return <ErrorView message="It seems that you are offline." />
   }
 
-  if (ticker?.active) {
-    return <ActiveView />
-  }
-
   if (ticker === null && settings?.inactiveSettings !== undefined) {
     return <InactiveView settings={settings.inactiveSettings} />
   }
 
-  return <div>...</div>
+  return <ActiveView />
 }
 
 export default Ticker

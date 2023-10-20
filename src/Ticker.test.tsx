@@ -19,7 +19,6 @@ describe('Ticker', function () {
   } as Settings
   const ticker = {
     id: '1',
-    active: true,
     createdAt: new Date(),
     title: 'Ticker Title',
     description: 'Ticker Description',

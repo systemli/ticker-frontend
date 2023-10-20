@@ -27,10 +27,7 @@ export function TickerProvider({ children }: { children: ReactNode }): JSX.Eleme
           setSettings(response.data.settings)
         }
 
-        if (response.data.ticker?.active) {
-          setTicker(response.data.ticker)
-        }
-
+        setTicker(response.data.ticker)
         setIsLoading(false)
       })
       .catch(error => {
