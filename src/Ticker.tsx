@@ -38,8 +38,8 @@ const Ticker: FC = () => {
     return <ActiveView />
   }
 
-  if (ticker === null && settings?.inactive_settings !== undefined) {
-    return <InactiveView settings={settings.inactive_settings} />
+  if (ticker === null && settings?.inactiveSettings !== undefined) {
+    return <InactiveView settings={settings.inactiveSettings} />
   }
 
   return <div>...</div>

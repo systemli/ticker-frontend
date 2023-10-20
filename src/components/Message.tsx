@@ -24,10 +24,10 @@ const Message: FC<Props> = props => {
   const relativeCreationDate = (
     <div>
       <Icon name="clock" />
-      {dayjs(props.message.creation_date).fromNow()}
+      {dayjs(props.message.createdAt).fromNow()}
     </div>
   )
-  const creationDate = dayjs(props.message.creation_date).format('LLLL')
+  const creationDate = dayjs(props.message.createdAt).format('LLLL')
 
   return (
     <Card fluid>
@@ -43,7 +43,7 @@ const Message: FC<Props> = props => {
           <Attachments attachments={props.message.attachments} />
         </AttachmentsWrapper>
       )}
-      <Map featureCollection={props.message.geo_information} />
+      <Map featureCollection={props.message.geoInformation} />
       <Card.Content extra>
         <Grid>
           <Grid.Row>

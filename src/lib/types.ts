@@ -1,6 +1,6 @@
 export type Ticker = {
   active: boolean
-  creation_date: Date
+  createdAt: Date
   description: string
   domain: string
   id: string
@@ -18,8 +18,8 @@ type TickerInformation = {
 }
 
 export type Settings = {
-  refresh_interval: number
-  inactive_settings: InactiveSettings
+  refreshInterval: number
+  inactiveSettings: InactiveSettings
 }
 
 export type InactiveSettings = {
@@ -28,7 +28,7 @@ export type InactiveSettings = {
   homepage: string
   twitter: string
   headline: string
-  sub_headline: string
+  subHeadline: string
   description: string
 }
 
@@ -45,16 +45,14 @@ export type Message = {
   id: string
   text: string
   ticker: number
-  creation_date: Date
-  tweet_id: string
-  tweet_user: string
+  createdAt: Date
   attachments: Attachment[]
   // Stringified GeoJSON.FeatureCollection
-  geo_information: string
+  geoInformation: string
 }
 
 export type Attachment = {
   // FIXME: Enum?
-  content_type: string
+  contentType: string
   url: string
 }

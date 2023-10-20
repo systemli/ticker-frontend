@@ -99,11 +99,11 @@ const MessageList: FC = () => {
   useEffect(() => {
     const interval = setInterval(
       () => fetchMessages(),
-      settings?.refresh_interval || 60000
+      settings?.refreshInterval || 60000
     )
 
     return () => clearInterval(interval)
-  }, [fetchMessages, messages, settings?.refresh_interval])
+  }, [fetchMessages, messages, settings?.refreshInterval])
 
   const renderPlaceholder = () => (
     <Segment placeholder>

@@ -7,11 +7,9 @@ describe('Message', function () {
       id: '1',
       text: 'message',
       ticker: 1,
-      creation_date: new Date(),
-      tweet_id: '',
-      tweet_user: '',
+      createdAt: new Date(),
       attachments: [],
-      geo_information: '{"type":"FeatureCollection","features":[]}',
+      geoInformation: '{"type":"FeatureCollection","features":[]}',
     }
     const { asFragment } = render(<Message message={message} />)
 
@@ -25,11 +23,9 @@ describe('Message', function () {
       id: '1',
       text: 'message',
       ticker: 1,
-      creation_date: new Date(),
-      tweet_id: '',
-      tweet_user: '',
+      createdAt: new Date(),
       attachments: [],
-      geo_information:
+      geoInformation:
         '{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[13.466282,52.5024]},"properties":null}]}',
     }
     const { asFragment } = render(<Message message={message} />)
