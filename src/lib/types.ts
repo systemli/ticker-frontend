@@ -1,5 +1,4 @@
 export type Ticker = {
-  active: boolean
   createdAt: Date
   description: string
   domain: string
