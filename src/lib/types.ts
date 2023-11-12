@@ -14,6 +14,7 @@ type TickerInformation = {
   telegram: string
   twitter: string
   url: string
+  mastodon: string
 }
 
 export type Settings = {
@@ -38,6 +39,7 @@ export enum DescriptionTypes {
   Homepage = 'HOMEPAGE',
   Twitter = 'TWITTER',
   Telegram = 'TELEGRAM',
+  Mastodon = 'MASTODON',
 }
 
 export type Message = {
