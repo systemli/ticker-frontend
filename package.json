@@ -78,7 +78,7 @@
     "postcss": "^8.4.31",
     "postcss-loader": "^7.3.3",
     "postcss-remove-google-fonts": "^1.2.0",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "resolve": "^1.22.0",
