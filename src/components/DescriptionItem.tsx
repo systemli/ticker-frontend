@@ -80,6 +80,17 @@ const DescriptionItem: FC<Props> = props => {
           </List.Content>
         </List.Item>
       )
+    case DescriptionTypes.Bluesky:
+      return (
+        <List.Item>
+          <List.Icon name="linkify" />
+          <List.Content>
+            <a href={`${props.info}`} rel="noopener noreferrer" target="_blank">
+              {props.info.replace('https://', '')}
+            </a>
+          </List.Content>
+        </List.Item>
+      )
     default:
       return null
   }

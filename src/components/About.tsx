@@ -27,6 +27,7 @@ const About: FC<Props> = ({ isModal }) => {
       {ticker.information.facebook && <DescriptionItem info={ticker.information.facebook} type={DescriptionTypes.Facebook} />}
       {ticker.information.telegram && <DescriptionItem info={ticker.information.telegram} type={DescriptionTypes.Telegram} />}
       {ticker.information.mastodon && <DescriptionItem info={ticker.information.mastodon} type={DescriptionTypes.Mastodon} />}
+      {ticker.information.bluesky && <DescriptionItem info={ticker.information.bluesky} type={DescriptionTypes.Bluesky} />}
       <List.Item>
         <List.Icon name="feed" />
         <List.Content>
