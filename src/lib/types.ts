@@ -15,6 +15,7 @@ type TickerInformation = {
   twitter: string
   url: string
   mastodon: string
+  bluesky: string
 }
 
 export type Settings = {
@@ -40,6 +41,7 @@ export enum DescriptionTypes {
   Twitter = 'TWITTER',
   Telegram = 'TELEGRAM',
   Mastodon = 'MASTODON',
+  Bluesky = 'BLUESKY',
 }
 
 export type Message = {
