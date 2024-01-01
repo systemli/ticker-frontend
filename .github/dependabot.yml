@@ -5,14 +5,45 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
+    groups:
+      react:
+        patterns:
+          - "@types/react"
+          - "@types/react-helmet"
+          - "react"
+          - "react-*"
+      development:
+        patterns:
+          - "@babel/*"
+          - "@testing-library/*"
+          - "@types/*"
+          - "@typescript-eslint/*"
+          - "babel-*"
+          - "css-loader"
+          - "dotenv"
+          - "dotenv-*"
+          - "eslint"
+          - "eslint-*"
+          - "file-loader"
+          - "html-webpack-plugin"
+          - "identity-obj-proxy"
+          - "jest"
+          - "jest-*"
+          - "postcss"
+          - "postcss-*"
+          - "prettier"
+          - "prettier-*"
+          - "resolve"
+          - "resolove-url-loader"
+          - "style-loader"
+          - "terser-webpack-plugin"
+          - "ts-*"
+          - "typescript"
+          - "typescript-*"
+          - "webpack"
+          - "webpack-*"
