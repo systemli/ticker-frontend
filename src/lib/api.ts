@@ -1,6 +1,6 @@
 import { Message, Settings, Ticker } from './types'
 
-export const ApiUrl = process.env.REACT_APP_API_URL
+export const ApiUrl = import.meta.env.TICKER_API_URL
 
 type InitResponseData = {
   settings: Settings

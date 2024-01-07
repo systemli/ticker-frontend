@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import * as api from './lib/api'
 import { Settings, Ticker as TickerType } from './lib/types'
 import { TickerProvider } from './components/useTicker'
+import { vi } from 'vitest'
 
 describe('Ticker', function () {
   const initSettings = {
@@ -41,7 +42,7 @@ describe('Ticker', function () {
   }
 
   test('renders OfflineView', async function () {
-    jest.spyOn(api, 'getInit').mockRejectedValue(new TypeError())
+    vi.spyOn(api, 'getInit').mockRejectedValue(new TypeError())
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
@@ -50,7 +51,7 @@ describe('Ticker', function () {
   })
 
   test('renders ErrorView', async function () {
-    jest.spyOn(api, 'getInit').mockRejectedValue(new Error('The server responses with an error: Internal Server Error (500)'))
+    vi.spyOn(api, 'getInit').mockRejectedValue(new Error('The server responses with an error: Internal Server Error (500)'))
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
@@ -59,7 +60,7 @@ describe('Ticker', function () {
   })
 
   test('renders InactiveView', async function () {
-    jest.spyOn(api, 'getInit').mockResolvedValue({
+    vi.spyOn(api, 'getInit').mockResolvedValue({
       data: {
         settings: initSettings,
         ticker: null,
@@ -73,13 +74,13 @@ describe('Ticker', function () {
   })
 
   test('renders ActiveView', async function () {
-    jest.spyOn(api, 'getInit').mockResolvedValue({
+    vi.spyOn(api, 'getInit').mockResolvedValue({
       data: {
         settings: initSettings,
         ticker: ticker,
       },
     })
-    jest.spyOn(api, 'getTimeline').mockResolvedValue({
+    vi.spyOn(api, 'getTimeline').mockResolvedValue({
       data: {
         messages: [],
       },
@@ -87,7 +88,7 @@ describe('Ticker', function () {
     const intersectionObserverMock = () => ({
       observe: () => null,
     })
-    window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock)
+    window.IntersectionObserver = vi.fn().mockImplementation(intersectionObserverMock)
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()

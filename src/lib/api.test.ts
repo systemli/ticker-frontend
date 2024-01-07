@@ -1,5 +1,4 @@
 import { getInit, getTimeline } from './api'
-import fetch from 'jest-fetch-mock'
 
 describe('api', function () {
   beforeEach(() => {

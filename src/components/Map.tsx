@@ -54,11 +54,10 @@ const Map: FC<Props> = props => {
 
     if (
       features.length === 1 &&
-      // Type is currently not defined by DefinitelyTyped
-      // @ts-ignore
+      // @ts-expect-error Type is currently not defined by DefinitelyTyped
       features[0].feature.geometry.type === 'Point'
     ) {
-      // @ts-ignore
+      // @ts-expect-error Type is currently not defined by DefinitelyTyped
       const coords = features[0].feature.geometry.coordinates
       leafletLayer._map.setView([coords[1], coords[0]], 13)
     } else {
