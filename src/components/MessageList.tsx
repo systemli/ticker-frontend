@@ -24,9 +24,7 @@ const MessageList: FC = () => {
         }
         setIsLoading(false)
       })
-      .catch(error => {
-        // eslint-disable-next-line no-console
-        console.error(error)
+      .catch(() => {
         setIsLoading(false)
       })
   }, [messages])
@@ -42,10 +40,7 @@ const MessageList: FC = () => {
             setLastMessageReceived(true)
           }
         })
-        .catch(error => {
-          // eslint-disable-next-line no-console
-          console.error(error)
-        })
+        .catch(() => {})
     }
   }, [messages])
 

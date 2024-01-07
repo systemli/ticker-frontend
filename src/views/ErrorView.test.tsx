@@ -1,6 +1,6 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import ErrorView from './ErrorView'
+import { vi } from 'vitest'
 
 describe('ErrorView', function () {
   const original = window.location
@@ -8,7 +8,7 @@ describe('ErrorView', function () {
   beforeAll(() => {
     Object.defineProperty(window, 'location', {
       configurable: true,
-      value: { reload: jest.fn() },
+      value: { reload: vi.fn() },
     })
   })
 

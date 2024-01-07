@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
 import { getInit } from '../lib/api'
 import { Settings, Ticker } from '../lib/types'
 import { useState } from 'react'

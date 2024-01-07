@@ -1,16 +1,17 @@
 import * as api from '../lib/api'
 import MessageList from './MessageList'
 import { render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 describe('MessageList', function () {
   test('renders empty Messages', async function () {
-    jest.spyOn(api, 'getTimeline').mockResolvedValue({
+    vi.spyOn(api, 'getTimeline').mockResolvedValue({
       data: { messages: [] },
     })
     const intersectionObserverMock = () => ({
       observe: () => null,
     })
-    window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock)
+    window.IntersectionObserver = vi.fn().mockImplementation(intersectionObserverMock)
 
     render(<MessageList />)
 
