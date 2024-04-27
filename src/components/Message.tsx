@@ -7,6 +7,8 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import Attachments from './Attachments'
 import styled from 'styled-components'
 import Map from './Map'
+import linkifyHtml from 'linkify-html'
+import parse from 'html-react-parser'
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
@@ -28,14 +30,17 @@ const Message: FC<Props> = props => {
   )
   const creationDate = dayjs(props.message.createdAt).format('LLLL')
 
+  const decorateText = (text: string) => {
+    // replace newlines
+    text = text.replace(/\r\n|\r|\n/g, '<br />')
+    // turn URLs into links
+    return linkifyHtml(text, { defaultProtocol: 'https' })
+  }
+
   return (
     <Card fluid>
       <CardContent>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: props.message.text.replace(/(?:\r\n|\r|\n)/g, '<br/>'),
-          }}
-        />
+        <div>{parse(decorateText(props.message.text))}</div>
       </CardContent>
       {props.message.attachments && (
         <AttachmentsWrapper>
