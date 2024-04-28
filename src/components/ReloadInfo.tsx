@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { Message } from 'semantic-ui-react'
 
 const ReloadInfo: FC = () => {
@@ -7,6 +7,13 @@ const ReloadInfo: FC = () => {
   const handleDismiss = useCallback(() => {
     setShowReloadInfo(false)
     localStorage.setItem('showReloadInfo', '0')
+  }, [])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowReloadInfo(false)
+    }, 10000)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   return (
