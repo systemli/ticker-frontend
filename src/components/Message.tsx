@@ -7,6 +7,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import Attachments from './Attachments'
 import styled from 'styled-components'
 import Map from './Map'
+import Links from './Links'
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
@@ -31,11 +32,11 @@ const Message: FC<Props> = props => {
   return (
     <Card fluid>
       <CardContent>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: props.message.text.replace(/(?:\r\n|\r|\n)/g, '<br/>'),
-          }}
-        />
+        {props.message.text.split(/\r\n|\r|\n/g).map((line, i) => (
+          <p key={props.message.id + i}>
+            <Links message={line} />
+          </p>
+        ))}
       </CardContent>
       {props.message.attachments && (
         <AttachmentsWrapper>
