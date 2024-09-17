@@ -55,7 +55,7 @@
     "postcss-remove-google-fonts": "^1.2.4",
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
-    "vite": "^5.4.2",
+    "vite": "^5.4.6",
     "vitest": "^2.0.5",
     "vitest-fetch-mock": "^0.3.0"
   },
