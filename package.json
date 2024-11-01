@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@semantic-ui-react/css-patch": "^1.1.3",
-    "@types/leaflet": "^1.9.12",
+    "@types/leaflet": "^1.9.14",
     "@types/react": "^18.3.12",
     "@types/react-helmet": "^6.1.11",
     "@types/styled-components": "^5.1.34",
