@@ -34,8 +34,8 @@ export async function getInit(): Promise<InitResponse> {
 }
 
 export type TimelineOpts = {
-  after?: string | null
-  before?: string | null
+  after?: number
+  before?: number
 }
 
 export async function getTimeline(opts: TimelineOpts): Promise<TimelineResponse> {
@@ -48,12 +48,4 @@ export async function getTimeline(opts: TimelineOpts): Promise<TimelineResponse>
   }
 
   return get(`${ApiUrl}/timeline`)
-}
-
-export function getAtomFeedUrl(): string {
-  return `${ApiUrl}/feed?origin=${window.location.hostname}&format=atom`
-}
-
-export function getRssFeedUrl(): string {
-  return `${ApiUrl}/feed?origin=${window.location.hostname}&format=rss`
 }

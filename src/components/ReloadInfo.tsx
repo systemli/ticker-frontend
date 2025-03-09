@@ -1,13 +1,12 @@
-import { FC, useCallback, useEffect, useState } from 'react'
-import { Message } from 'semantic-ui-react'
+import { FC, useEffect, useState } from 'react'
 
 const ReloadInfo: FC = () => {
   const [showReloadInfo, setShowReloadInfo] = useState<boolean>(localStorage.getItem('showReloadInfo') === null)
 
-  const handleDismiss = useCallback(() => {
+  const handleDismiss = () => {
     setShowReloadInfo(false)
     localStorage.setItem('showReloadInfo', '0')
-  }, [])
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -16,15 +15,22 @@ const ReloadInfo: FC = () => {
     return () => clearTimeout(timeoutId)
   }, [])
 
+  if (!showReloadInfo) {
+    return null
+  }
+
   return (
-    <Message
-      color="teal"
-      content="The messages update automatically. There is no need to reload the entire page."
-      header="Information"
-      hidden={!showReloadInfo}
-      icon="info"
-      onDismiss={handleDismiss}
-    />
+    <div className="absolute top-0 right-0 left-0 bg-amber-300 p-2 text-black shadow-xl transition-all transition-discrete duration-700">
+      <div className="flex items-center justify-center">
+        <p>New messages will load automatically.</p>
+        <button
+          onClick={handleDismiss}
+          className="ml-2 rounded-lg bg-gray-700 p-1 px-3 py-2 text-center text-xs font-medium text-white hover:bg-gray-800 focus:ring-4 focus:ring-gray-400 focus:outline-none"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
   )
 }
 

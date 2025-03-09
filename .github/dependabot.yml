@@ -1,45 +1,44 @@
 ---
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "monthly"
+      interval: 'monthly'
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "monthly"
+      interval: 'monthly'
+    ignore:
+      - dependency-name: 'eslint'
+        versions: ['>=9.0.0']
     groups:
       react:
         patterns:
-          - "@semantic-ui-react/css-patch"
-          - "@types/react"
-          - "@types/react-helmet"
-          - "@types/styled-components"
-          - "dayjs"
-          - "leaflet"
-          - "pure-react-carousel"
-          - "react"
-          - "react-*"
-          - "semantic-ui-*"
-          - "styled-components"
+          - '@tailwindcss/vite'
+          - '@types/react'
+          - '@types/react-helmet'
+          - 'dayjs'
+          - 'react'
+          - 'react-*'
+          - 'tailwindcss'
       development:
         patterns:
-          - "@testing-library/*"
-          - "@types/node"
-          - "@types/react-dom"
-          - "@typescript-eslint/*"
-          - "@vitejs/*"
-          - "@vitest/*"
-          - "cssnano"
-          - "eslint"
-          - "eslint-*"
-          - "jsdom"
-          - "postcss"
-          - "postcss-*"
-          - "prettier"
-          - "typescript"
-          - "vite"
-          - "vitest"
-          - "vitest-*"
+          - '@testing-library/*'
+          - '@types/node'
+          - '@types/react-dom'
+          - '@typescript-eslint/*'
+          - '@vitejs/*'
+          - '@vitest/*'
+          - 'cssnano'
+          - 'eslint'
+          - 'eslint-*'
+          - 'jsdom'
+          - 'postcss'
+          - 'postcss-*'
+          - 'prettier'
+          - 'typescript'
+          - 'vite'
+          - 'vitest'
+          - 'vitest-*'

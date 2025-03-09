@@ -1,8 +1,9 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react'
-import { Message as MessageType } from '../lib/types'
-import Message from './Message'
 import { getTimeline } from '../lib/api'
+import { Message as MessageType } from '../lib/types'
+import EmptyMessageList from './EmptyMessageList'
+import Loader from './Loader'
+import Message from './Message'
 import useTicker from './useTicker'
 
 const MessageList: FC = () => {
@@ -17,7 +18,7 @@ const MessageList: FC = () => {
   const fetchMessages = useCallback(() => {
     const after = messages[0]?.id
 
-    getTimeline({ after: after ? after : null })
+    getTimeline({ after: after })
       .then(response => {
         if (response.data.messages) {
           setMessages([...response.data.messages, ...messages])
@@ -44,7 +45,6 @@ const MessageList: FC = () => {
     }
   }, [messages])
 
-  // FIXME: possibly triggers unnecessary rerenders
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const intersectionObserverOptions = {
     root: null,
@@ -85,32 +85,17 @@ const MessageList: FC = () => {
 
   // periodically fetch new messages
   useEffect(() => {
-    const interval = setInterval(() => fetchMessages(), settings?.refreshInterval || 60000)
+    const interval = setInterval(() => fetchMessages(), settings?.refreshInterval ?? 60000)
 
     return () => clearInterval(interval)
   }, [fetchMessages, messages, settings?.refreshInterval])
 
-  const renderPlaceholder = () => (
-    <Segment placeholder>
-      <Header icon>
-        <Icon color={'grey'} name="hourglass half" />
-        We dont have any messages at the moment.
-      </Header>
-    </Segment>
-  )
-
   if (isLoading) {
-    return (
-      <Dimmer active inverted>
-        <Loader inverted size="small">
-          Loading messages
-        </Loader>
-      </Dimmer>
-    )
+    return <Loader content="Loading" />
   }
 
-  if (!messages.length) {
-    return renderPlaceholder()
+  if (messages.length === 0) {
+    return <EmptyMessageList />
   }
 
   return (
@@ -118,11 +103,7 @@ const MessageList: FC = () => {
       {messages.map(message => (
         <Message key={message.id} message={message} />
       ))}
-      {!lastMessageReceived && (
-        <div ref={loadMoreSpinnerRef}>
-          <Loader active inline="centered" size="tiny" />
-        </div>
-      )}
+      {!lastMessageReceived && <div ref={loadMoreSpinnerRef}>Loading...</div>}
     </div>
   )
 }

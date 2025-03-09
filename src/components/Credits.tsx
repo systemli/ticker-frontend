@@ -1,20 +1,23 @@
 import { FC } from 'react'
-import { Icon } from 'semantic-ui-react'
-import styled from 'styled-components'
-
-const Wrapper = styled.div`
-  color: rgba(0, 0, 0, 0.5);
-  text-align: right;
-`
+import Code from './icons/Code'
+import Heart from './icons/Heart'
 
 const Credits: FC = () => {
   return (
-    <Wrapper>
-      <Icon name="code" /> with <Icon color="red" name="heart" /> by{' '}
-      <a href="https://www.systemli.org" rel="noopener noreferrer" target="_blank">
-        systemli.org
-      </a>
-    </Wrapper>
+    <footer>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+        <div className="flex flex-row text-xs">
+          <div aria-label="Code with">
+            <Code className="size-4" />
+          </div>
+          <div className="px-1">with</div>
+          <div aria-label="Love">
+            <Heart className="size-4" />
+          </div>
+          <div className="px-1">by systemli.org</div>
+        </div>
+      </div>
+    </footer>
   )
 }
 

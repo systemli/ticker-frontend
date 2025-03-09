@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import ErrorView from './ErrorView'
 import { vi } from 'vitest'
+import ErrorView from './ErrorView'
 
 describe('ErrorView', function () {
   const original = window.location
@@ -23,8 +23,9 @@ describe('ErrorView', function () {
     render(<ErrorView message="Errormessage" />)
 
     expect(screen.getByText('Errormessage'))
+    expect(screen.getByRole('button')).toBeInTheDocument()
 
-    screen.getByText('Try reload').click()
+    screen.getByRole('button').click()
 
     expect(window.location.reload).toHaveBeenCalled()
   })

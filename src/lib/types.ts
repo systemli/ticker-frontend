@@ -1,8 +1,7 @@
 export type Ticker = {
-  createdAt: Date
+  createdAt: string
   description: string
-  domain: string
-  id: string
+  id: number
   title: string
   information: TickerInformation
 }
@@ -11,6 +10,8 @@ type TickerInformation = {
   author: string
   email: string
   facebook: string
+  instagram: string
+  threads: string
   telegram: string
   twitter: string
   url: string
@@ -33,29 +34,15 @@ export type InactiveSettings = {
   description: string
 }
 
-export enum DescriptionTypes {
-  Author = 'AUTHOR',
-  Email = 'EMAIL',
-  Facebook = 'FACEBOOK',
-  Homepage = 'HOMEPAGE',
-  Twitter = 'TWITTER',
-  Telegram = 'TELEGRAM',
-  Mastodon = 'MASTODON',
-  Bluesky = 'BLUESKY',
-}
-
 export type Message = {
-  id: string
+  id: number
   text: string
   ticker: number
-  createdAt: Date
+  createdAt: string
   attachments: Attachment[]
-  // Stringified GeoJSON.FeatureCollection
-  geoInformation: string
 }
 
 export type Attachment = {
-  // FIXME: Enum?
   contentType: string
   url: string
 }
