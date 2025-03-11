@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react'
-import { Container, Dimmer, Loader } from 'semantic-ui-react'
-import ErrorView from './views/ErrorView'
-import ActiveView from './views/ActiveView'
-import InactiveView from './views/InactiveView'
+import Loader from './components/Loader'
 import useTicker from './components/useTicker'
+import ActiveView from './views/ActiveView'
+import ErrorView from './views/ErrorView'
+import InactiveView from './views/InactiveView'
 
 const Ticker: FC = () => {
   const { ticker, settings, isLoading, isOffline, hasError } = useTicker()
@@ -15,13 +15,7 @@ const Ticker: FC = () => {
   }, [ticker])
 
   if (isLoading) {
-    return (
-      <Container>
-        <Dimmer active>
-          <Loader content="Loading" size="large" />
-        </Dimmer>
-      </Container>
-    )
+    return <Loader content="Loading" />
   }
 
   if (hasError) {

@@ -2,28 +2,15 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ReloadInfo from './ReloadInfo'
 
-describe('ReloadInfo', function () {
-  beforeAll(function () {
-    localStorage.removeItem('showReloadInfo')
-  })
+describe('ReloadInfo', () => {
+  it('should dismiss the reload info', async () => {
+    render(<ReloadInfo />)
 
-  test('renders correctly', async function () {
-    const { container } = render(<ReloadInfo />)
+    const dismissButton = screen.getByText('Dismiss')
+    expect(dismissButton).toBeInTheDocument()
 
-    expect(screen.getByText('The messages update automatically. There is no need to reload the entire page.')).toBeVisible()
+    await userEvent.click(dismissButton)
 
-    const close = container.querySelector('i.close') as HTMLElement
-    const user = userEvent.setup()
-    await user.click(close)
-
-    expect(localStorage.getItem('showReloadInfo')).toBe('0')
-  })
-
-  test('not renders if dismissed', function () {
-    localStorage.setItem('showReloadInfo', '0')
-    const { container } = render(<ReloadInfo />)
-
-    expect(screen.getByText('The messages update automatically. There is no need to reload the entire page.')).toBeInTheDocument()
-    expect(container.firstElementChild).toHaveClass('hidden')
+    expect(dismissButton).not.toBeInTheDocument()
   })
 })

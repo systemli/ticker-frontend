@@ -1,9 +1,9 @@
-import Ticker from './Ticker'
 import { render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
+import { TickerProvider } from './components/useTicker'
 import * as api from './lib/api'
 import { Settings, Ticker as TickerType } from './lib/types'
-import { TickerProvider } from './components/useTicker'
-import { vi } from 'vitest'
+import Ticker from './Ticker'
 
 describe('Ticker', function () {
   const initSettings = {
@@ -19,11 +19,10 @@ describe('Ticker', function () {
     },
   } as Settings
   const ticker = {
-    id: '1',
-    createdAt: new Date(),
+    id: 1,
+    createdAt: new Date().toISOString(),
     title: 'Ticker Title',
     description: 'Ticker Description',
-    domain: 'example.com',
     information: {
       author: 'Systemli Ticker Team',
       url: 'https://demoticker.org',
@@ -93,8 +92,6 @@ describe('Ticker', function () {
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
 
-    expect(await screen.findByText('The messages update automatically. There is no need to reload the entire page.')).toBeInTheDocument()
-
-    expect(await screen.findByText('We dont have any messages at the moment.')).toBeInTheDocument()
+    expect(await screen.findByText("We don't have any messages at the moment.")).toBeInTheDocument()
   })
 })

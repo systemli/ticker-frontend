@@ -1,66 +1,31 @@
-import { FC, useCallback, useState } from 'react'
-import { Container, Grid, Header, Sticky } from 'semantic-ui-react'
-import styled from 'styled-components'
-import { spacing } from '../lib/theme'
-import { isMobile } from '../lib/helper'
-import About from '../components/About'
-import ReloadInfo from '../components/ReloadInfo'
+import { FC } from 'react'
+import Description from '../components/Description'
+import Divider from '../components/Divider'
+import Play from '../components/icons/Play'
 import MessageList from '../components/MessageList'
-import DynamicMetaTags from '../components/DynamicMetaTags'
+import ReloadInfo from '../components/ReloadInfo'
 import useTicker from '../components/useTicker'
 
-const Wrapper = styled(Container)`
-  padding: ${spacing.normal} 0;
-`
-
-const HeaderWrapper = styled(Header)`
-  margin: 0 0 ${spacing.normal} !important;
-`
-
-type StickyContext = Document | Window | HTMLElement | React.Ref<HTMLElement>
-
 const ActiveView: FC = () => {
-  const [stickyContext, setStickyContext] = useState<StickyContext>()
   const { ticker } = useTicker()
 
-  const headline = ticker === null || ticker.title == undefined ? 'Ticker' : ticker.title
-
-  const handleContextRef = useCallback((stickyContextValue: StickyContext) => {
-    setStickyContext(stickyContextValue)
-  }, [])
-
-  if (isMobile()) {
-    return (
-      <Wrapper>
-        <DynamicMetaTags />
-        <About isModal />
-        {headline && <HeaderWrapper content={headline} size={'large'} />}
-        <ReloadInfo />
-        <MessageList />
-      </Wrapper>
-    )
-  }
-
   return (
-    <Wrapper>
-      <DynamicMetaTags />
-      {headline && <HeaderWrapper content={headline} size={'large'} />}
+    <section className="w-full px-3 sm:w-xl md:m-auto md:w-2xl md:px-0">
       <ReloadInfo />
-      <Grid divided={'vertically'}>
-        <Grid.Row columns={2}>
-          <Grid.Column computer={10} tablet={10}>
-            <div ref={handleContextRef}>
-              <MessageList />
-            </div>
-          </Grid.Column>
-          <Grid.Column computer={6} tablet={6}>
-            <Sticky context={stickyContext} offset={30}>
-              <About />
-            </Sticky>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Wrapper>
+      <div className="border-s border-gray-200 dark:border-gray-600">
+        <div className="mt-4 p-4">
+          <Description ticker={ticker!} />
+        </div>
+        <div className="mb-4 px-20 sm:px-36">
+          <Divider>
+            <Play className="size-6" />
+          </Divider>
+        </div>
+        <div className="mb-4">
+          <MessageList />
+        </div>
+      </div>
+    </section>
   )
 }
 
