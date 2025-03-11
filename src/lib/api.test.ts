@@ -2,11 +2,11 @@ import { getInit, getTimeline } from './api'
 
 describe('api', function () {
   beforeEach(() => {
-    fetch.resetMocks()
+    fetchMock.resetMocks()
   })
 
   test('get w/ error response', async function () {
-    fetch.mockResponse('{}', { status: 400 })
+    fetchMock.mockResponse('{}', { status: 400, statusText: 'Bad Request' })
 
     expect(async () => {
       await getInit()
@@ -14,42 +14,42 @@ describe('api', function () {
   })
 
   test('getInit', async function () {
-    fetch.mockResponseOnce('{}')
+    fetchMock.mockResponseOnce('{}')
 
     const response = await getInit()
 
     expect(response).not.toBeNull()
-    expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/init')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/init')
   })
 
   test('getTimeline', async function () {
-    fetch.mockResponseOnce('{}')
+    fetchMock.mockResponseOnce('{}')
 
     const response = await getTimeline({})
 
     expect(response).not.toBeNull()
-    expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/timeline')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline')
   })
 
   test('getTimeline w/ after pagination', async function () {
-    fetch.mockResponseOnce('{}')
+    fetchMock.mockResponseOnce('{}')
 
-    const response = await getTimeline({ after: '1' })
+    const response = await getTimeline({ after: 1 })
 
     expect(response).not.toBeNull()
-    expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?after=1')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?after=1')
   })
 
   test('getTimeline w/ before pagination', async function () {
-    fetch.mockResponseOnce('{}')
+    fetchMock.mockResponseOnce('{}')
 
-    const response = await getTimeline({ before: '1' })
+    const response = await getTimeline({ before: 1 })
 
     expect(response).not.toBeNull()
-    expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?before=1')
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?before=1')
   })
 })
