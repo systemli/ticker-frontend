@@ -17,11 +17,11 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'yarn'
+          node-version-file: .nvmrc
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Run Prettier
         uses: wearerequired/lint-action@v2
@@ -40,11 +40,11 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'yarn'
+          node-version-file: .nvmrc
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Run ESLint
         uses: wearerequired/lint-action@v2
