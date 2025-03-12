@@ -17,14 +17,14 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'yarn'
+          node-version-file: .nvmrc
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Test
-        run: yarn run coverage
+        run: npm run coverage
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarqube-scan-action@v5.0.0
@@ -44,14 +44,14 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'yarn'
+          node-version-file: .nvmrc
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build
-        run: yarn run build
+        run: npm run build
 
   automerge:
     name: Merge Automatically
