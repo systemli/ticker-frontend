@@ -1,7 +1,5 @@
 import { FC } from 'react'
 import Description from '../components/Description'
-import Divider from '../components/Divider'
-import Play from '../components/icons/Play'
 import MessageList from '../components/MessageList'
 import ReloadInfo from '../components/ReloadInfo'
 import useTicker from '../components/useTicker'
@@ -19,11 +17,11 @@ const ActiveView: FC = () => {
           </div>
         </div>
         <div className="border-s border-gray-200 dark:border-gray-600">
-          <Description ticker={ticker!} />
-          <div className="mb-4 px-20 sm:px-36">
-            <Divider>
-              <Play className="size-6" />
-            </Divider>
+          <div className="px-4 pt-4">
+            <Description ticker={ticker!} />
+          </div>
+          <div className="px-8 py-8 sm:px-16 md:px-24 dark:border-gray-600">
+            <div className="border-t border-dotted border-gray-200 dark:border-gray-600"></div>
           </div>
           <div className="mb-4">
             <MessageList />
