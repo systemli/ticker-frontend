@@ -1,10 +1,16 @@
 import { FC } from 'react'
 import { Ticker } from '../lib/types'
+import At from './icons/At'
 import Author from './icons/Author'
 import Bluesky from './icons/Bluesky'
+import Facebook from './icons/Facebook'
+import Instagram from './icons/Instagram'
 import Mastodon from './icons/Mastodon'
 import Telegram from './icons/Telegram'
+import Threads from './icons/Threads'
+import Twitter from './icons/Twitter'
 import Url from './icons/Url'
+import InformationItem from './InformationItem'
 
 interface Props {
   ticker: Ticker
@@ -15,52 +21,42 @@ const Description: FC<Props> = ({ ticker }) => {
     <div className="p-4">
       {ticker.description && (
         <div className="tracking-tight md:text-lg">
-          {ticker?.description.split('\n').map(paragraph => (
+          {ticker.description.split('\n').map(paragraph => (
             <p key={paragraph} className="">
               {paragraph}
             </p>
           ))}
         </div>
       )}
-      <div className="">
+      <div className="text-base/8">
         <div className="mt-2 flex overflow-x-scroll md:mt-4 md:grid md:grid-cols-2 md:place-items-center md:overflow-x-auto lg:mx-auto">
-          {ticker?.information.author && (
-            <div className="flex flex-shrink-0 items-center">
-              <Author className="size-4" />
-              <p className="pl-1">{ticker.information.author}</p>
-            </div>
+          {ticker.information.author && <InformationItem icon={Author} label={ticker.information.author} />}
+          {ticker.information.email && <InformationItem icon={At} label={ticker.information.email} url={ticker.information.email} />}
+          {ticker.information.url && <InformationItem icon={Url} label={ticker.information.url.replace(/https?:\/\//, '')} url={ticker.information.url} />}
+          {ticker.information.mastodon && (
+            <InformationItem icon={Mastodon} label={ticker.information.mastodon.replace(/https?:\/\//, '')} url={ticker.information.mastodon} />
           )}
-          {ticker?.information.url && (
-            <div className="flex flex-shrink-0 items-center pl-2 lg:pl-0">
-              <Url className="size-4" />
-              <p className="pl-1">
-                <a href={ticker.information.url}>{ticker.information.url.replace(/https?:\/\//, '')}</a>
-              </p>
-            </div>
+          {ticker.information.bluesky && (
+            <InformationItem
+              icon={Bluesky}
+              label={ticker.information.bluesky.replace(/https?:\/\/bsky\.app\/profile\//, '')}
+              url={ticker.information.bluesky}
+            />
           )}
-          {ticker?.information.mastodon && (
-            <div className="flex flex-shrink-0 items-center pl-2 lg:pl-0">
-              <Mastodon className="size-4" />
-              <p className="pl-1">
-                <a href={ticker.information.mastodon}>{ticker.information.mastodon.replace(/https?:\/\//, '')}</a>
-              </p>
-            </div>
+          {ticker.information.telegram && (
+            <InformationItem icon={Telegram} label={ticker.information.telegram} url={`https://t.me/${ticker.information.telegram}`} />
           )}
-          {ticker?.information.bluesky && (
-            <div className="flex flex-shrink-0 items-center pl-2 lg:pl-0">
-              <Bluesky className="size-4" />
-              <p className="pl-1">
-                <a href={ticker.information.bluesky}>{ticker.information.bluesky.replace(/https?:\/\//, '')}</a>
-              </p>
-            </div>
+          {ticker.information.facebook && (
+            <InformationItem icon={Facebook} label={ticker.information.facebook} url={`https://fb.com/${ticker.information.facebook}`} />
           )}
-          {ticker?.information.telegram && (
-            <div className="flex flex-shrink-0 items-center pl-2 md:pl-0">
-              <Telegram className="size-4" />
-              <p className="pl-1">
-                <a href={ticker.information.telegram}>{ticker.information.telegram.replace(/https?:\/\//, '')}</a>
-              </p>
-            </div>
+          {ticker.information.threads && (
+            <InformationItem icon={Threads} label={ticker.information.threads} url={`https://www.threads.net/${ticker.information.threads}`} />
+          )}
+          {ticker.information.instagram && (
+            <InformationItem icon={Instagram} label={ticker.information.instagram} url={`https://instagram.com/${ticker.information.instagram}`} />
+          )}
+          {ticker.information.twitter && (
+            <InformationItem icon={Twitter} label={`@${ticker.information.twitter}`} url={`https://x.com/${ticker.information.twitter}`} />
           )}
         </div>
       </div>
