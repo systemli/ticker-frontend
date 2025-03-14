@@ -15,7 +15,7 @@ const ActiveView: FC = () => {
         <div className="sticky top-0 z-10 -mx-3 bg-white dark:bg-gray-950">
           <ReloadInfo />
           <div className="mx-3 border-s border-gray-200 dark:border-gray-600">
-            <h1 className="px-4 py-4 text-3xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">{ticker!.title}</h1>
+            <h1 className="px-4 py-4 text-5xl font-extrabold tracking-tight lg:text-6xl">{ticker!.title}</h1>
           </div>
         </div>
         <div className="border-s border-gray-200 dark:border-gray-600">

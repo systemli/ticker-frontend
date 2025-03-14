@@ -28,7 +28,12 @@ describe('Ticker', function () {
       url: 'https://demoticker.org',
       email: 'admin@demoticker.org',
       twitter: 'systemli',
-      facebook: 'betternot',
+      facebook: 'systemli',
+      instagram: 'systemli',
+      mastodon: 'systemli',
+      telegram: 'systemli',
+      threads: 'systemli',
+      bluesky: 'systemli',
     },
   } as TickerType
 
