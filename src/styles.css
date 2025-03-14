@@ -1,12 +1,5 @@
 @import 'tailwindcss';
 
-body {
-  @apply w-full;
-  @apply text-gray-900 dark:text-gray-200;
-  @apply bg-white dark:bg-gray-950;
-  @apply selection:bg-pink-800 selection:text-white dark:selection:bg-pink-500;
-}
-
 a {
   @apply text-pink-800 hover:underline dark:text-pink-500;
 }
