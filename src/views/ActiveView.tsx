@@ -11,18 +11,23 @@ const ActiveView: FC = () => {
 
   return (
     <section className="w-full px-3 sm:w-xl md:m-auto md:w-2xl md:px-0">
-      <ReloadInfo />
-      <div className="border-s border-gray-200 dark:border-gray-600">
-        <div className="mt-4 p-4">
+      <div className="static">
+        <div className="sticky top-0 z-10 -mx-3 bg-white dark:bg-gray-950">
+          <ReloadInfo />
+          <div className="mx-3 border-s border-gray-200 dark:border-gray-600">
+            <h1 className="px-4 py-4 text-3xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">{ticker!.title}</h1>
+          </div>
+        </div>
+        <div className="border-s border-gray-200 dark:border-gray-600">
           <Description ticker={ticker!} />
-        </div>
-        <div className="mb-4 px-20 sm:px-36">
-          <Divider>
-            <Play className="size-6" />
-          </Divider>
-        </div>
-        <div className="mb-4">
-          <MessageList />
+          <div className="mb-4 px-20 sm:px-36">
+            <Divider>
+              <Play className="size-6" />
+            </Divider>
+          </div>
+          <div className="mb-4">
+            <MessageList />
+          </div>
         </div>
       </div>
     </section>
