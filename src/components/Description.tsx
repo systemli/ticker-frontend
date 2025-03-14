@@ -18,7 +18,7 @@ interface Props {
 
 const Description: FC<Props> = ({ ticker }) => {
   return (
-    <div className="p-4">
+    <div>
       {ticker.description && (
         <div className="tracking-tight md:text-lg">
           {ticker.description.split('\n').map(paragraph => (
