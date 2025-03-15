@@ -9,7 +9,7 @@ const ActiveView: FC = () => {
   const { ticker } = useTicker()
 
   return (
-    <section className="w-full px-3 sm:w-xl md:m-auto md:w-2xl md:px-0">
+    <section className="mx-auto w-full px-3 sm:w-xl md:w-2xl md:px-0">
       <div className="static">
         <div className="sticky top-0 z-10 -mx-3 bg-white dark:bg-gray-950">
           <ReloadInfo />
