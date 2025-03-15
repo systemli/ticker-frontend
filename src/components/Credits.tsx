@@ -5,7 +5,7 @@ import Heart from './icons/Heart'
 const Credits: FC = () => {
   return (
     <footer>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+      <div className="flex flex-col items-center justify-center pb-4">
         <div className="flex flex-row text-xs">
           <div aria-label="Code with">
             <Code className="size-4" />

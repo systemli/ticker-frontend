@@ -33,8 +33,8 @@ const InactiveView: FC<Props> = ({ settings }) => {
             </p>
           </div>
         </div>
+        <Credits />
       </div>
-      <Credits />
     </section>
   )
 }

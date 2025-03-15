@@ -30,8 +30,8 @@ const ErrorView: FC<Props> = ({ message }) => {
             <div>Try a Reload</div>
           </button>
         </div>
+        <Credits />
       </div>
-      <Credits />
     </section>
   )
 }
