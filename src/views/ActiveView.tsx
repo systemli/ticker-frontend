@@ -2,6 +2,7 @@ import { FC } from 'react'
 import Description from '../components/Description'
 import MessageList from '../components/MessageList'
 import ReloadInfo from '../components/ReloadInfo'
+import Title from '../components/Title'
 import useTicker from '../components/useTicker'
 
 const ActiveView: FC = () => {
@@ -12,9 +13,7 @@ const ActiveView: FC = () => {
       <div className="static">
         <div className="sticky top-0 z-10 -mx-3 bg-white dark:bg-gray-950">
           <ReloadInfo />
-          <div className="mx-3 border-s border-gray-200 dark:border-gray-600">
-            <h1 className="px-4 py-4 text-5xl font-extrabold tracking-tight lg:text-6xl">{ticker!.title}</h1>
-          </div>
+          <Title title={ticker!.title} />
         </div>
         <div className="border-s border-gray-200 dark:border-gray-600">
           <div className="px-4 pt-4">
