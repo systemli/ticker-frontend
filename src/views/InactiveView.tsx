@@ -1,7 +1,5 @@
 import { FC } from 'react'
 import Credits from '../components/Credits'
-import Divider from '../components/Divider'
-import Pause from '../components/icons/Pause'
 import { InactiveSettings } from '../lib/types'
 
 interface Props {
@@ -15,10 +13,8 @@ const InactiveView: FC<Props> = ({ settings }) => {
         <div className="p-4 pt-8 text-center sm:p-8">
           <h1 className="mb-4 text-4xl leading-none font-extrabold tracking-tight md:text-5xl lg:text-6xl">{settings.headline}</h1>
           <h2 className="mb-4 text-xl font-bold tracking-tight md:text-2xl lg:text-3xl">{settings.subHeadline}</h2>
-          <div className="px-20 sm:px-36">
-            <Divider>
-              <Pause className="size-6" />
-            </Divider>
+          <div className="px-8 py-8 sm:px-16 md:px-24 dark:border-gray-600">
+            <div className="border-t border-dotted border-gray-200 dark:border-gray-600"></div>
           </div>
           <p className="leading-7">{settings.description}</p>
           <div className="mt-2 px-2 py-2 leading-7">
