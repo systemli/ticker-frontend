@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import Loader from './components/Loader'
 import useTicker from './components/useTicker'
 import ActiveView from './views/ActiveView'
@@ -7,12 +7,6 @@ import InactiveView from './views/InactiveView'
 
 const Ticker: FC = () => {
   const { ticker, settings, isLoading, isOffline, hasError } = useTicker()
-
-  useEffect(() => {
-    if (ticker?.title) {
-      document.title = ticker.title
-    }
-  }, [ticker])
 
   if (isLoading) {
     return <Loader content="Loading" />

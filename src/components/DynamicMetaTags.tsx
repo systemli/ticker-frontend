@@ -9,13 +9,13 @@ const DynamicMetaTags: FC = () => {
     return null
   }
 
+  document.title = ticker.title
+
   return (
     <Helmet>
+      <title>{ticker.title}</title>
+      <meta content={ticker.information.author} name="author" />
       <meta content={ticker.description} name="description" />
-      <meta content="summary" name="twitter:card" />
-      <meta content={ticker.title} name="twitter:title" />
-      <meta content={ticker.description} name="twitter:description" />
-      <meta content={ticker.information.twitter ? `@${ticker.information.twitter}` : ''} name="twitter:site" />
       <meta content={ticker.title} property="og:title" />
       <meta content="website" property="og:type" />
       <meta content={window.location.href} property="og:url" />
