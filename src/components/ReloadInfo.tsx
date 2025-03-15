@@ -14,7 +14,7 @@ const ReloadInfo: FC = () => {
 
   return (
     <div className="h-10">
-      <div className="absolute right-0 left-0 z-20 bg-amber-300 p-2 text-black shadow-xl sm:fixed">
+      <div className="absolute left-1/2 z-20 w-screen -translate-x-1/2 transform bg-amber-300 p-2 text-black shadow-xl">
         <div className="flex items-center justify-center">
           <p>New messages will load automatically.</p>
           <button
