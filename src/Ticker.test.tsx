@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-import { TickerProvider } from './components/useTicker'
+import { TickerProvider } from './components/TickerContext'
 import * as api from './lib/api'
 import { Settings, Ticker as TickerType } from './lib/types'
 import Ticker from './Ticker'
