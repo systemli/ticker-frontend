@@ -11,7 +11,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.0.13",
+    "@tailwindcss/vite": "^4.0.14",
     "@types/react": "^19.0.10",
     "dayjs": "^1.11.13",
     "linkify-react": "^4.2.0",
