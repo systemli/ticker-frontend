@@ -8,6 +8,8 @@ import useTicker from '../components/useTicker'
 const ActiveView: FC = () => {
   const { ticker } = useTicker()
 
+  document.title = `${ticker!.title} - Ticker`
+
   return (
     <section className="mx-auto w-full px-3 sm:w-xl md:w-2xl md:px-0">
       <div className="static">
