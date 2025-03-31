@@ -41,7 +41,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.8.2",
-    "vite": "^6.2.2",
+    "vite": "^6.2.4",
     "vitest": "^3.0.8",
     "vitest-fetch-mock": "^0.4.5"
   },
