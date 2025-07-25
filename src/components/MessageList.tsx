@@ -1,75 +1,31 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { getTimeline } from '../lib/api'
-import { Message as MessageType } from '../lib/types'
+import { FC, useCallback, useEffect, useRef } from 'react'
+import { useMessages } from '../hooks/useMessages'
 import EmptyMessageList from './EmptyMessageList'
 import Loader from './Loader'
 import Message from './Message'
-import useTicker from './useTicker'
 
 const MessageList: FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [messages, setMessages] = useState<MessageType[]>([])
-  const [lastMessageReceived, setLastMessageReceived] = useState<boolean>(false)
-
-  const { settings } = useTicker()
+  const { messages, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useMessages()
 
   const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
 
-  const fetchMessages = useCallback(() => {
-    const after = messages[0]?.id
-
-    getTimeline({ after: after })
-      .then(response => {
-        if (response.data.messages) {
-          setMessages([...response.data.messages, ...messages])
-        }
-        setIsLoading(false)
-      })
-      .catch(() => {
-        setIsLoading(false)
-      })
-  }, [messages])
-
-  const fetchOlderMessages = useCallback(() => {
-    const oldestMessage = messages[messages.length - 1]
-    if (oldestMessage !== undefined) {
-      getTimeline({ before: oldestMessage.id })
-        .then(response => {
-          if (response.data.messages.length !== 0) {
-            setMessages([...messages, ...response.data.messages])
-          } else {
-            setLastMessageReceived(true)
-          }
-        })
-        .catch(() => {})
-    }
-  }, [messages])
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const intersectionObserverOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  }
-
   const fetchOlderMessagesCallback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting) {
-        fetchOlderMessages()
+      if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage()
       }
     },
-    [fetchOlderMessages]
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
   )
 
+  // Intersection Observer for loading older messages
   useEffect(() => {
-    fetchMessages()
+    const observer = new IntersectionObserver(fetchOlderMessagesCallback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    })
 
-    // This should only be executed once on load (~ componentDidMount)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(fetchOlderMessagesCallback, intersectionObserverOptions)
     const currentRef = loadMoreSpinnerRef.current
 
     if (currentRef) {
@@ -81,17 +37,14 @@ const MessageList: FC = () => {
         observer.unobserve(currentRef)
       }
     }
-  }, [fetchOlderMessagesCallback, intersectionObserverOptions, loadMoreSpinnerRef])
-
-  // periodically fetch new messages
-  useEffect(() => {
-    const interval = setInterval(() => fetchMessages(), settings?.refreshInterval ?? 60000)
-
-    return () => clearInterval(interval)
-  }, [fetchMessages, messages, settings?.refreshInterval])
+  }, [fetchOlderMessagesCallback])
 
   if (isLoading) {
     return <Loader content="Loading" />
+  }
+
+  if (isError) {
+    return <div className="p-4 text-red-600 dark:text-red-400">Error loading messages: {error?.message || 'Unknown error'}</div>
   }
 
   if (messages.length === 0) {
@@ -103,7 +56,11 @@ const MessageList: FC = () => {
       {messages.map(message => (
         <Message key={message.id} message={message} />
       ))}
-      {!lastMessageReceived && <div ref={loadMoreSpinnerRef}>Loading...</div>}
+      {hasNextPage && (
+        <div ref={loadMoreSpinnerRef} className="py-4 text-center">
+          {isFetchingNextPage ? <Loader content="Loading more..." /> : <span className="text-gray-500 dark:text-gray-400">Loading...</span>}
+        </div>
+      )}
     </div>
   )
 }
