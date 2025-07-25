@@ -46,3 +46,22 @@ export type Attachment = {
   contentType: string
   url: string
 }
+
+// WebSocket message types
+export type WebSocketMessageCreated = {
+  type: 'message_created'
+  tickerId: number
+  data: {
+    message: Message
+  }
+}
+
+export type WebSocketMessageDeleted = {
+  type: 'message_deleted'
+  tickerId: number
+  data: {
+    messageId: number
+  }
+}
+
+export type WebSocketMessage = WebSocketMessageCreated | WebSocketMessageDeleted

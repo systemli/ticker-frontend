@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import { TickerProvider } from './components/TickerContext'
@@ -38,10 +39,19 @@ describe('Ticker', function () {
   } as TickerType
 
   const renderTicker = () => {
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+        mutations: { retry: false },
+      },
+    })
+
     return render(
-      <TickerProvider>
-        <Ticker />
-      </TickerProvider>
+      <QueryClientProvider client={queryClient}>
+        <TickerProvider>
+          <Ticker />
+        </TickerProvider>
+      </QueryClientProvider>
     )
   }
 
@@ -89,10 +99,6 @@ describe('Ticker', function () {
         messages: [],
       },
     })
-    const intersectionObserverMock = () => ({
-      observe: () => null,
-    })
-    window.IntersectionObserver = vi.fn().mockImplementation(intersectionObserverMock)
     renderTicker()
 
     expect(screen.getByText('Loading')).toBeInTheDocument()
