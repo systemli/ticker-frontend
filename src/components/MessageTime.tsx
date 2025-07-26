@@ -12,7 +12,20 @@ interface Props {
 }
 
 const MessageTime: FC<Props> = ({ creationTime }) => {
-  const [relativeTime, setRelativeTime] = useState(() => dayjs(creationTime).fromNow())
+  const getRelativeTime = useCallback((messageCreationTime: string) => {
+    const now = dayjs()
+    const messageTime = dayjs(messageCreationTime)
+    const diffInSeconds = now.diff(messageTime, 'second')
+
+    // Handle edge case where message appears to be in the future
+    if (diffInSeconds < 0) {
+      return 'a few seconds ago'
+    }
+
+    return messageTime.fromNow()
+  }, [])
+
+  const [relativeTime, setRelativeTime] = useState(() => getRelativeTime(creationTime))
   const creationDate = dayjs(creationTime).format('LLLL')
 
   const getUpdateInterval = useCallback(() => {
@@ -29,13 +42,13 @@ const MessageTime: FC<Props> = ({ creationTime }) => {
 
   useEffect(() => {
     const updateRelativeTime = () => {
-      setRelativeTime(dayjs(creationTime).fromNow())
+      setRelativeTime(getRelativeTime(creationTime))
     }
 
     const interval = setInterval(updateRelativeTime, getUpdateInterval())
 
     return () => clearInterval(interval)
-  }, [creationTime, getUpdateInterval])
+  }, [creationTime, getUpdateInterval, getRelativeTime])
 
   return (
     <div className="flex-column mt-2 flex items-center text-xs">
