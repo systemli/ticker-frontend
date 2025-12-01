@@ -11,10 +11,10 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-query": "^5.90.6",
     "@tanstack/react-query-devtools": "^5.90.2",
-    "@types/react": "^19.2.2",
+    "@types/react": "^19.2.7",
     "dayjs": "^1.11.19",
     "linkify-react": "^4.3.2",
     "linkifyjs": "^4.3.2",
