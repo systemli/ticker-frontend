@@ -4,23 +4,32 @@ import { ReactNode } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useWebSocket } from '../useWebSocket'
 
-// Mock WebSocket
-const mockWebSocket = {
-  close: vi.fn(),
-  send: vi.fn(),
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  readyState: WebSocket.OPEN,
-  CONNECTING: WebSocket.CONNECTING,
-  OPEN: WebSocket.OPEN,
-  CLOSING: WebSocket.CLOSING,
-  CLOSED: WebSocket.CLOSED,
-} as unknown as WebSocket
+// Mock WebSocket using a class
+let mockWebSocketInstance: MockWebSocket | null = null
+const mockWebSocketConstructor = vi.fn()
 
-const mockWebSocketConstructor = vi.fn(() => mockWebSocket)
+class MockWebSocket {
+  static CONNECTING = 0
+  static OPEN = 1
+  static CLOSING = 2
+  static CLOSED = 3
 
-// eslint-disable-next-line
-global.WebSocket = mockWebSocketConstructor as any
+  close = vi.fn()
+  send = vi.fn()
+  readyState = MockWebSocket.OPEN
+  onopen: ((event: Event) => void) | null = null
+  onmessage: ((event: MessageEvent) => void) | null = null
+  onclose: ((event: CloseEvent) => void) | null = null
+  onerror: ((event: Event) => void) | null = null
+
+  constructor(url: string) {
+    mockWebSocketConstructor(url)
+    mockWebSocketInstance = this
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(globalThis as any).WebSocket = MockWebSocket
 
 // Mock API URL
 vi.mock('../../lib/api', () => ({
@@ -30,6 +39,7 @@ vi.mock('../../lib/api', () => ({
 describe('useWebSocket', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockWebSocketInstance = null
   })
 
   afterEach(() => {
@@ -82,19 +92,6 @@ describe('useWebSocket', () => {
   it('should handle WebSocket messages', async () => {
     const onMessage = vi.fn()
 
-    // Mock the WebSocket constructor to capture the onmessage handler
-    const mockWebSocketInstance = {
-      close: vi.fn(),
-      send: vi.fn(),
-      readyState: WebSocket.OPEN,
-      onopen: null as ((event: Event) => void) | null,
-      onmessage: null as ((event: MessageEvent) => void) | null,
-      onclose: null as ((event: CloseEvent) => void) | null,
-      onerror: null as ((event: Event) => void) | null,
-    }
-
-    mockWebSocketConstructor.mockReturnValue(mockWebSocketInstance as unknown as WebSocket)
-
     renderHook(
       () =>
         useWebSocket({
@@ -128,7 +125,7 @@ describe('useWebSocket', () => {
     })
 
     // Simulate receiving a message
-    mockWebSocketInstance.onmessage!(messageEvent)
+    mockWebSocketInstance!.onmessage!(messageEvent)
 
     await waitFor(() => {
       expect(onMessage).toHaveBeenCalledWith(mockMessage)
@@ -138,19 +135,6 @@ describe('useWebSocket', () => {
   it('should handle malformed WebSocket messages gracefully', async () => {
     const onMessage = vi.fn()
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
-    // Mock the WebSocket constructor to capture the onmessage handler
-    const mockWebSocketInstance = {
-      close: vi.fn(),
-      send: vi.fn(),
-      readyState: WebSocket.OPEN,
-      onopen: null as ((event: Event) => void) | null,
-      onmessage: null as ((event: MessageEvent) => void) | null,
-      onclose: null as ((event: CloseEvent) => void) | null,
-      onerror: null as ((event: Event) => void) | null,
-    }
-
-    mockWebSocketConstructor.mockReturnValue(mockWebSocketInstance as unknown as WebSocket)
 
     renderHook(
       () =>
@@ -171,7 +155,7 @@ describe('useWebSocket', () => {
     })
 
     // Simulate receiving a malformed message
-    mockWebSocketInstance.onmessage!(messageEvent)
+    mockWebSocketInstance!.onmessage!(messageEvent)
 
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('Failed to parse WebSocket message:', expect.any(Error))
