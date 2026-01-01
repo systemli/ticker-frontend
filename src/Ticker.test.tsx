@@ -105,4 +105,42 @@ describe('Ticker', function () {
 
     expect(await screen.findByText("We don't have any messages at the moment.")).toBeInTheDocument()
   })
+
+  test('renders ActiveView with cached data when offline', async function () {
+    // Set navigator.onLine to false to simulate offline
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
+
+    // Simulate successful response from cache even though we're "offline"
+    vi.spyOn(api, 'getInit').mockResolvedValue({
+      data: {
+        settings: initSettings,
+        ticker: ticker,
+      },
+    })
+    vi.spyOn(api, 'getTimeline').mockResolvedValue({
+      data: {
+        messages: [],
+      },
+    })
+    renderTicker()
+
+    expect(screen.getByText('Loading')).toBeInTheDocument()
+
+    // Should show ActiveView with content, not ErrorView
+    expect(await screen.findByText("We don't have any messages at the moment.")).toBeInTheDocument()
+
+    // Should also show offline warning
+    expect(await screen.findByText(/You appear to be offline/i)).toBeInTheDocument()
+
+    // Reset navigator.onLine
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      writable: true,
+      configurable: true,
+    })
+  })
 })
