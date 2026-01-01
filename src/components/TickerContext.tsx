@@ -6,8 +6,22 @@ export function TickerProvider({ children }: Readonly<{ children: ReactNode }>):
   const [ticker, setTicker] = useState<Ticker | null>(null)
   const [settings, setSettings] = useState<Settings>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isOffline, setIsOffline] = useState<boolean>(false)
+  const [isOffline, setIsOffline] = useState<boolean>(!navigator.onLine)
   const [hasError, setHasError] = useState<boolean>(false)
+
+  // Listen to browser online/offline events
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false)
+    const handleOffline = () => setIsOffline(true)
+
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
 
   const fetchInit = () => {
     getInit()
@@ -18,6 +32,10 @@ export function TickerProvider({ children }: Readonly<{ children: ReactNode }>):
 
         setTicker(response.data.ticker)
         setIsLoading(false)
+        // Only set online if browser reports online (cache responses don't mean we're online)
+        if (navigator.onLine) {
+          setIsOffline(false)
+        }
       })
       .catch(error => {
         if (error instanceof TypeError) {
@@ -40,6 +58,7 @@ export function TickerProvider({ children }: Readonly<{ children: ReactNode }>):
       isLoading,
       isOffline,
       hasError,
+      setIsOffline,
     }),
     [ticker, settings, isLoading, isOffline, hasError]
   )
@@ -53,6 +72,7 @@ interface TickerContext {
   isLoading: boolean
   isOffline: boolean
   hasError: boolean
+  setIsOffline: (offline: boolean) => void
 }
 
 const TickerContext = createContext<TickerContext>({} as TickerContext)
