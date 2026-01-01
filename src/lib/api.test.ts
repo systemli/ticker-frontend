@@ -8,7 +8,7 @@ describe('api', function () {
   test('get w/ error response', async function () {
     fetchMock.mockResponse('{}', { status: 400, statusText: 'Bad Request' })
 
-    expect(async () => {
+    await expect(async () => {
       await getInit()
     }).rejects.toThrow('The server responses with an error: Bad Request (400)')
   })

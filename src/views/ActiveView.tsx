@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import Description from '../components/Description'
 import MessageList from '../components/MessageList'
 import ReloadInfo from '../components/ReloadInfo'
@@ -8,7 +8,9 @@ import useTicker from '../components/useTicker'
 const ActiveView: FC = () => {
   const { ticker } = useTicker()
 
-  document.title = `${ticker!.title} - Ticker`
+  useEffect(() => {
+    document.title = `${ticker!.title} - Ticker`
+  }, [ticker])
 
   return (
     <section className="mx-auto w-full px-3 sm:w-xl md:w-2xl md:px-0">
