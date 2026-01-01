@@ -11,15 +11,15 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.6",
     "@tanstack/react-query-devtools": "^5.91.1",
     "@types/react": "^19.2.7",
     "dayjs": "^1.11.19",
     "linkify-react": "^4.3.2",
     "linkifyjs": "^4.3.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-refresh": "^0.18.0",
     "tailwindcss": "^4.0.9"
   },
@@ -30,7 +30,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.6.1",
-    "@types/react-dom": "^19.2.2",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.31.1",
     "@vitejs/plugin-react": "^5.0.4",
