@@ -8,14 +8,14 @@ const Title: FC<Props> = ({ title }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const h1Ref = useRef<HTMLHeadingElement>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [wrapperHeight, setWrapperHeight] = useState<string>('auto')
 
-  const wrapperHeight = () => {
+  useEffect(() => {
     if (wrapperRef.current) {
       const height = wrapperRef.current.offsetHeight
-      return `${height * 0.75}px`
+      setWrapperHeight(`${height * 0.75}px`)
     }
-    return 'auto'
-  }
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +41,7 @@ const Title: FC<Props> = ({ title }) => {
       className="mx-3 border-s border-gray-200 transition-all delay-200 duration-400 max-sm:h-auto dark:border-gray-600"
       style={{
         // Only apply height change on small screens
-        height: isScrolled && window.innerWidth <= 640 ? wrapperHeight() : 'auto',
+        height: isScrolled && window.innerWidth <= 640 ? wrapperHeight : 'auto',
       }}
     >
       <h1 ref={h1Ref} className="px-4 py-4 text-left text-5xl font-extrabold tracking-tight duration-200 lg:text-6xl">
