@@ -2,138 +2,85 @@
 
 ## Architecture Overview
 
-This is a React frontend for the Systemli Ticker project - a real-time messaging system. The app displays ticker messages from a backend API with automatic polling and infinite scroll functionality.
+React frontend for the Systemli Ticker project - a real-time messaging system displaying live ticker messages.
 
 ### Core Data Flow
 
-- **Context**: `TickerProvider` wraps the app and manages global state (ticker info, settings, loading states)
-- **API Layer**: Simple fetch-based API client in `src/lib/api.ts` with two endpoints: `/init` (ticker metadata) and `/timeline` (messages)
-- **View Logic**: Three main views: `ActiveView` (live ticker), `InactiveView` (placeholder), `ErrorView` (connection issues)
-- **Message Loading**: Bidirectional infinite scroll - newer messages via polling, older via intersection observer
+1. **Entry**: `main.tsx` → `QueryClientProvider` → `App` → `TickerProvider` → `Ticker`
+2. **Init**: `TickerContext.tsx` fetches `/init` for ticker metadata and settings
+3. **Messages**: `useMessages` hook uses TanStack Query for infinite scroll + WebSocket for real-time updates
+4. **Views**: `Ticker.tsx` routes to `ActiveView`, `InactiveView`, or `ErrorView` based on state
 
-## Key Patterns & Conventions
+### State Management Architecture
 
-### Component Structure
-
-- Functional components with TypeScript interfaces for props
-- Custom hooks pattern: `useTicker()` for accessing ticker context
-- View components handle layout, smaller components handle specific UI elements
-- Test files alongside components using `*.test.tsx` naming
-
-### API Integration
-
-```typescript
-// Environment-driven API URL
-export const ApiUrl = import.meta.env.TICKER_API_URL
-
-// Simple fetch wrapper with error handling
-async function get<T>(path: string): Promise<T>
+```
+QueryClientProvider (TanStack Query - caching, pagination)
+  └── TickerProvider (React Context - ticker metadata, settings, connection state)
+        └── Ticker → Views → Components
 ```
 
-### State Management
+- **TanStack Query**: Message caching, infinite scroll pagination, background refetching
+- **React Context**: Ticker info, settings, loading/offline/error states via `useTicker()` hook
+- **WebSocket**: Real-time message push via `useWebSocket` hook with auto-reconnect
 
-- React Context for global ticker state (no external state library)
-- Local component state for UI interactions
-- No data caching layer - direct API calls with periodic refresh
+## Key Patterns
 
-### Styling Approach
+### Hook Composition (`src/hooks/`)
 
-- **Tailwind CSS v4** with `@tailwindcss/vite` plugin (no separate config file)
-- Responsive design with `max-sm:` variants for mobile-specific behavior
-- Dark mode support via `dark:` classes
-- Custom CSS utilities defined inline or in component styles
+`useMessages` combines TanStack Query + WebSocket for hybrid data fetching:
+
+```typescript
+// Infinite scroll with useInfiniteQuery
+const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  queryKey: ['messages'],
+  queryFn: ({ pageParam }) => getTimeline(pageParam || {}),
+  getNextPageParam: lastPage => ({ before: oldestMessageId }),
+})
+
+// WebSocket updates via callback
+useWebSocket({ onMessage: wsMsg => addMessage(wsMsg.data.message) })
+```
+
+### Component Testing Pattern
+
+Tests use wrapper with QueryClientProvider for hook testing:
+
+```typescript
+const createWrapper = ({ children }) => createElement(QueryClientProvider, { client: queryClient }, children)
+
+renderHook(() => useMessages(), { wrapper: createWrapper })
+```
+
+### Global Test Mocks (`vitest-setup.ts`)
+
+WebSocket, IntersectionObserver, and fetch are mocked globally - no per-test setup needed.
 
 ## Development Commands
 
 ```bash
-# Development
-npm run dev        # Starts dev server on port 4000
-npm run build      # Production build
-npm run preview    # Preview production build
-
-# Testing
-npm run test       # Run vitest in watch mode
-npm run coverage   # Generate test coverage report
-
-# Code Quality
-npm run lint       # ESLint with TypeScript rules
+npm run dev        # Dev server on port 4000
+npm run test       # Vitest watch mode
+npm run coverage   # Coverage report
+npm run lint       # ESLint
 ```
 
-## Testing Patterns
+## Styling
 
-### Test Setup
+- **Tailwind CSS v4** via `@tailwindcss/vite` plugin (no tailwind.config.js)
+- Global styles in `src/styles.css` with `@import 'tailwindcss'`
+- Dark mode: `dark:` variants
+- Mobile-first: `max-sm:` for small screen overrides
 
-- **Vitest** with jsdom environment for React testing
-- `vitest-fetch-mock` for API mocking in tests
-- `@testing-library/react` for component testing
-- Global test setup in `vitest-setup.ts`
+## API Integration
 
-### Common Test Patterns
+- Backend URL: `TICKER_API_URL` env var (Vite prefix: `TICKER_`)
+- Endpoints: `/init` (metadata), `/timeline` (messages), `/ws` (WebSocket)
+- Response format: `{ data: { ... } }` wrapper
 
-```typescript
-// Mock API calls
-fetchMock.mockResponseOnce(JSON.stringify({ data: { messages: [] } }))
+## File Organization
 
-// Test components with context
-const { ticker, settings } = useTicker()
-
-// Intersection Observer mocking
-window.IntersectionObserver = vi.fn().mockImplementation(intersectionObserverMock)
-```
-
-## Message Timeline Logic
-
-### Infinite Scroll Implementation
-
-- **Newer messages**: Polling via `setInterval` using `after` parameter with newest message ID
-- **Older messages**: Intersection Observer triggers loading with `before` parameter using oldest message ID
-- **State tracking**: `lastMessageReceived` boolean prevents infinite older message requests
-
-### API Pagination
-
-```typescript
-getTimeline({ after: newestId }) // Fetch newer messages
-getTimeline({ before: oldestId }) // Fetch older messages
-getTimeline({}) // Initial load
-```
-
-## Mobile-Specific Features
-
-### Responsive Scroll Behavior
-
-Components like `Title.tsx` use conditional styling with Tailwind responsive variants:
-
-```typescript
-// Only apply on small screens
-h1Ref.current.classList.toggle('max-sm:scale-66', scrolled)
-// Style adjustments via window.innerWidth checks
-```
-
-## Integration Points
-
-### Backend Dependencies
-
-- Expects ticker backend API at `TICKER_API_URL` environment variable (default: localhost:8080)
-- API returns structured responses with `data` property containing actual content
-- Handles offline detection via TypeError catch blocks
-
-### Build Integration
-
-- Vite-based build with React and TypeScript
-- GitHub Actions CI/CD with Node.js LTS (lts/jod from `.nvmrc`)
-- SonarCloud integration for code quality
-- Environment variables prefixed with `TICKER_`
-
-## Error Handling Patterns
-
-- Network errors (TypeError) → offline state
-- API errors → error state with user message
-- Graceful degradation: shows appropriate view based on connection/data state
-- No global error boundaries - component-level error handling
-
-## Development Notes
-
-- Use `npm` (specified in `packageManager` field)
-- TypeScript strict mode enabled
-- ESLint with React hooks plugin for hook dependency checking
-- Prettier with Tailwind plugin for class ordering
+- `src/components/` - UI components + context
+- `src/hooks/` - Data fetching hooks (`useMessages`, `useWebSocket`)
+- `src/views/` - Page-level layouts
+- `src/lib/` - API client + TypeScript types
+- Tests: `*.test.tsx` alongside source files, `hooks/__tests__/` for hook tests
