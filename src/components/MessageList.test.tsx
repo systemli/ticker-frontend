@@ -15,13 +15,17 @@ vi.mock('../hooks/useWebSocket', () => ({
   })),
 }))
 
-// Mock IntersectionObserver for scroll testing
-const mockIntersectionObserver = vi.fn()
-mockIntersectionObserver.mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-})
+// Mock IntersectionObserver for scroll testing using a class
+const mockObserve = vi.fn()
+const mockUnobserve = vi.fn()
+const mockDisconnect = vi.fn()
+
+const mockIntersectionObserver = vi.fn(function (this: IntersectionObserver, _callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {
+  this.observe = mockObserve
+  this.unobserve = mockUnobserve
+  this.disconnect = mockDisconnect
+}) as unknown as typeof IntersectionObserver
+
 window.IntersectionObserver = mockIntersectionObserver
 
 const createTestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -205,8 +209,7 @@ describe('MessageList', function () {
     )
 
     // Verify observer.observe was called
-    const observerInstance = mockIntersectionObserver.mock.results[0].value
-    expect(observerInstance.observe).toHaveBeenCalled()
+    expect(mockObserve).toHaveBeenCalled()
   })
 
   test('shows pagination loading when hasNextPage is true', async function () {
@@ -277,12 +280,9 @@ describe('MessageList', function () {
       expect(screen.getByText('Test message')).toBeInTheDocument()
     })
 
-    // Get the observer instance to check cleanup
-    const observerInstance = mockIntersectionObserver.mock.results[0].value
-
     unmount()
 
     // Verify unobserve was called on cleanup
-    expect(observerInstance.unobserve).toHaveBeenCalled()
+    expect(mockUnobserve).toHaveBeenCalled()
   })
 })
