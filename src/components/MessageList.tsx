@@ -3,19 +3,21 @@ import { useMessages } from '../hooks/useMessages'
 import EmptyMessageList from './EmptyMessageList'
 import Loader from './Loader'
 import Message from './Message'
+import useTicker from './useTicker'
 
 const MessageList: FC = () => {
   const { messages, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useMessages()
+  const { isOffline } = useTicker()
 
   const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
 
   const fetchOlderMessagesCallback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+      if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage && !isOffline) {
         fetchNextPage()
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
+    [fetchNextPage, hasNextPage, isFetchingNextPage, isOffline]
   )
 
   // Intersection Observer for loading older messages

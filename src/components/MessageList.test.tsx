@@ -19,8 +19,10 @@ vi.mock('../hooks/useWebSocket', () => ({
 const mockObserve = vi.fn()
 const mockUnobserve = vi.fn()
 const mockDisconnect = vi.fn()
+let lastIntersectionCallback: IntersectionObserverCallback | null = null
 
-const mockIntersectionObserver = vi.fn(function (this: IntersectionObserver, _callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {
+const mockIntersectionObserver = vi.fn(function (this: IntersectionObserver, callback: IntersectionObserverCallback, _options?: IntersectionObserverInit) {
+  lastIntersectionCallback = callback
   this.observe = mockObserve
   this.unobserve = mockUnobserve
   this.disconnect = mockDisconnect
@@ -284,5 +286,60 @@ describe('MessageList', function () {
 
     // Verify unobserve was called on cleanup
     expect(mockUnobserve).toHaveBeenCalled()
+  })
+
+  test('does not fetch next page when offline', async function () {
+    // Set navigator.onLine to false
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
+
+    vi.spyOn(api, 'getInit').mockResolvedValue({
+      data: {
+        settings: { refreshInterval: 60000, inactiveSettings: {} as any },
+        ticker: { id: 1, title: 'Test', description: 'Test', createdAt: '', information: {} as any },
+      },
+    })
+
+    const getTimelineSpy = vi.spyOn(api, 'getTimeline').mockResolvedValue({
+      data: {
+        messages: [
+          {
+            id: 1,
+            text: 'Test message',
+            ticker: 1,
+            createdAt: '2023-01-01T12:00:00Z',
+            attachments: [],
+          },
+        ],
+      },
+    })
+
+    render(<MessageList />, { wrapper: createTestWrapper })
+
+    await waitFor(() => {
+      expect(screen.getByText('Test message')).toBeInTheDocument()
+    })
+
+    // Simulate intersection (scroll to bottom) using the stored callback
+    if (lastIntersectionCallback) {
+      lastIntersectionCallback([{ isIntersecting: true }] as IntersectionObserverEntry[], {} as IntersectionObserver)
+    }
+
+    // Wait a bit to ensure no additional fetch was triggered
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    // getTimeline should only be called once (initial load), not again for pagination
+    // because we're offline
+    expect(getTimelineSpy).toHaveBeenCalledTimes(1)
+
+    // Reset navigator.onLine
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      writable: true,
+      configurable: true,
+    })
   })
 })

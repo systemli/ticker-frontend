@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import Description from '../components/Description'
 import MessageList from '../components/MessageList'
+import OfflineWarning from '../components/OfflineWarning'
 import ReloadInfo from '../components/ReloadInfo'
 import Title from '../components/Title'
 import useTicker from '../components/useTicker'
@@ -16,6 +17,7 @@ const ActiveView: FC = () => {
     <section className="mx-auto w-full px-3 sm:w-xl md:w-2xl md:px-0">
       <div className="static">
         <div className="sticky top-0 z-10 -mx-3 bg-white dark:bg-gray-950">
+          <OfflineWarning />
           <ReloadInfo />
           <Title title={ticker!.title} />
         </div>

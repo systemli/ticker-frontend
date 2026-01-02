@@ -18,12 +18,24 @@ export type MessagesPageParam = {
  */
 export const useMessages = () => {
   const queryClient = useQueryClient()
-  const { ticker } = useTicker()
+  const { ticker, setIsOffline } = useTicker()
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
     queryKey: MESSAGES_QUERY_KEY,
-    queryFn: ({ pageParam }: { pageParam?: MessagesPageParam }) => {
-      return getTimeline(pageParam || {})
+    queryFn: async ({ pageParam }: { pageParam?: MessagesPageParam }) => {
+      try {
+        const result = await getTimeline(pageParam || {})
+        // Only set online if browser reports online (cache responses don't mean we're online)
+        if (navigator.onLine) {
+          setIsOffline(false)
+        }
+        return result
+      } catch (err) {
+        if (err instanceof TypeError) {
+          setIsOffline(true) // Network error, we're offline
+        }
+        throw err
+      }
     },
     getNextPageParam: (lastPage: TimelineResponse) => {
       // Check if there are messages in the last page
