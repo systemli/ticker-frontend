@@ -1,8 +1,10 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import useTicker from './useTicker'
 
 const OfflineWarning: FC = () => {
   const { isOffline } = useTicker()
+  const { t } = useTranslation()
 
   if (!isOffline) {
     return null
@@ -20,7 +22,7 @@ const OfflineWarning: FC = () => {
               d="M18.364 5.636a9 9 0 010 12.728M5.636 5.636a9 9 0 000 12.728M12 12h.01M8.464 8.464a5 5 0 017.072 7.072M8.464 15.536a5 5 0 010-7.072"
             />
           </svg>
-          <p>You appear to be offline. Some content may be outdated.</p>
+          <p>{t('appearsOffline')}</p>
         </div>
       </div>
     </div>

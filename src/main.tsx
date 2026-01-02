@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
 })
 
 const persister = createAsyncStoragePersister({
-  storage: window.localStorage,
+  storage: globalThis.localStorage,
   key: 'ticker-query-cache',
   throttleTime: 1000,
 })

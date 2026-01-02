@@ -10,6 +10,7 @@ import { useWebSocket } from '../useWebSocket'
 vi.mock('../../components/useTicker', () => ({
   default: vi.fn(() => ({
     ticker: { id: 1, title: 'Test Ticker' },
+    isOffline: false,
     setIsOffline: vi.fn(),
   })),
 }))
