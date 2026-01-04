@@ -1,6 +1,10 @@
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/de'
+import 'dayjs/locale/en'
+import 'dayjs/locale/fr'
+import { useTranslation } from 'react-i18next'
 import { FC, useCallback, useEffect, useState } from 'react'
 import Clock from './icons/Clock'
 
@@ -40,10 +44,20 @@ const MessageTime: FC<Props> = ({ creationTime }) => {
     return 1800000 // 30 minutes for older messages
   }, [creationTime])
 
+  const { i18n } = useTranslation()
+  const normalizedLang = i18n.language.split('-')[0].toLowerCase()
+  let dayjsLocale = 'en'
+  if (['en', 'de', 'fr'].includes(normalizedLang)) {
+    dayjsLocale = normalizedLang
+  }
+  dayjs.locale(dayjsLocale)
+
   useEffect(() => {
     const updateRelativeTime = () => {
       setRelativeTime(getRelativeTime(creationTime))
     }
+    // Call once to apply locale dayjs
+    updateRelativeTime()
 
     const interval = setInterval(updateRelativeTime, getUpdateInterval())
 
