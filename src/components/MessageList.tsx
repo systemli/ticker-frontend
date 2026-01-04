@@ -3,8 +3,10 @@ import { useMessages } from '../hooks/useMessages'
 import EmptyMessageList from './EmptyMessageList'
 import Loader from './Loader'
 import Message from './Message'
+import { useTranslation } from 'react-i18next'
 
 const MessageList: FC = () => {
+  const { t } = useTranslation()
   const { messages, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useMessages()
 
   const loadMoreSpinnerRef = useRef<HTMLDivElement>(null)
@@ -40,11 +42,11 @@ const MessageList: FC = () => {
   }, [fetchOlderMessagesCallback])
 
   if (isLoading) {
-    return <Loader content="Loading" />
+    return <Loader content={t('loading')} />
   }
 
   if (isError) {
-    return <div className="p-4 text-red-600 dark:text-red-400">Error loading messages: {error?.message || 'Unknown error'}</div>
+    return <div className="p-4 text-red-600 dark:text-red-400">{t('errorLoading', { message: error?.message || t('unknownError') })}</div>
   }
 
   if (messages.length === 0) {
@@ -58,7 +60,7 @@ const MessageList: FC = () => {
       ))}
       {hasNextPage && (
         <div ref={loadMoreSpinnerRef} className="py-4 text-center">
-          {isFetchingNextPage ? <Loader content="Loading more..." /> : <span className="text-gray-500 dark:text-gray-400">Loading...</span>}
+          {isFetchingNextPage ? <Loader content={t('loadingMore')} /> : <span className="text-gray-500 dark:text-gray-400">{t('loading')}</span>}
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import './i18n/i18n' // Import i18n configuration
 
 const queryClient = new QueryClient({
   defaultOptions: {
