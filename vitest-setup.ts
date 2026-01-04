@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 import createFetchMock from 'vitest-fetch-mock'
+import { initReactI18next } from 'react-i18next'
+import i18n from 'i18next'
+import en from './src/i18n/locales/en.json'
 
 // Mock WebSocket globally for all tests using a class
 class MockWebSocket {
@@ -48,3 +51,11 @@ const fetchMocker = createFetchMock(vi)
 
 // sets globalThis.fetch and globalThis.fetchMock to our mocked version
 fetchMocker.enableMocks()
+
+// Internationalization
+i18n.use(initReactI18next).init({
+  resources: { en: { translation: en } },
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: { escapeValue: false },
+})

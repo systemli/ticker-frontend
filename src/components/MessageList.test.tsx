@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '../test-utils'
+import { render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, vi } from 'vitest'
 import * as api from '../lib/api'
 import MessageList from './MessageList'
 import { TickerProvider } from './TickerContext'
-import en from '../i18n/locales/en.json'
 
 // Mock the WebSocket hook to prevent connection attempts
 vi.mock('../hooks/useWebSocket', () => ({
@@ -63,7 +62,7 @@ describe('MessageList', function () {
     render(<MessageList />, { wrapper: createTestWrapper })
 
     // The text is already there immediately, so just check for it
-    expect(screen.getByText(en.noMessages)).toBeInTheDocument()
+    expect(screen.getByText("We don't have any messages at the moment.")).toBeInTheDocument()
   })
 
   test('shows loading state initially', async function () {
@@ -80,7 +79,7 @@ describe('MessageList', function () {
     render(<MessageList />, { wrapper: createTestWrapper })
 
     await waitFor(() => {
-      expect(screen.getByText(en.loading)).toBeInTheDocument()
+      expect(screen.getByText('Loading')).toBeInTheDocument()
     })
   })
 
@@ -97,7 +96,7 @@ describe('MessageList', function () {
     render(<MessageList />, { wrapper: createTestWrapper })
 
     await waitFor(() => {
-      expect(screen.getByText(new RegExp(en.errorLoading.replace('{{message}}', '.*')))).toBeInTheDocument()
+      expect(screen.getByText(/Error loading messages/)).toBeInTheDocument()
       expect(screen.getByText(/Network error/)).toBeInTheDocument()
     })
   })
