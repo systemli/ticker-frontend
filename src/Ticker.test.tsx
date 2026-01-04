@@ -1,10 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from './test-utils'
 import { vi } from 'vitest'
 import { TickerProvider } from './components/TickerContext'
 import * as api from './lib/api'
 import { Settings, Ticker as TickerType } from './lib/types'
 import Ticker from './Ticker'
+import en from './i18n/locales/en.json'
 
 describe('Ticker', function () {
   const initSettings = {
@@ -59,18 +60,18 @@ describe('Ticker', function () {
     vi.spyOn(api, 'getInit').mockRejectedValue(new TypeError())
     renderTicker()
 
-    expect(screen.getByText('Loading')).toBeInTheDocument()
+    expect(screen.getByText(en.loading)).toBeInTheDocument()
 
-    expect(await screen.findByText('It seems that you are offline.')).toBeInTheDocument()
+    expect(await screen.findByText(en.offline)).toBeInTheDocument()
   })
 
   test('renders ErrorView', async function () {
     vi.spyOn(api, 'getInit').mockRejectedValue(new Error('The server responses with an error: Internal Server Error (500)'))
     renderTicker()
 
-    expect(screen.getByText('Loading')).toBeInTheDocument()
+    expect(screen.getByText(en.loading)).toBeInTheDocument()
 
-    expect(await screen.findByText('There seems to be a problem connecting to the server.')).toBeInTheDocument()
+    expect(await screen.findByText(en.errorConnection)).toBeInTheDocument()
   })
 
   test('renders InactiveView', async function () {
@@ -82,7 +83,7 @@ describe('Ticker', function () {
     })
     renderTicker()
 
-    expect(screen.getByText('Loading')).toBeInTheDocument()
+    expect(screen.getByText(en.loading)).toBeInTheDocument()
 
     expect(await screen.findByText('The ticker is currently inactive.')).toBeInTheDocument()
   })
@@ -101,8 +102,8 @@ describe('Ticker', function () {
     })
     renderTicker()
 
-    expect(screen.getByText('Loading')).toBeInTheDocument()
+    expect(screen.getByText(en.loading)).toBeInTheDocument()
 
-    expect(await screen.findByText("We don't have any messages at the moment.")).toBeInTheDocument()
+    expect(await screen.findByText(en.noMessages)).toBeInTheDocument()
   })
 })
