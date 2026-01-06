@@ -1,15 +1,15 @@
 {
-  "automaticLoad": "",
-  "dismiss": "",
-  "errorConnection": "",
-  "errorLoading": "",
-  "errorOccurred": "",
-  "loading": "",
-  "loadingMore": "",
-  "noMessages": "",
-  "offline": "",
-  "ohNo": "",
-  "reload": "",
-  "reloading": "",
-  "unknownError": ""
+  "automaticLoad": "Neue Nachrichten werden automatisch geladen.",
+  "dismiss": "Schließen",
+  "errorConnection": "Es scheint ein Problem bei der Verbindung zum Server zu geben.",
+  "errorLoading": "Fehler beim Laden der Nachrichten: {{message}}",
+  "errorOccurred": "Es ist ein Fehler aufgetreten :-(",
+  "loading": "Lädt...",
+  "loadingMore": "Lädt mehr...",
+  "noMessages": "Wir haben im Moment keine Nachrichten.",
+  "offline": "Es scheint, dass du offline bist.",
+  "ohNo": "Oh nein!",
+  "reload": "Neu laden",
+  "reloading": "Wird neu geladen",
+  "unknownError": "Unbekannter Fehler"
 }
