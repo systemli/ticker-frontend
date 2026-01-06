@@ -20,7 +20,7 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/init')
+    expect(fetchMock).toHaveBeenCalledWith('/api/init')
   })
 
   test('getTimeline', async function () {
@@ -30,7 +30,7 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline')
+    expect(fetchMock).toHaveBeenCalledWith('/api/timeline')
   })
 
   test('getTimeline w/ after pagination', async function () {
@@ -40,7 +40,7 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?after=1')
+    expect(fetchMock).toHaveBeenCalledWith('/api/timeline?after=1')
   })
 
   test('getTimeline w/ before pagination', async function () {
@@ -50,6 +50,6 @@ describe('api', function () {
 
     expect(response).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/v1/timeline?before=1')
+    expect(fetchMock).toHaveBeenCalledWith('/api/timeline?before=1')
   })
 })

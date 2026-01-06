@@ -1,0 +1,11 @@
+services:
+  frontend:
+    container_name: ticker-frontend
+    restart: unless-stopped
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    env_file:
+      - .env
