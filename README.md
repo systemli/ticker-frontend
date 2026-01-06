@@ -42,6 +42,15 @@ It provides a simple single page website to present your ticker.
 [![Screenshot Mobile](assets/screenshot-mobile-default-small.png)](assets/screenshot-mobile-default.png)
 [![Screenshot Mobile](assets/screenshot-mobile-dark-small.png)](assets/screenshot-mobile-dark.png)
 
+## Localization
+
+Strings are localized on the [locales](./src/i18n/locales) folder. To add more languages, please update those files:
+
+- [i18n.ts](./src/i18n/i18n.ts) to localize all strings
+- [MessageTime.tsx](./src/components/MessageTime.tsx) to localize `dayjs` relative times
+
+To add a new string, please use the `t('stringKey')` notation and update all the locales.
+
 ## License
 
 GPL-3.0 license. See [LICENSE](LICENSE) for more information.

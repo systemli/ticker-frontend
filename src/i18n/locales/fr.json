@@ -1,0 +1,15 @@
+{
+  "automaticLoad": "Les nouveaux messages seront chargés automatiquement.",
+  "dismiss": "Fermer",
+  "errorConnection": "Il semble y avoir un problème de connexion au serveur.",
+  "errorLoading": "Erreur lors du chargement des messages : {{message}}",
+  "errorOccurred": "Une erreur s'est produite :-(",
+  "loading": "Chargement",
+  "loadingMore": "Chargement supplémentaire...",
+  "noMessages": "Nous n'avons aucun message pour le moment.",
+  "offline": "Il semble que vous êtes hors ligne.",
+  "ohNo": "Oh non !",
+  "reload": "Recharger",
+  "reloading": "Réessayer",
+  "unknownError": "Erreur inconnue"
+}

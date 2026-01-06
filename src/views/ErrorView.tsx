@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Credits from '../components/Credits'
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 const ErrorView: FC<Props> = ({ message }) => {
+  const { t } = useTranslation()
   const handleClick = () => {
     window.location.reload()
   }
@@ -14,10 +16,10 @@ const ErrorView: FC<Props> = ({ message }) => {
     <section className="flex h-screen">
       <div className="mx-auto mt-[50%] w-full sm:m-auto sm:w-xl md:w-2xl">
         <div className="p-4 pt-8 text-center sm:p-8">
-          <h1 className="mb-4 text-4xl leading-none font-extrabold tracking-tight md:text-5xl lg:text-6xl">Oh no!</h1>
-          <h2 className="mb-4 text-xl font-bold tracking-tight md:text-2xl lg:text-3xl">An error occurred :-(</h2>
+          <h1 className="mb-4 text-4xl leading-none font-extrabold tracking-tight md:text-5xl lg:text-6xl">{t('ohNo')}</h1>
+          <h2 className="mb-4 text-xl font-bold tracking-tight md:text-2xl lg:text-3xl">{t('errorOccurred')}</h2>
           <p className="text-lg leading-7">{message}</p>
-          <button className="mt-8 inline-flex items-center rounded-md px-2 py-1 text-sm ring" onClick={handleClick} name="reload" aria-label="Reload">
+          <button className="mt-8 inline-flex items-center rounded-md px-2 py-1 text-sm ring" onClick={handleClick} name="reload" aria-label={t('reload')}>
             <div className="pr-1">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                 <path
@@ -27,7 +29,7 @@ const ErrorView: FC<Props> = ({ message }) => {
                 />
               </svg>
             </div>
-            <div>Try a Reload</div>
+            <div>{t('reloading')}</div>
           </button>
         </div>
         <Credits />

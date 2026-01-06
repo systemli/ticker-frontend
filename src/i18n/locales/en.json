@@ -1,0 +1,15 @@
+{
+  "automaticLoad": "New messages will load automatically.",
+  "dismiss": "Dismiss",
+  "errorConnection": "There seems to be a problem connecting to the server.",
+  "errorLoading": "Error loading messages: {{message}}",
+  "errorOccurred": "An error occurred :-(",
+  "loading": "Loading",
+  "loadingMore": "Loading more...",
+  "noMessages": "We don't have any messages at the moment.",
+  "offline": "It seems that you are offline.",
+  "ohNo": "Oh no!",
+  "reload": "Reload",
+  "reloading": "Try a Reload",
+  "unknownError": "Unknown error"
+}
