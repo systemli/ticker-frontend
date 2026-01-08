@@ -34,7 +34,10 @@ export const useWebSocket = ({ onMessage, onOpen, onClose, onError, enabled = tr
     try {
       // Convert HTTP(S) URL to WS(S) URL
       let wsUrl: string
-      if (ApiUrl?.startsWith('https://')) {
+      if (ApiUrl === '/api') {
+        const loc = window.location
+        wsUrl = (loc.protocol === 'https:' ? 'wss://' : 'ws://') + loc.host + '/api/ws'
+      } else if (ApiUrl?.startsWith('https://')) {
         wsUrl = ApiUrl.replace('https://', 'wss://') + '/ws'
       } else if (ApiUrl?.startsWith('http://')) {
         wsUrl = ApiUrl.replace('http://', 'ws://') + '/ws'
