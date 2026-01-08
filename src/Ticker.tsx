@@ -18,14 +18,16 @@ const Ticker: FC = () => {
     return <ErrorView message={t('errorConnection')} />
   }
 
-  if (isOffline) {
-    return <ErrorView message={t('offline')} />
-  }
-
   if (ticker === null && settings?.inactiveSettings !== undefined) {
     return <InactiveView settings={settings.inactiveSettings} />
   }
 
+  // If we have no data at all and can't fetch (offline or error), show error
+  if (ticker === null) {
+    return <ErrorView message={isOffline ? t('offline') : t('errorConnection')} />
+  }
+
+  // Show ActiveView with OfflineWarning if we have ticker data (even when offline)
   return <ActiveView />
 }
 

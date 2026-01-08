@@ -1,37 +1,46 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { createContext, JSX, ReactNode, useEffect, useMemo, useState } from 'react'
 import { getInit } from '../lib/api'
 import { Settings, Ticker } from '../lib/types'
 
 export function TickerProvider({ children }: Readonly<{ children: ReactNode }>): JSX.Element {
-  const [ticker, setTicker] = useState<Ticker | null>(null)
-  const [settings, setSettings] = useState<Settings>()
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isOffline, setIsOffline] = useState<boolean>(false)
-  const [hasError, setHasError] = useState<boolean>(false)
+  const queryClient = useQueryClient()
+  const [browserOffline, setBrowserOffline] = useState<boolean>(!navigator.onLine)
 
-  const fetchInit = () => {
-    getInit()
-      .then(response => {
-        if (response.data.settings) {
-          setSettings(response.data.settings)
-        }
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['init'],
+    queryFn: getInit,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  })
 
-        setTicker(response.data.ticker)
-        setIsLoading(false)
-      })
-      .catch(error => {
-        if (error instanceof TypeError) {
-          setIsOffline(true)
-        } else {
-          setHasError(true)
-        }
-        setIsLoading(false)
-      })
-  }
+  const ticker = data?.data.ticker ?? null
+  const settings = data?.data.settings
 
+  // Detect offline via network errors (TypeError indicates network failure)
+  const networkOffline = isError && error instanceof TypeError
+  const isOffline = browserOffline || networkOffline
+  const hasError = isError && !networkOffline
+
+  // Listen to browser online/offline events
   useEffect(() => {
-    fetchInit()
-  }, [])
+    const handleOnline = () => {
+      setBrowserOffline(false)
+      // Refetch init data when coming back online
+      queryClient.refetchQueries({ queryKey: ['init'] })
+    }
+    const handleOffline = () => setBrowserOffline(true)
+
+    globalThis.addEventListener('online', handleOnline)
+    globalThis.addEventListener('offline', handleOffline)
+
+    return () => {
+      globalThis.removeEventListener('online', handleOnline)
+      globalThis.removeEventListener('offline', handleOffline)
+    }
+  }, [queryClient])
+
+  // setIsOffline updates the browser offline state (used by useMessages for network error detection)
+  const setIsOffline = (offline: boolean) => setBrowserOffline(offline)
 
   const memoedValue = useMemo(
     () => ({
@@ -40,6 +49,7 @@ export function TickerProvider({ children }: Readonly<{ children: ReactNode }>):
       isLoading,
       isOffline,
       hasError,
+      setIsOffline,
     }),
     [ticker, settings, isLoading, isOffline, hasError]
   )
@@ -53,6 +63,7 @@ interface TickerContext {
   isLoading: boolean
   isOffline: boolean
   hasError: boolean
+  setIsOffline: (offline: boolean) => void
 }
 
 const TickerContext = createContext<TickerContext>({} as TickerContext)

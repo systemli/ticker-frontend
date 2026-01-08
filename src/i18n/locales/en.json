@@ -1,4 +1,5 @@
 {
+  "appearsOffline": "You appear to be offline. Some content may be outdated.",
   "automaticLoad": "New messages will load automatically.",
   "dismiss": "Dismiss",
   "errorConnection": "There seems to be a problem connecting to the server.",

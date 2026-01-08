@@ -1,12 +1,16 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
-import { vi } from 'vitest'
+import { beforeEach, vi } from 'vitest'
 import { TickerProvider } from './components/TickerContext'
 import * as api from './lib/api'
 import { Settings, Ticker as TickerType } from './lib/types'
 import Ticker from './Ticker'
 
 describe('Ticker', function () {
+  beforeEach(() => {
+    // Clear localStorage to prevent cached data from affecting tests
+    localStorage.clear()
+  })
   const initSettings = {
     refreshInterval: 1000,
     inactiveSettings: {

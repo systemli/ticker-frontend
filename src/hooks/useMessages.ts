@@ -1,5 +1,5 @@
 import { InfiniteData, useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import useTicker from '../components/useTicker'
 import { getTimeline, TimelineResponse } from '../lib/api'
 import { Message, WebSocketMessage } from '../lib/types'
@@ -18,12 +18,29 @@ export type MessagesPageParam = {
  */
 export const useMessages = () => {
   const queryClient = useQueryClient()
-  const { ticker } = useTicker()
+  const { ticker, isOffline, setIsOffline } = useTicker()
+  const wasOfflineRef = useRef(isOffline)
+
+  // When coming back online, refetch messages to fill any gaps
+  useEffect(() => {
+    if (wasOfflineRef.current && !isOffline) {
+      // We just came back online - refetch to fill any gaps
+      queryClient.refetchQueries({ queryKey: MESSAGES_QUERY_KEY })
+    }
+    wasOfflineRef.current = isOffline
+  }, [isOffline, queryClient])
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
     queryKey: MESSAGES_QUERY_KEY,
-    queryFn: ({ pageParam }: { pageParam?: MessagesPageParam }) => {
-      return getTimeline(pageParam || {})
+    queryFn: async ({ pageParam }: { pageParam?: MessagesPageParam }) => {
+      try {
+        return await getTimeline(pageParam || {})
+      } catch (err) {
+        if (err instanceof TypeError) {
+          setIsOffline(true)
+        }
+        throw err
+      }
     },
     getNextPageParam: (lastPage: TimelineResponse) => {
       // Check if there are messages in the last page
