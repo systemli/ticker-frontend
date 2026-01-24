@@ -1,5 +1,7 @@
 import { FC } from 'react'
 import { Ticker } from '../lib/types'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
 import At from './icons/At'
 import Author from './icons/Author'
 import Bluesky from './icons/Bluesky'
@@ -12,21 +14,29 @@ import Twitter from './icons/Twitter'
 import Url from './icons/Url'
 import InformationItem from './InformationItem'
 
+// Configure marked to support GitHub Flavored Markdown
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+  pedantic: false,
+})
+
 interface Props {
   ticker: Ticker
 }
 
 const Description: FC<Props> = ({ ticker }) => {
+  // Process the description with Markdown and sanitize the result
+  const processedDescription = ticker.description ?
+    DOMPurify.sanitize(marked.parse(ticker.description)) : null
+
   return (
     <div>
-      {ticker.description && (
-        <div className="tracking-tight md:text-lg">
-          {ticker.description.split('\n').map(paragraph => (
-            <p key={paragraph} className="">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+      {processedDescription && (
+        <div
+          className="tracking-tight md:text-lg prose prose-gray max-w-none"
+          dangerouslySetInnerHTML={{ __html: processedDescription }}
+        />
       )}
       <div className="text-base/8">
         <div className="mt-2 flex overflow-x-scroll md:mt-4 md:grid md:grid-cols-2 md:place-items-center md:overflow-x-auto lg:mx-auto">
