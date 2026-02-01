@@ -18,7 +18,7 @@
     "@tanstack/react-query-persist-client": "^5.90.18",
     "@types/react": "^19.2.10",
     "dayjs": "^1.11.19",
-    "i18next": "^25.7.3",
+    "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",
     "linkify-react": "^4.3.2",
     "linkifyjs": "^4.3.2",
