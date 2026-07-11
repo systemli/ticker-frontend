@@ -8,10 +8,8 @@ import { TickerProvider } from './TickerContext'
 // Mock the WebSocket hook to prevent connection attempts
 vi.mock('../hooks/useWebSocket', () => ({
   useWebSocket: vi.fn(() => ({
-    socket: null,
     disconnect: vi.fn(),
     reconnect: vi.fn(),
-    isConnected: false,
   })),
 }))
 
