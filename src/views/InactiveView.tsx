@@ -23,7 +23,7 @@ const InactiveView: FC<Props> = ({ settings }) => {
               <a href={`mailto:${settings.email}`}>{settings.email}</a>
             </p>
             <p className="">
-              <a href={settings.homepage} target="_blank">
+              <a href={settings.homepage} target="_blank" rel="noreferrer">
                 {settings.homepage.replace(/https?:\/\//, '')}
               </a>
             </p>
