@@ -15,9 +15,12 @@ export const useWebSocket = ({ onMessage, onOpen, onClose, onError, enabled = tr
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const reconnectAttemptsRef = useRef(0)
   const enabledRef = useRef(enabled)
+  const connectRef = useRef<() => void>(() => {})
 
   // Keep enabled ref in sync
-  enabledRef.current = enabled
+  useEffect(() => {
+    enabledRef.current = enabled
+  }, [enabled])
 
   const maxReconnectAttempts = 5
   const baseReconnectDelay = 1000
@@ -84,7 +87,7 @@ export const useWebSocket = ({ onMessage, onOpen, onClose, onError, enabled = tr
         reconnectAttemptsRef.current += 1
 
         reconnectTimeoutRef.current = setTimeout(() => {
-          connect()
+          connectRef.current()
         }, delay)
       }
 
@@ -102,10 +105,15 @@ export const useWebSocket = ({ onMessage, onOpen, onClose, onError, enabled = tr
       reconnectAttemptsRef.current += 1
 
       reconnectTimeoutRef.current = setTimeout(() => {
-        connect()
+        connectRef.current()
       }, delay)
     }
   }, [onMessage, onOpen, onClose, onError])
+
+  // Keep connect ref in sync for scheduled reconnects
+  useEffect(() => {
+    connectRef.current = connect
+  }, [connect])
 
   const disconnect = () => {
     if (reconnectTimeoutRef.current) {
@@ -144,9 +152,7 @@ export const useWebSocket = ({ onMessage, onOpen, onClose, onError, enabled = tr
   }, [enabled, connect])
 
   return {
-    socket: socketRef.current,
     disconnect,
     reconnect: connect,
-    isConnected: socketRef.current?.readyState === WebSocket.OPEN,
   }
 }

@@ -113,10 +113,8 @@ describe('useMessages', () => {
     mockUseWebSocket.mockImplementation(options => {
       onMessageHandler = options?.onMessage
       return {
-        socket: null,
         disconnect: vi.fn(),
         reconnect: vi.fn(),
-        isConnected: false,
       }
     })
 
@@ -159,10 +157,8 @@ describe('useMessages', () => {
     mockUseWebSocket.mockImplementation(options => {
       onMessageHandler = options?.onMessage
       return {
-        socket: null,
         disconnect: vi.fn(),
         reconnect: vi.fn(),
-        isConnected: false,
       }
     })
 
@@ -196,10 +192,8 @@ describe('useMessages', () => {
     mockUseWebSocket.mockImplementation(options => {
       onMessageHandler = options?.onMessage
       return {
-        socket: null,
         disconnect: vi.fn(),
         reconnect: vi.fn(),
-        isConnected: false,
       }
     })
 

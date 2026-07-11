@@ -16,21 +16,21 @@ It provides a simple single page website to present your ticker.
 
 1. Optional: Install NodeJS with nvm
 
-    ```bash
-    nvm use
-    ```
+   ```bash
+   nvm use
+   ```
 
 2. Install dependencies
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. Start the development server
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 4. Open the website in your browser: <http://localhost:4000>
 
