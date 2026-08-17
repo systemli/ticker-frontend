@@ -28,7 +28,11 @@ updates:
       interval: 'monthly'
     ignore:
       - dependency-name: 'eslint'
-        versions: ['>=9.0.0']
+        versions: ['>=10.0.0']
+      - dependency-name: '@eslint/js'
+        versions: ['>=10.0.0']
+      - dependency-name: 'typescript'
+        versions: ['>=6.1.0']
     groups:
       react:
         patterns:
