@@ -1,4 +1,4 @@
-# Ticker Frontend - AI Agent Instructions
+# AGENTS.md
 
 ## Architecture Overview
 
@@ -62,7 +62,12 @@ npm run dev        # Dev server on port 4000
 npm run test       # Vitest watch mode
 npm run coverage   # Coverage report
 npm run lint       # ESLint
+npm run build      # Production build
+npm run preview    # Serve the production build
 ```
+
+Node 24 (see `.nvmrc`), npm as package manager. Deployment, configuration and troubleshooting
+for the whole stack are documented at <https://systemli.github.io/ticker/>.
 
 ## Styling
 
@@ -73,9 +78,12 @@ npm run lint       # ESLint
 
 ## API Integration
 
-- Backend URL: `TICKER_API_URL` env var (Vite prefix: `TICKER_`)
+- Backend URL: `TICKER_API_URL` env var (Vite prefix: `TICKER_`). Must include the `/v1`
+  suffix; falls back to a relative `/api` that a proxy is expected to forward.
 - Endpoints: `/init` (metadata), `/timeline` (messages), `/ws` (WebSocket)
 - Response format: `{ data: { ... } }` wrapper
+- The API resolves which ticker to serve from the request's `Origin`, so the address the app is
+  served from must be registered on the ticker in the admin interface.
 
 ## File Organization
 
@@ -84,3 +92,60 @@ npm run lint       # ESLint
 - `src/views/` - Page-level layouts
 - `src/lib/` - API client + TypeScript types
 - Tests: `*.test.tsx` alongside source files, `hooks/__tests__/` for hook tests
+
+## Commits and Pull Requests
+
+### Commit messages
+
+Start every commit with a [Gitmoji](https://gitmoji.dev/), followed by a space and a short
+description in the imperative mood. Use the **Unicode emoji**, not the `:shortcode:` form — both
+occur in the history, but new commits should use the emoji.
+
+| Emoji | Use for |
+| ----- | ------- |
+| ✨ | New feature |
+| 🐛 | Bug fix |
+| 🩹 | Minor, non-critical fix |
+| ♻️ | Refactor |
+| ✅ | Add, update or pass tests |
+| 🧪 | Add a deliberately failing test |
+| 📝 | Documentation |
+| ⬆️ | Upgrade dependencies |
+| ➖ | Remove a dependency |
+| 🔥 | Remove code or files |
+| 👷 | CI / build system |
+| 🔧 | Configuration files |
+| 🚨 | Fix linter or compiler warnings |
+| ⚡️ | Performance |
+| 🔒️ | Security fix |
+| 🗃️ | Database schema or storage changes |
+| 🔊 | Logging |
+| 💄 | UI and styling |
+| 🌐 | Internationalization and localization |
+
+Examples:
+
+```
+✨ Add Bluesky reply restrictions
+🐛 Fix message ordering on the public timeline
+♻️ Extract origin handling into a helper
+✅ Cover the upload handler
+⬆️ Upgrade dependencies
+```
+
+### Pull requests
+
+PR titles follow the same Gitmoji convention as commits.
+
+Every PR must be labeled. `release-drafter` (`.github/release-drafter.yml`) uses the label to
+choose both the changelog category and the version bump:
+
+| Label                   | Category       | Version bump |
+| ----------------------- | -------------- | ------------ |
+| `feature`               | 🚀 Features    | major        |
+| `enhancement`           | 🚀 Features    | minor        |
+| `fix`, `bugfix`, `bug`  | 🐛 Bug Fixes   | patch        |
+| `chore`, `dependencies` | 🧹 Maintenance | patch        |
+
+An unlabeled PR falls back to a patch bump. A release draft is kept up to date on every push to
+`main`; drafts that are a pure patch bump are published automatically on the first of each month.
