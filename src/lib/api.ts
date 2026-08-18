@@ -2,6 +2,13 @@ import { Message, Settings, Ticker } from './types'
 
 export const ApiUrl = import.meta.env.TICKER_API_URL || '/api'
 
+// The API returns attachment URLs relative to the site serving them, as
+// /api/media/<file>. That resolves by itself with the default relative ApiUrl,
+// but not when TICKER_API_URL points somewhere else.
+export function mediaUrl(url: string): string {
+  return url.startsWith('/api/') ? `${ApiUrl}${url.slice('/api'.length)}` : url
+}
+
 type InitResponseData = {
   settings: Settings
   ticker: Ticker | null

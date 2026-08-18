@@ -1,4 +1,4 @@
-import { getInit, getTimeline } from './api'
+import { getInit, getTimeline, mediaUrl } from './api'
 
 describe('api', function () {
   beforeEach(() => {
@@ -51,5 +51,11 @@ describe('api', function () {
     expect(response).not.toBeNull()
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(fetchMock).toHaveBeenCalledWith('/api/timeline?before=1')
+  })
+
+  test('mediaUrl', function () {
+    // ApiUrl is the relative default in tests, so the URL passes through.
+    expect(mediaUrl('/api/media/uuid.jpg')).toEqual('/api/media/uuid.jpg')
+    expect(mediaUrl('https://cdn.example.org/media/uuid.jpg')).toEqual('https://cdn.example.org/media/uuid.jpg')
   })
 })
