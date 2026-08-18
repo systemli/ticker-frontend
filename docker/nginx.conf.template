@@ -3,7 +3,13 @@
 #
 # TICKER_API_URL must include the /v1 suffix, for example
 # http://ticker:8080/v1 -- the application requests paths below /api/, which
-# this proxy maps onto the API's /v1 routes.
+# this proxy maps onto the API's /v1 routes. Attachments are among them, at
+# /api/media/<file>.
+#
+# It has to be set: nginx refuses to start with an empty or unresolvable
+# proxy_pass. Note the same name is a build-time variable for the application
+# bundle; the published image is built without it, so the value here configures
+# this proxy only.
 
 map $http_upgrade $connection_upgrade {
     default upgrade;
@@ -17,6 +23,16 @@ server {
 
     # The API accepts uploads up to 10 MB; nginx would otherwise cap them at 1 MB.
     client_max_body_size 10m;
+
+    # Attachments. Buffered and cacheable, unlike the rest of /api/, and they
+    # need no Origin because the API resolves them by UUID.
+    location /api/media/ {
+        proxy_pass ${TICKER_API_URL}/media/;
+        proxy_ssl_server_name on;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 
     location /api/ {
         proxy_pass ${TICKER_API_URL}/;
