@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { mediaUrl } from '../lib/api'
 import { Attachment } from '../lib/types'
 import Lightbox from './Lightbox'
 
@@ -19,14 +20,14 @@ const Attachments: FC<Props> = ({ attachments }) => {
     return null
   }
 
-  const images = attachments?.map(attachment => attachment.url) ?? []
+  const images = attachments?.map(attachment => mediaUrl(attachment.url)) ?? []
 
   return (
     <div>
       <div className={`mt-2 grid max-h-full grid-flow-col gap-1 md:max-h-3/6 md:gap-2`}>
         {attachments?.map((attachment, key) => (
           <button key={attachment.url} onClick={() => handleClick(key)}>
-            <img src={attachment.url} className="rounded" alt="" />
+            <img src={mediaUrl(attachment.url)} className="rounded" alt="" />
           </button>
         ))}
       </div>

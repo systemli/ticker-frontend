@@ -79,8 +79,11 @@ for the whole stack are documented at <https://systemli.github.io/ticker/>.
 ## API Integration
 
 - Backend URL: `TICKER_API_URL` env var (Vite prefix: `TICKER_`). Must include the `/v1`
-  suffix; falls back to a relative `/api` that a proxy is expected to forward.
-- Endpoints: `/init` (metadata), `/timeline` (messages), `/ws` (WebSocket)
+  suffix; falls back to a relative `/api` that a proxy is expected to forward — the dev server and
+  the Docker image both provide one, so leaving it unset is the normal case.
+- Endpoints: `/init` (metadata), `/timeline` (messages), `/ws` (WebSocket), `/media/<file>`
+  (attachments). Attachment URLs come back relative as `/api/media/<file>`; resolve them with
+  `mediaUrl()` from `src/lib/api.ts` so they also work with an absolute `TICKER_API_URL`.
 - Response format: `{ data: { ... } }` wrapper
 - The API resolves which ticker to serve from the request's `Origin`, so the address the app is
   served from must be registered on the ticker in the admin interface.

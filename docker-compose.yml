@@ -5,7 +5,6 @@ services:
     build: .
     ports:
       - '8080:80'
-    volumes:
-      - ./docker/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
-    env_file:
-      - .env
+    environment:
+      # Must include the /v1 suffix.
+      TICKER_API_URL: ${TICKER_API_URL:-http://host.docker.internal:8080/v1}

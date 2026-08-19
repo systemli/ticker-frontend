@@ -10,6 +10,17 @@ export default defineConfig({
   envPrefix: 'TICKER_',
   server: {
     port: 4000,
+    // Mirrors production: the app requests /api and the proxy maps it onto the
+    // API's /v1 routes. Origin has to be set explicitly, because a same-origin
+    // GET does not send one and the API resolves the ticker from it.
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        rewrite: path => path.replace(/^\/api/, '/v1'),
+        ws: true,
+        headers: { Origin: 'http://localhost:4000' },
+      },
+    },
   },
   plugins: [
     react(),

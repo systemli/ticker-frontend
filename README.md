@@ -43,18 +43,18 @@ npm install
 npm run dev        # http://localhost:4000
 ```
 
-Point it at your API with a `.env` file. The URL must include the `/v1` suffix:
+The dev server proxies `/api` to `http://localhost:8080/v1`, so run the API alongside it and nothing
+needs configuring.
 
-```shell
-TICKER_API_URL=http://localhost:8080/v1
-```
+> **Delete a leftover `.env`.** `TICKER_API_URL` overrides the proxy with an absolute address.
+> Requests still work, but attachment images do not: their URLs are relative and would resolve
+> against the dev server instead of the API. The file is gitignored, so an old one may still be in
+> your checkout.
 
-Without this the application falls back to a relative `/api`, which only works when something is
-proxying that path — as the Docker image expects. Restart the dev server after changing `.env`.
-
-> **The ticker must know this address.** The API works out which ticker to serve from the browser's
-> `Origin` header, so `http://localhost:4000` has to be registered under the ticker's websites in the
-> admin interface. Otherwise the page only ever shows "The ticker is currently inactive".
+> **The ticker must know this address.** The API works out which ticker to serve from the request's
+> `Origin` header, which the proxy sets to `http://localhost:4000`. That address has to be registered
+> under the ticker's websites in the admin interface. Otherwise the page only ever shows "The ticker
+> is currently inactive".
 
 ### Commands
 
