@@ -7,7 +7,7 @@ interface Props {
 }
 
 const InformationItem: FC<Props> = ({ icon: Icon, label, url }) => {
-  const isEmail = label.includes('@')
+  const isEmail = label.includes('@') && !label.includes('://')
   const href = isEmail ? `mailto:${label}` : url
 
   return (
