@@ -31,7 +31,7 @@ const Description: FC<Props> = ({ ticker }) => {
       <div className="text-base/8">
         <div className="mt-2 flex overflow-x-scroll md:mt-4 md:grid md:grid-cols-2 md:place-items-center md:overflow-x-auto lg:mx-auto">
           {ticker.information.author && <InformationItem icon={Author} label={ticker.information.author} />}
-          {ticker.information.email && <InformationItem icon={At} label={ticker.information.email} url={ticker.information.email} />}
+          {ticker.information.email && <InformationItem icon={At} label={ticker.information.email} url={`mailto:${ticker.information.email}`} />}
           {ticker.information.url && <InformationItem icon={Url} label={ticker.information.url.replace(/https?:\/\//, '')} url={ticker.information.url} />}
           {ticker.information.mastodon && (
             <InformationItem icon={Mastodon} label={ticker.information.mastodon.replace(/https?:\/\//, '')} url={ticker.information.mastodon} />
